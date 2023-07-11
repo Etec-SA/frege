@@ -2,6 +2,20 @@ export class Simplify {
   private static implicationRegex = /(.*)->(.*)/;
   private static biconditionalRegex = /(.*)<->(.*)/;
 
+
+  public static simplifyExpression(expression: string): string {
+    let simplifiedExpression: string;
+
+    if (expression.includes('->'))
+      simplifiedExpression = this.simplifyImplication(expression);
+    else if (expression.includes('<->'))
+      simplifiedExpression = this.simplifyBiconditional(expression);
+    else
+      simplifiedExpression = expression;
+
+    return simplifiedExpression
+  }
+
   private static simplifyImplication(expression: string): string {
     const matches = expression.match(this.implicationRegex);
 
