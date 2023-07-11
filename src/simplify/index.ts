@@ -1,5 +1,6 @@
 export class Simplify {
   private static implicationRegex = /(.*)->(.*)/;
+  private static biconditionalRegex = /(.*)<->(.*)/;
 
   private static simplifyImplication(expression: string): string {
     const matches = expression.match(this.implicationRegex);
@@ -13,5 +14,9 @@ export class Simplify {
     const negatedP = `¬${p}`;
 
     return `(${negatedP} ∨ ${q})`;
+  }
+
+  private static simplifyBiconditional(expression: string) {
+
   }
 }
