@@ -2,6 +2,7 @@ import assert from "assert/strict";
 import { describe, it } from "node:test";
 import { builder } from "../Builder";
 import { Formula } from "../interfaces/formula";
+import { Implication } from "../interfaces/operations/implication";
 
 describe('Builder', () => {
   it('should be defined', () => {
@@ -76,5 +77,40 @@ describe('Builder', () => {
     });
 
     assert.equal(result, '(P -> (Q -> P))');
+  });
+
+  it('should build ¬((P ^ (Q->Q)) -> (A<->¬(A)))', () => {
+
+    const leftImplication: Implication = {
+      operation: 'Implication',
+      left: 'Q',
+      right: 'Q'
+    }
+
+    const left: Formula = {
+      operation: 'Negation',
+      value: {
+        operation: 'Conjunction',
+        left: 'P',
+        right: leftImplication
+      }
+    }
+
+    const right: Formula = {
+      operation: 'Biconditional',
+      left: 'A',
+      right: {
+        operation: 'Negation',
+        value: 'A'
+      }
+    }
+
+    const result = builder.buildFormula({
+      operation: 'Implication',
+      left,
+      right
+    });
+
+    assert.equal(result, '(¬((P ∧ (Q -> Q))) -> (A ↔ ¬(A)))');
   });
 })
