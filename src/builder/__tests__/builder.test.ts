@@ -29,4 +29,14 @@ describe('Builder', () => {
     assert.equal(result, expected);
   });
 
+  it('should build an implication', () => {
+    const result = builder.buildFormula({
+      operation: 'Implication',
+      left: 'P',
+      right: 'Q'
+    });
+
+    const expected = '(P -> Q)';
+    assert.equal(result, expected);
+  })
 })
