@@ -51,5 +51,13 @@ describe('Builder', () => {
     assert.equal(result, expected);
   });
 
+  it('should build a negation', () => {
+    const result = builder.buildFormula({
+      operation: 'Negation',
+      value: 'A'
+    });
 
+    const expected = '¬(A)';
+    assert.equal(result, expected);
+  });
 })
