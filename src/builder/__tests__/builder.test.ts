@@ -1,6 +1,7 @@
 import assert from "assert/strict";
 import { describe, it } from "node:test";
 import { builder } from "../Builder";
+import { Formula } from "../interfaces/formula";
 
 describe('Builder', () => {
   it('should be defined', () => {
@@ -59,5 +60,21 @@ describe('Builder', () => {
 
     const expected = '¬(A)';
     assert.equal(result, expected);
+  });
+
+  it('should build (P->(Q->P))', () => {
+    const right: Formula = {
+      operation: 'Implication',
+      left: 'Q',
+      right: 'P'
+    };
+
+    const result = builder.buildFormula({
+      operation: 'Implication',
+      left: 'P',
+      right
+    });
+
+    assert.equal(result, '(P -> (Q -> P))');
   });
 })
