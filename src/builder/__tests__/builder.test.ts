@@ -18,4 +18,15 @@ describe('Builder', () => {
     assert.equal(result, expected);
   });
 
+  it('should build a disjunction', () => {
+    const result = builder.buildFormula({
+      operation: 'Disjunction',
+      left: 'P',
+      right: 'Q'
+    });
+
+    const expected = '(P ∨ Q)';
+    assert.equal(result, expected);
+  });
+
 })
