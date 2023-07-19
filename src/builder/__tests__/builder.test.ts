@@ -38,5 +38,18 @@ describe('Builder', () => {
 
     const expected = '(P -> Q)';
     assert.equal(result, expected);
-  })
+  });
+
+  it('should build a biconditional', () => {
+    const result = builder.buildFormula({
+      operation: 'Biconditional',
+      left: 'P',
+      right: 'Q'
+    });
+
+    const expected = '(P ↔ Q)';
+    assert.equal(result, expected);
+  });
+
+
 })
