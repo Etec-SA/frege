@@ -9,7 +9,7 @@
     "typescript": "^5.1.6"
   },
   "scripts": {
-    "test": ""
+    "test": "npx tsx --test src/**/__tests__/*.test.ts"
   },
   "keywords": [],
   "author": "iamthepoe",
