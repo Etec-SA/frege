@@ -8,7 +8,12 @@ describe('Builder', () => {
   });
 
   it('should build an disjunction', () => {
-    const result = Builder.disjunction('p', 'q');
-    assert.equal(result, 'P ∨ Q');
+    const disjunction = Builder.disjunction;
+    assert.equal(disjunction('p', 'q'), 'P ∨ Q');
+    assert.equal(disjunction('(p ∨ q)', 'q'), '(P ∨ Q) ∨ Q');
+    assert.equal(
+      disjunction('((p -> q) -> (q -> (p -> q)))', '(q <-> p)'),
+      '((P -> Q) -> (Q -> (P -> Q))) ∨ (Q <-> P)'
+    );
   });
 })
