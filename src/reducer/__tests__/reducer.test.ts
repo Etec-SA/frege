@@ -5,7 +5,6 @@ import { reducer } from "../Reducer";
 import { builder } from "src/builder/Builder";
 import { Biconditional } from "src/builder/interfaces/operations/biconditional";
 import { Disjunction } from "src/builder/interfaces/operations/disjunction";
-import { Conjunction } from "src/builder/interfaces/operations/conjunction";
 
 describe('Reducer', () => {
   it('should reduce (P -> Q) to (¬(P) v Q)', () => {
