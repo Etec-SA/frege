@@ -12,7 +12,8 @@
   "scripts": {
     "test": "npx tsx --test src/**/__tests__/*.test.ts",
     "style:check": "prettier --check src/**/*.ts src/**/__tests__/*.test.ts",
-    "style:fix": "prettier --write src/**/*.ts src/**/__tests__/*.test.ts"
+    "style:fix": "prettier --write src/**/*.ts src/**/__tests__/*.test.ts",
+    "build": "npx tsup src/"
   },
   "keywords": [],
   "author": "iamthepoe",
