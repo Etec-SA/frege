@@ -3,24 +3,27 @@ import { Biconditional } from "src/builder/interfaces/operations/biconditional";
 import { Conjunction } from "src/builder/interfaces/operations/conjunction";
 import { Disjunction } from "src/builder/interfaces/operations/disjunction";
 import { Implication } from "src/builder/interfaces/operations/implication";
+import { Negation } from "src/builder/interfaces/operations/negation";
 
 export class reducer {
-
-  private static map = {
-    'Biconditional': this.biconditional.bind(this),
-    'Implication': this.implication.bind(this),
-    'Conjunction': this.conjunction.bind(this),
-    'Disjunction': this.disjunction.bind(this)
-  }
-
-  public static reduceFormula(x: Formula){
+  public static reduceFormula(x: Formula) {
     if (typeof x === "string") return x;
 
-    const { operation } = x
-    
-    return this.map[operation](x);
+    switch (x.operation) {
+      case "Biconditional":
+        return this.biconditional(x);
+      case "Implication":
+        return this.implication(x);
+      case "Conjunction":
+        return this.conjunction(x);
+      case "Disjunction":
+        return this.disjunction(x);
+      case "Negation":
+        return this.negation(x);
+      default:
+        throw new Error("Invalid operation");
+    }
   }
-
   
   private static biconditional(x: Biconditional){
     const left = this.reduceFormula(x.left);
@@ -78,6 +81,16 @@ export class reducer {
       operation: "Disjunction",
       left: left,
       right: right,
+    };
+  }
+
+  private static negation(x: Negation) {
+    const value = this.reduceFormula(x.value);
+
+    return {
+      operation: "Disjunction",
+      left: "¬" + value,
+      right: value,
     };
   }
 }
