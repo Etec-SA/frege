@@ -21,21 +21,27 @@ export class reducer {
     return this.map[operation](x);
   }
 
+  
   private static biconditional(x: Biconditional){
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
+
+    const reducedLeft = this.reduceFormula({
+      operation: "Implication",
+      left: left,
+      right: right,
+    });
+
+    const reducedRight = this.reduceFormula({
+      operation: "Implication",
+      left: right,
+      right: left,
+    });
+
     return {
       operation: "Conjunction",
-      left: {
-        operation: "Implication",
-        left: left,
-        right: right,
-      },
-      right: {
-        operation: "Implication",
-        left: right,
-        right: left,
-      },
+      left: reducedLeft,
+      right: reducedRight,
     };
   }
 
