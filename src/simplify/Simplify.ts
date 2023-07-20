@@ -1,82 +1,77 @@
-import { builder } from "src/builder/Builder";
 import { Formula } from "src/builder/interfaces/formula";
 import { Biconditional } from "src/builder/interfaces/operations/biconditional";
 import { Conjunction } from "src/builder/interfaces/operations/conjunction";
 import { Disjunction } from "src/builder/interfaces/operations/disjunction";
 import { Implication } from "src/builder/interfaces/operations/implication";
 
-export class simplify {
+export class reducer {
 
-  public static simplifyFormula(x: Formula): Formula {
-    if (typeof x === 'string') return x;
-
-    if (!('operation' in x)) return x;
-
-    if (x.operation === 'Biconditional')
-      return this.simplifyFormula(this.biconditional(x));
-
-    if (x.operation === 'Implication')
-      return this.implication(x);
-
-    if (x.operation === 'Conjunction')
-      return this.conjunction(x);
-
-    if (x.operation === 'Disjunction')
-      return this.disjunction(x);
+  private static map = {
+    'Biconditional': this.biconditional.bind(this),
+    'Implication': this.implication.bind(this),
+    'Conjunction': this.conjunction.bind(this),
+    'Disjunction': this.disjunction.bind(this)
   }
 
-  public static biconditional(x: Biconditional) {
-    const firstImplication: Implication = {
-      operation: 'Implication',
-      left: x.left,
-      right: x.right
-    };
+  public static reduceFormula(x: Formula){
+    if (typeof x === "string") return x;
 
-    const secondImplication: Implication = {
-      operation: 'Implication',
-      right: x.left,
-      left: x.right
-    };
-
-    const simplifiedBiconditional: Conjunction = {
-      operation: 'Conjunction',
-      left: firstImplication,
-      right: secondImplication
-    };
-
-    return simplifiedBiconditional;
+    const { operation } = x
+    
+    return this.map[operation](x);
   }
 
-  public static implication(x: Implication) {
-    const simplifiedImplication: Disjunction = {
-      operation: 'Disjunction',
+  private static biconditional(x: Biconditional){
+    const left = this.reduceFormula(x.left);
+    const right = this.reduceFormula(x.right);
+    return {
+      operation: "Conjunction",
       left: {
-        operation: 'Negation',
-        value: x.left
+        operation: "Implication",
+        left: left,
+        right: right,
       },
-      right: x.right
+      right: {
+        operation: "Implication",
+        left: right,
+        right: left,
+      },
     };
-
-    return simplifiedImplication;
   }
 
-  public static conjunction(x: Conjunction): Formula {
-    const simplifiedConjunction: Conjunction = {
-      operation: 'Conjunction',
-      left: this.simplifyFormula(x.left),
-      right: this.simplifyFormula(x.right),
-    };
+  private static implication(x: Implication){
+    const left = this.reduceFormula(x.left);
+    const right = this.reduceFormula(x.right);
 
-    return simplifiedConjunction;
+    return {
+      operation: "Disjunction",
+      left: {
+        operation: "Negation",
+        value: left,
+      },
+      right: right,
+    };
   }
 
-  public static disjunction(x: Disjunction): Formula {
-    const simplifiedDisjunction: Disjunction = {
-      operation: 'Disjunction',
-      left: this.simplifyFormula(x.left),
-      right: this.simplifyFormula(x.right),
-    };
+  private static conjunction(x: Conjunction){
+    const left = this.reduceFormula(x.left);
+    const right = this.reduceFormula(x.right);
 
-    return simplifiedDisjunction;
+    return {
+      operation: "Conjunction",
+      left: left,
+      right: right,
+    };
+  }
+
+  private static disjunction(x: Disjunction){
+    const left = this.reduceFormula(x.left);
+    const right = this.reduceFormula(x.right);
+
+    return {
+      operation: "Disjunction",
+      left: left,
+      right: right,
+    };
   }
 }
