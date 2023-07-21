@@ -14,7 +14,7 @@ export class reducer {
    * @param x - The logical formula to reduce.
    * @returns The reduced logical formula.
    */
-  private static reduceFormula(x: Formula){
+  private static reduceFormula(x: Formula) {
     if (typeof x === 'string') return x;
 
     switch (x.operation) {
@@ -66,7 +66,7 @@ export class reducer {
    * @param x - The formula to reduce.
    * @returns The reduced Disjunction formula.
    */
-  public static implication(x: Implication): Disjunction{
+  public static implication(x: Implication): Disjunction {
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -85,7 +85,7 @@ export class reducer {
    * @param x - The formula to reduce.
    * @returns The reduced Conjunction formula.
    */
-  public static conjunction(x: Conjunction): Conjunction{
+  public static conjunction(x: Conjunction): Conjunction {
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -101,7 +101,7 @@ export class reducer {
    * @param x - The formula to reduce.
    * @returns The reduced Disjunction formula.
    */
-  public static disjunction(x: Disjunction): Disjunction{
+  public static disjunction(x: Disjunction): Disjunction {
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -117,7 +117,7 @@ export class reducer {
    * @param x - The formula to reduce.
    * @returns The reduced Negation formula.
    */
-  public static negation(x: Negation): Negation{
+  public static negation(x: Negation): Negation {
     const value = this.reduceFormula(x.value);
 
     return {
