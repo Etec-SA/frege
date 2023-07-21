@@ -5,15 +5,18 @@ import { Disjunction } from 'src/builder/interfaces/operations/disjunction';
 import { Implication } from 'src/builder/interfaces/operations/implication';
 import { Negation } from 'src/builder/interfaces/operations/negation';
 
+/**
+ * A class that provides methods to reduce formulas, which use implication or biconditional, to use only negations, conjunctions and disjunctions.
+ */
 export class reducer {
   private static reduceFormula(x: Formula){
     if (typeof x === 'string') return x;
 
     switch (x.operation) {
       case 'Biconditional':
-        return this.reduceBiconditional(x);
+        return this.biconditional(x);
       case 'Implication':
-        return this.reduceImplication(x);
+        return this.implication(x);
       case 'Conjunction':
         return this.conjunction(x);
       case 'Disjunction':
@@ -25,7 +28,12 @@ export class reducer {
     }
   }
 
-  public static reduceBiconditional(x: Biconditional): Conjunction {
+  /**
+   * Reduces a Biconditional to a Conjunction.
+   * @param x - The Biconditional operation to reduce.
+   * @returns The reduced Conjunction formula.
+   */
+  public static biconditional(x: Biconditional): Conjunction {
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -48,7 +56,12 @@ export class reducer {
     };
   }
 
-  public static reduceImplication(x: Implication): Disjunction{
+  /**
+   * Reduces an Implication to a Disjunction
+   * @param x - The formula to reduce.
+   * @returns The reduced Disjunction formula.
+   */
+  public static implication(x: Implication): Disjunction{
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -62,7 +75,12 @@ export class reducer {
     };
   }
 
-  private static conjunction(x: Conjunction): Conjunction{
+  /**
+   * Reduces both sides of a Conjunction
+   * @param x - The formula to reduce.
+   * @returns The reduced Conjunction formula.
+   */
+  public static conjunction(x: Conjunction): Conjunction{
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -73,7 +91,12 @@ export class reducer {
     };
   }
 
-  private static disjunction(x: Disjunction): Disjunction{
+  /**
+   * Reduces both sides of a Disjunction
+   * @param x - The formula to reduce.
+   * @returns The reduced Disjunction formula.
+   */
+  public static disjunction(x: Disjunction): Disjunction{
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -84,7 +107,12 @@ export class reducer {
     };
   }
 
-  private static negation(x: Negation): Negation{
+  /**
+   * Reduces the negated formula
+   * @param x - The formula to reduce.
+   * @returns The reduced Negation formula.
+   */
+  public static negation(x: Negation): Negation{
     const value = this.reduceFormula(x.value);
 
     return {
