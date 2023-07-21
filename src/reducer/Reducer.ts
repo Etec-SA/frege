@@ -6,14 +6,14 @@ import { Implication } from 'src/builder/interfaces/operations/implication';
 import { Negation } from 'src/builder/interfaces/operations/negation';
 
 export class reducer {
-  public static reduceFormula(x: Formula) {
+  private static reduceFormula(x: Formula){
     if (typeof x === 'string') return x;
 
     switch (x.operation) {
       case 'Biconditional':
-        return this.biconditional(x);
+        return this.reduceBiconditional(x);
       case 'Implication':
-        return this.implication(x);
+        return this.reduceImplication(x);
       case 'Conjunction':
         return this.conjunction(x);
       case 'Disjunction':
@@ -25,7 +25,7 @@ export class reducer {
     }
   }
 
-  private static biconditional(x: Biconditional) {
+  public static reduceBiconditional(x: Biconditional): Conjunction {
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -48,7 +48,7 @@ export class reducer {
     };
   }
 
-  private static implication(x: Implication) {
+  public static reduceImplication(x: Implication): Disjunction{
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -62,7 +62,7 @@ export class reducer {
     };
   }
 
-  private static conjunction(x: Conjunction) {
+  private static conjunction(x: Conjunction): Conjunction{
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -73,7 +73,7 @@ export class reducer {
     };
   }
 
-  private static disjunction(x: Disjunction) {
+  private static disjunction(x: Disjunction): Disjunction{
     const left = this.reduceFormula(x.left);
     const right = this.reduceFormula(x.right);
 
@@ -84,7 +84,7 @@ export class reducer {
     };
   }
 
-  private static negation(x: Negation) {
+  private static negation(x: Negation): Negation{
     const value = this.reduceFormula(x.value);
 
     return {

@@ -14,11 +14,28 @@ describe('Reducer', () => {
       right: 'Q',
     };
 
-    const result = reducer.reduceFormula(implication);
+    const result = reducer.reduceImplication(implication);
     assert.ok(result);
     assert.equal(result.operation, 'Disjunction');
     assert.equal(builder.buildFormula(result), '(¬(P) ∨ Q)');
   });
+
+  it('should reduce P -> (Q -> P) to (¬(P) v (¬(Q) v P))', ()=>{
+    const implication: Implication = {
+      operation: 'Implication',
+      left: 'P',
+      right: {
+        operation: 'Implication',
+        left: 'Q',
+        right: 'P'
+      }
+    };
+
+    const result = reducer.reduceImplication(implication);
+    assert.ok(result);
+    assert.equal(result.operation, 'Disjunction');
+    assert.equal(builder.buildFormula(result), '(¬(P) ∨ (¬(Q) ∨ P))');
+  })
 
   it('should reduce (P <-> Q) to ((¬(P) v Q) ^ (¬(Q) v P))', () => {
     const biconditional: Biconditional = {
@@ -27,7 +44,7 @@ describe('Reducer', () => {
       right: 'Q',
     };
 
-    const result = reducer.reduceFormula(biconditional);
+    const result = reducer.reduceBiconditional(biconditional);
 
     assert.ok(result);
     assert.equal(result.operation, 'Conjunction');
@@ -66,7 +83,7 @@ describe('Reducer', () => {
       right: disjunction,
     };
 
-    const result = reducer.reduceFormula(conjunction);
+    const result = reducer.reduceBiconditional(conjunction);
     assert.ok(result);
     assert.equal(result.operation, 'Conjunction');
     assert.equal(
