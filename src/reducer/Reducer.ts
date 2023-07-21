@@ -9,6 +9,11 @@ import { Negation } from 'src/builder/interfaces/operations/negation';
  * A class that provides methods to reduce formulas, which use implication or biconditional, to use only negations, conjunctions and disjunctions.
  */
 export class reducer {
+  /**
+   * Recursively reduces a logical formula to its reduced form based on its operation.
+   * @param x - The logical formula to reduce.
+   * @returns The reduced logical formula.
+   */
   private static reduceFormula(x: Formula){
     if (typeof x === 'string') return x;
 
