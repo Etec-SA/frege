@@ -1,12 +1,9 @@
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import { Implication } from 'src/builder/interfaces/operations/implication';
 import { reducer } from '../Reducer';
 import { builder } from 'src/builder/Builder';
-import { Biconditional } from 'src/builder/interfaces/operations/biconditional';
-import { Disjunction } from 'src/builder/interfaces/operations/disjunction';
-import { Conjunction } from 'src/builder/interfaces/operations/conjunction';
-import { Negation } from 'src/builder/interfaces/operations/negation';
+import { Negation } from 'src/builder/interfaces/operations/unary-operation';
+import { Biconditional, Implication, Conjunction, Disjunction } from 'src/builder/interfaces/operations/binary-operations';
 
 describe('Reducer', () => {
   it('should reduce (P -> Q) to (¬(P) v Q)', () => {
