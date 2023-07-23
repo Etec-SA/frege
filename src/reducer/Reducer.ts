@@ -1,6 +1,6 @@
-import { Formula } from 'src/builder/interfaces/formula';
-import { Negation } from 'src/builder/interfaces/operations/unary-operation';
-import { Disjunction, Conjunction, Biconditional, Implication } from 'src/builder/interfaces/operations/binary-operations';
+import { Formula } from 'src/types/formulas/formula';
+import { Negation } from 'src/types/operations/unary-operation';
+import { Disjunction, Conjunction, Biconditional, Implication } from 'src/types/operations/binary-operations';
 /**
  * A class that provides methods to reduce formulas, which use implication or biconditional, to use only negations, conjunctions and disjunctions.
  */

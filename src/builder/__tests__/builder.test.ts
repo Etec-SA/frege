@@ -1,8 +1,8 @@
 import assert from 'assert/strict';
 import { describe, it } from 'node:test';
 import { builder } from '../Builder';
-import { Formula } from '../interfaces/formula';
-import { Implication } from '../interfaces/operations/binary-operations';
+import { Formula } from '../../types/formulas/formula';
+import { Implication } from '../../types/operations/binary-operations';
 
 describe('Builder', () => {
   it('should be defined', () => {

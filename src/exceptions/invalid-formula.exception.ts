@@ -1,1 +1,1 @@
-export class InvalidFormulaException extends Error { }
+export class InvalidFormulaException extends Error {}

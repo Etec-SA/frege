@@ -1,4 +1,4 @@
-import { Formula } from '../formula';
+import { Formula } from '../formulas/formula';
 
 export interface UnaryOperation {
   value: Formula;

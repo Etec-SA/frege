@@ -3,7 +3,7 @@ import {
   Disjunction,
   Implication,
   Biconditional,
-} from './operations/binary-operations';
+} from '../operations/binary-operations';
 
 export type MolecularFormula =
   | Conjunction

@@ -1,11 +1,11 @@
-import { PropositionalVariable } from './propositional-variable';
-import { Negation } from './operations/unary-operation';
+import { PropositionalVariable } from '../operations/propositional-variable';
+import { Negation } from '../operations/unary-operation';
 import {
   Conjunction,
   Disjunction,
   Implication,
   Biconditional,
-} from './operations/binary-operations';
+} from '../operations/binary-operations';
 
 export type Formula =
   | PropositionalVariable
