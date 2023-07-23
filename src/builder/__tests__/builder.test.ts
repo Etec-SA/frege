@@ -2,7 +2,7 @@ import assert from 'assert/strict';
 import { describe, it } from 'node:test';
 import { builder } from '../Builder';
 import { Formula } from '../interfaces/formula';
-import { Implication } from '../interfaces/operations/implication';
+import { Implication } from '../interfaces/operations/binary-operations';
 
 describe('Builder', () => {
   it('should be defined', () => {

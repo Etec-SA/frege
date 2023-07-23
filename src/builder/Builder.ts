@@ -6,7 +6,6 @@ import { Formula } from './interfaces/formula';
  * the artificial language of logic syntax.
  */
 
-
 export class builder {
   private static operations = {
     Biconditional: this.biconditional,
@@ -37,24 +36,25 @@ export class builder {
     if ('operation' in formula && formula.operation === 'Negation')
       return `¬(${this.buildFormula(formula.value)})`;
 
-    if (!('operation' in formula)) throw new InvalidFormulaException('Invalid Formula.');
+    if (!('operation' in formula))
+      throw new InvalidFormulaException('Invalid Formula.');
 
     const left = this.buildFormula(formula.left);
     const right = this.buildFormula(formula.right);
     const operation = formula.operation;
 
-    return this.operations[operation](left, right);
+    return this.operations[operation](left as Formula, right as Formula);
   }
 
   /**
    * Builds a formula with the syntax of logic.
    * @param formula - The logical formula to build.
-   * @returns The builded logical formula. 
+   * @returns The builded logical formula.
    * @throws {InvalidFormulaException}
    */
 
-  public static buildFormula(formula: Formula) {
+  public static buildFormula(formula: Formula): string {
     const result = this.buildRecursively(formula);
-    return result as string;
+    return result;
   }
 }

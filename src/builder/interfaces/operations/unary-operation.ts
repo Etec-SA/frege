@@ -1,5 +1,9 @@
-import { Formula } from "../formula";
+import { Formula } from '../formula';
 
 export interface UnaryOperation {
-    value: Formula;
+  value: Formula;
+}
+
+export interface Negation extends UnaryOperation {
+  readonly operation: 'Negation';
 }

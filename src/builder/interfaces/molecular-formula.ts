@@ -1,6 +1,12 @@
-import { Conjunction } from "./operations/conjunction";
-import { Disjunction } from "./operations/disjunction";
-import { Implication } from "./operations/implication";
-import { Biconditional } from "./operations/biconditional";
+import {
+  Conjunction,
+  Disjunction,
+  Implication,
+  Biconditional,
+} from './operations/binary-operations';
 
-export type MolecularFormula = Conjunction | Disjunction | Implication | Biconditional;
+export type MolecularFormula =
+  | Conjunction
+  | Disjunction
+  | Implication
+  | Biconditional;
