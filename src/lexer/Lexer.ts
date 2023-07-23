@@ -1,3 +1,8 @@
+/* 
+  Lexer is a modified version of the llang by Petr Nevyhoštěný (@pnevyk on github/twitter).
+  "llang is MIT licensed. Feel free to use it, contribute or spread the word. Created with love by Petr Nevyhoštěný."
+*/
+
 import { UnrecognizedTokenException } from "src/exceptions/unrecognized-token.exception";
 import { PropositionalVariable } from "src/types/operations/propositional-variable";
 import { Token, TokenType, Boundary, Operator } from "src/types/tokens/tokens";
