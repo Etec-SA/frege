@@ -1,6 +1,7 @@
 import { Formula } from '../formulas/formula';
 
 export interface BinaryOperation {
+  operation: string;
   right: Formula;
   left: Formula;
 }
