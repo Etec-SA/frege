@@ -9,7 +9,7 @@ import { Token, TokenType, Boundary, Operator } from "src/types/tokens/tokens";
 
 export class Lexer {
   public input: string;
-  private tokens: Token<TokenType>[] = [];
+  private tokens: Token[] = [];
   private pointer: number = 0;
   private c: string;
   private operator: string = '';
@@ -18,12 +18,12 @@ export class Lexer {
     this.input = input;
   }
 
-  public lex(): Token<TokenType>[] {
+  public lex(): Token[] {
     while (this.next()) {
       if (this.isSpecial(this.c)) {
         this.operator += this.c;
         if (this.operatorExists(this.operator)) {
-          this.push('operator', {
+          this.push({
             type: 'operator',
             value: this.operator,
           });
@@ -40,10 +40,10 @@ export class Lexer {
         else if (this.isWhiteSpace(this.c)) continue;
 
         else if (this.isVariable(this.c))
-          this.push('variable', { type: 'variable', value: this.c });
+          this.push({ type: 'variable', value: this.c });
 
         else if (this.isExpressionBoundary(this.c))
-          this.push('boundary', { type: 'boundary', value: this.c });
+          this.push({ type: 'boundary', value: this.c });
 
         else this.throwTokenException(this.c, this.pointer - 2);
       }
@@ -56,11 +56,11 @@ export class Lexer {
     return (this.c = this.input[this.pointer++]);
   }
 
-  private push<T extends TokenType>(type: T, token: Token<T>) {
+  private push(token: Token) {
     this.tokens.push({
-      type: type,
+      type: token.type,
       value: token.value,
-    });
+    } as Token);
   }
 
   private isWhiteSpace(c: string) {
