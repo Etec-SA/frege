@@ -10,7 +10,7 @@ import { Operator, Token } from 'src/types/tokens/tokens';
  * Parser class for analyzing tokens and creating a logical formula tree.
  */
 export class Parser {
-  private tokens: Token[];
+  public tokens: Token[];
   private token: Token;
 
   /**
