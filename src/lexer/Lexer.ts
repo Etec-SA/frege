@@ -3,10 +3,13 @@
   "llang is MIT licensed. Feel free to use it, contribute or spread the word. Created with love by Petr Nevyhoštěný."
 */
 
-import { UnrecognizedTokenException } from "src/exceptions/unrecognized-token.exception";
-import { PropositionalVariable } from "src/types/operations/propositional-variable";
-import { Token, Boundary, Operator } from "src/types/tokens/tokens";
+import { UnrecognizedTokenException } from 'src/exceptions/unrecognized-token.exception';
+import { PropositionalVariable } from 'src/types/operations/propositional-variable';
+import { Token, Boundary, Operator } from 'src/types/tokens/tokens';
 
+/**
+ * Lexer class for tokenizing propositional logic formulas.
+ */
 export class Lexer {
   public input: string;
   private tokens: Token[] = [];
@@ -14,10 +17,18 @@ export class Lexer {
   private c: string;
   private operator: string = '';
 
-  constructor(input: string) {
-    this.input = input;
+  /**
+   * Creates a new Lexer instance.
+   * @param formula The propositional logic formula to tokenize.
+   */
+  constructor(formula: string) {
+    this.input = formula;
   }
 
+  /**
+   * Tokenizes the propositional logic formula.
+   * @returns An array of tokens representing the formula.
+   */
   public lex(): Token[] {
     while (this.next()) {
       if (this.isSpecial(this.c)) {
@@ -30,21 +41,16 @@ export class Lexer {
           this.operator = '';
         }
       } else {
-
         if (this.operator)
           this.throwTokenException(
             this.operator,
             this.pointer - this.operator.length - 1
           );
-
         else if (this.isWhiteSpace(this.c)) continue;
-
         else if (this.isVariable(this.c))
           this.push({ type: 'variable', value: this.c });
-
         else if (this.isExpressionBoundary(this.c))
           this.push({ type: 'boundary', value: this.c });
-
         else this.throwTokenException(this.c, this.pointer - 2);
       }
     }
@@ -83,7 +89,7 @@ export class Lexer {
     return ['¬', '∧', 'v', '->', '<->'].indexOf(op) !== -1;
   }
 
-  throwTokenException(token: string, position: number) {
+  private throwTokenException(token: string, position: number) {
     throw new UnrecognizedTokenException(
       `Unrecognized token "${token}" on position ${position}`
     );
