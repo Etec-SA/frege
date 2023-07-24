@@ -39,4 +39,21 @@ describe('Lexer', () => {
     assert.equal(result.length, 3);
     assert.deepEqual(result, expected);
   });
+
+  it('should lex P -> (Q -> P)', () => {
+    const expected: Token[] = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '->' },
+      { type: 'boundary', value: '(' },
+      { type: 'variable', value: 'Q' },
+      { type: 'operator', value: '->' },
+      { type: 'variable', value: 'P' },
+      { type: 'boundary', value: ')' },
+    ];
+
+    lexer.input = 'P -> (Q -> P)'
+    const result = lexer.lex();
+    assert.equal(result.length, 7);
+    assert.deepEqual(result, expected);
+  });
 });
