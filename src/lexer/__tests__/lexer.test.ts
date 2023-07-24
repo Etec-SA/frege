@@ -56,12 +56,16 @@ describe('Lexer', () => {
     assert.deepEqual(result, expected);
   });
 
-  it('should lex ( P v Q ) <-> (Q -> P)', () => {
+  it('should lex ( P v (Q ^ P) ) <-> (Q -> P)', () => {
     const expected: Token[] = [
       { type: 'boundary', value: '(' },
       { type: 'variable', value: 'P' },
       { type: 'operator', value: 'v' },
+      { type: 'boundary', value: '(' },
       { type: 'variable', value: 'Q' },
+      { type: 'operator', value: '∧' },
+      { type: 'variable', value: 'P' },
+      { type: 'boundary', value: ')' },
       { type: 'boundary', value: ')' },
       { type: 'operator', value: '<->' },
       { type: 'boundary', value: '(' },
@@ -71,10 +75,9 @@ describe('Lexer', () => {
       { type: 'boundary', value: ')' },
     ];
 
-    lexer.input = '(P v Q) <-> ( Q -> P)';
+    lexer.input = '(P v (Q ∧ P)) <-> ( Q -> P) ';
     const result = lexer.lex();
-    assert.equal(result.length, 11);
+    assert.equal(result.length, 15);
     assert.deepEqual(result, expected);
   });
-
 });
