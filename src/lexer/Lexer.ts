@@ -5,7 +5,7 @@
 
 import { UnrecognizedTokenException } from "src/exceptions/unrecognized-token.exception";
 import { PropositionalVariable } from "src/types/operations/propositional-variable";
-import { Token, TokenType, Boundary, Operator } from "src/types/tokens/tokens";
+import { Token, Boundary, Operator } from "src/types/tokens/tokens";
 
 export class Lexer {
   public input: string;
