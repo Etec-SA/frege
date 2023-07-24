@@ -71,7 +71,7 @@ $ npm run build
 
 ## 🤔 How to contribute
 
-Thanks for taking an interest in contributing. New features, bug fixes, better performance and better typing are extremely welcome. To get a broader view of the project, check out the <a target="_blank" href="https://github.com/Etec-SA/frege/tree/main/diagrams">diagram folder</a>.
+Thanks for taking an interest in contributing. New features, bug fixes, better performance and better typing are extremely welcome. To get a broader view of the project, check out the <a target="_blank" href="https://github.com/Etec-SA/diagrams/frege/">diagram folder</a>.
 
 ###  🚧 Advice:
 **(the folder are under construction, soon we will have a README to explain, in detail, how each module should work)**
