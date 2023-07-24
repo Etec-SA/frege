@@ -10,7 +10,6 @@ export type TokenMap = {
   boundary: Boundary;
 };
 
-export type Token<T extends TokenType> = {
-  type: T;
-  value: TokenMap[T];
-};
+export type Token = {
+  [K in keyof TokenMap]: {type: K, value: TokenMap[K]}
+}[keyof TokenMap];
