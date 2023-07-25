@@ -4,6 +4,9 @@
 */
 
 import { Formula } from 'src/types/formulas/formula';
+import { Biconditional, Conjunction, Disjunction, Implication } from 'src/types/operations/binary-operations';
+import { PropositionalVariable } from 'src/types/operations/propositional-variable';
+import { Negation } from 'src/types/operations/unary-operation';
 import { Operator, Token } from 'src/types/tokens/tokens';
 
 /**
@@ -71,17 +74,17 @@ export class Parser {
   private node(operator: Operator, args: Formula[]): Formula {
     switch (operator) {
       case '¬':
-        return { operation: 'Negation', value: args[0] };
+        return { operation: 'Negation', value: args[0] } as Negation;
       case 'v':
-        return { operation: 'Disjunction', left: args[0], right: args[1] };
+        return { operation: 'Disjunction', left: args[0], right: args[1] } as Disjunction;
       case '∧':
-        return { operation: 'Conjunction', left: args[0], right: args[1] };
+        return { operation: 'Conjunction', left: args[0], right: args[1] } as Conjunction;
       case '->':
-        return { operation: 'Implication', left: args[0], right: args[1] };
+        return { operation: 'Implication', left: args[0], right: args[1] } as Implication;
       case '<->':
-        return { operation: 'Biconditional', left: args[0], right: args[1] };
+        return { operation: 'Biconditional', left: args[0], right: args[1] } as Biconditional;
       default:
-        return args[0];
+        return args[0] as PropositionalVariable;
     }
   }
 
