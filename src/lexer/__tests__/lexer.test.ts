@@ -60,7 +60,7 @@ describe('Lexer', () => {
     const expected: Token[] = [
       { type: 'boundary', value: '(' },
       { type: 'variable', value: 'P' },
-      { type: 'operator', value: 'v' },
+      { type: 'operator', value: '∨' },
       { type: 'boundary', value: '(' },
       { type: 'variable', value: 'Q' },
       { type: 'operator', value: '∧' },
@@ -75,7 +75,7 @@ describe('Lexer', () => {
       { type: 'boundary', value: ')' },
     ];
 
-    lexer.input = '(P v (Q ∧ P)) <-> ( Q -> P) ';
+    lexer.input = '(P ∨ (Q ∧ P)) <-> ( Q -> P) ';
     const result = lexer.lex();
     assert.equal(result.length, 15);
     assert.deepEqual(result, expected);

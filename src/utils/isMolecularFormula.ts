@@ -1,5 +1,5 @@
-import { Formula } from 'src/builder/interfaces/formula';
-import { MolecularFormula } from 'src/builder/interfaces/molecular-formula';
+import { Formula } from "src/types/formulas/formula";
+import { MolecularFormula } from "src/types/formulas/molecular-formula";
 
 /**
  * Checks if the given formula is a molecular formula.

@@ -75,7 +75,7 @@ export class Parser {
     switch (operator) {
       case '¬':
         return { operation: 'Negation', value: args[0] } as Negation;
-      case 'v':
+      case '∨':
         return { operation: 'Disjunction', left: args[0], right: args[1] } as Disjunction;
       case '∧':
         return { operation: 'Conjunction', left: args[0], right: args[1] } as Conjunction;

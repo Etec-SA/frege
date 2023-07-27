@@ -15,7 +15,7 @@ export class builder {
   };
 
   private static biconditional(left: Formula, right: Formula) {
-    return `(${left} ↔ ${right})`;
+    return `(${left} <-> ${right})`;
   }
 
   private static conjunction(left: Formula, right: Formula) {

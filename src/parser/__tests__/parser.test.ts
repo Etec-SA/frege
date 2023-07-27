@@ -104,7 +104,7 @@ describe('Parser', () => {
 
     parser.tokens = [
       { type: 'variable', value: 'P' },
-      { type: 'operator', value: 'v' },
+      { type: 'operator', value: '∨' },
       { type: 'variable', value: 'Q' },
     ];
 
@@ -135,7 +135,7 @@ describe('Parser', () => {
       { type: 'operator', value: '->' },
       { type: 'variable', value: 'Q' },
       { type: 'boundary', value: ')' },
-      { type: 'operator', value: 'v' },
+      { type: 'operator', value: '∨' },
       { type: 'boundary', value: '(' },
       { type: 'variable', value: 'Q' },
       { type: 'operator', value: '->' },
@@ -167,7 +167,7 @@ describe('Parser', () => {
     parser.tokens = [
       { type: 'boundary', value: '(' },
       { type: 'variable', value: 'P' },
-      { type: 'operator', value: 'v' },
+      { type: 'operator', value: '∨' },
       { type: 'variable', value: 'Q' },
       { type: 'boundary', value: ')' },
       { type: 'operator', value: '->' },
@@ -198,7 +198,7 @@ describe('Parser', () => {
       { type: 'operator', value: '¬' },
       { type: 'boundary', value: '(' },
       { type: 'variable', value: 'P' },
-      { type: 'operator', value: 'v' },
+      { type: 'operator', value: '∨' },
       { type: 'variable', value: 'Q' },
       { type: 'boundary', value: ')' },
     ];

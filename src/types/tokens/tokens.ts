@@ -1,6 +1,6 @@
 import { PropositionalVariable } from "../operations/propositional-variable";
 
-export type Operator = '¬' | '∧' | 'v' | '->' | '<->';
+export type Operator = '¬' | '∧' | '∨' | '->' | '<->';
 export type Boundary = '(' | ')';
 export type TokenType = 'variable' | 'operator' | 'boundary';
 

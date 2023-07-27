@@ -49,7 +49,7 @@ describe('Builder', () => {
       right: 'Q',
     });
 
-    const expected = '(P ↔ Q)';
+    const expected = '(P <-> Q)';
     assert.equal(result, expected);
   });
 
@@ -110,6 +110,6 @@ describe('Builder', () => {
       right,
     });
 
-    assert.equal(result, '(¬((P ∧ (Q -> Q))) -> (A ↔ ¬(A)))');
+    assert.equal(result, '(¬((P ∧ (Q -> Q))) -> (A <-> ¬(A)))');
   });
 });
