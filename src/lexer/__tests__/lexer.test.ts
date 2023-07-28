@@ -50,7 +50,7 @@ describe('Lexer', () => {
       { type: 'boundary', value: ')' },
     ];
 
-    lexer.input = 'P -> (Q -> P)'
+    lexer.input = 'P -> (Q -> P)';
     const result = lexer.lex();
     assert.equal(result.length, 7);
     assert.deepEqual(result, expected);

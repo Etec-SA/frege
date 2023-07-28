@@ -1,8 +1,12 @@
-import { describe, it } from "node:test";
-import assert from "node:assert";
-import frege from "src/index";
-import { Biconditional, Conjunction, Implication } from "src/types/operations/binary-operations";
-import { Negation } from "src/types/operations/unary-operation";
+import { describe, it } from 'node:test';
+import assert from 'node:assert';
+import frege from 'src/index';
+import {
+  Biconditional,
+  Conjunction,
+  Implication,
+} from 'src/types/operations/binary-operations';
+import { Negation } from 'src/types/operations/unary-operation';
 
 describe('frege.parse', () => {
   it('should be defined', () => {
@@ -26,8 +30,8 @@ describe('frege.parse', () => {
       const formulaObject: Implication = {
         operation: 'Implication',
         left: { operation: 'Biconditional', left: 'P', right: 'Q' },
-        right: { operation: 'Conjunction', left: 'P', right: 'Q' }
-      }
+        right: { operation: 'Conjunction', left: 'P', right: 'Q' },
+      };
 
       const expectedFormulaString = '((P <-> Q) -> (P ∧ Q))';
       const actualFormulaString = frege.parse.toFormulaString(formulaObject);
@@ -46,12 +50,12 @@ describe('frege.parse', () => {
             right: { operation: 'Biconditional', left: 'Q', right: 'P' },
           },
         },
-      }
+      };
 
       const expectedFormulaString = '¬(((P ∨ Q) ∧ (P -> (Q <-> P))))';
       const actualFormulaString = frege.parse.toFormulaString(formulaObject);
       assert.equal(actualFormulaString, expectedFormulaString);
-    })
+    });
   });
 
   describe('parse.toFormulaObject', () => {
@@ -63,7 +67,8 @@ describe('frege.parse', () => {
         right: 'Q',
       };
 
-      const actualFormulaObject = frege.parse.toFormulaObject<Implication>(formulaString);
+      const actualFormulaObject =
+        frege.parse.toFormulaObject<Implication>(formulaString);
 
       assert.deepEqual(actualFormulaObject, expectedFormulaObject);
     });
@@ -73,13 +78,13 @@ describe('frege.parse', () => {
       const expectedFormulaObject: Implication = {
         operation: 'Implication',
         left: { operation: 'Biconditional', left: 'P', right: 'Q' },
-        right: { operation: 'Conjunction', left: 'P', right: 'Q' }
-      }
+        right: { operation: 'Conjunction', left: 'P', right: 'Q' },
+      };
 
       const actualFormulaObject = frege.parse.toFormulaObject<{
-        operation: 'Implication',
-        left: Biconditional,
-        right: Conjunction
+        operation: 'Implication';
+        left: Biconditional;
+        right: Conjunction;
       }>(formulaString);
 
       assert.deepEqual(actualFormulaObject, expectedFormulaObject);
@@ -98,7 +103,7 @@ describe('frege.parse', () => {
             right: { operation: 'Biconditional', left: 'Q', right: 'P' },
           },
         },
-      }
+      };
 
       const actualFormulaObject = frege.parse.toFormulaObject(formulaString);
       assert.deepEqual(actualFormulaObject, expectedFormulaObject);
@@ -118,7 +123,7 @@ describe('frege.parse', () => {
             right: { operation: 'Biconditional', left: 'Q', right: 'P' },
           },
         },
-      }
+      };
 
       const formulaString = '¬(((P ∨ Q) ∧ (P -> (Q <-> P))))';
       const parsedFormulaObject = frege.parse.toFormulaString(formulaObject);

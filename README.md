@@ -1,5 +1,5 @@
-
 # Frege
+
 <div align="center">
 <h3 align="center">
   Frege.js
@@ -28,8 +28,7 @@ Constructing formulas, simplifying them, checking semantic or syntactic validity
 
 **But why "Frege?"**
 
-> "**Friedrich Ludwig Gottlob Frege** ([/ˈfreɪɡə/](https://en.wikipedia.org/wiki/Help:IPA/English "Help:IPA/English");[[15]](https://en.wikipedia.org/wiki/Gottlob_Frege#cite_note-15)  German: [[ˈɡɔtloːp ˈfreːɡə]](https://en.wikipedia.org/wiki/Help:IPA/Standard_German "Help:IPA/Standard German"); 8 November 1848 – 26 July 1925) was a German [philosopher](https://en.wikipedia.org/wiki/Philosopher "Philosopher"), [logician](https://en.wikipedia.org/wiki/Mathematical_logic "Mathematical logic"), and [mathematician](https://en.wikipedia.org/wiki/Mathematician "Mathematician"). He was a mathematics professor at the [University of Jena](https://en.wikipedia.org/wiki/University_of_Jena "University of Jena"), and is understood by many to be the father of [analytic philosophy](https://en.wikipedia.org/wiki/Analytic_philosophy "Analytic philosophy"), concentrating on the [philosophy of language](https://en.wikipedia.org/wiki/Philosophy_of_language "Philosophy of language"), [logic](https://en.wikipedia.org/wiki/Philosophy_of_logic "Philosophy of logic"), and [mathematics](https://en.wikipedia.org/wiki/Philosophy_of_mathematics "Philosophy of mathematics")." via <a href="https://en.wikipedia.org/wiki/Gottlob_Frege" target="_blank">Wikipedia.</a>
-
+> "**Friedrich Ludwig Gottlob Frege** ([/ˈfreɪɡə/](https://en.wikipedia.org/wiki/Help:IPA/English 'Help:IPA/English');[[15]](https://en.wikipedia.org/wiki/Gottlob_Frege#cite_note-15) German: [[ˈɡɔtloːp ˈfreːɡə]](https://en.wikipedia.org/wiki/Help:IPA/Standard_German "Help:IPA/Standard German"); 8 November 1848 – 26 July 1925) was a German [philosopher](https://en.wikipedia.org/wiki/Philosopher 'Philosopher'), [logician](https://en.wikipedia.org/wiki/Mathematical_logic 'Mathematical logic'), and [mathematician](https://en.wikipedia.org/wiki/Mathematician 'Mathematician'). He was a mathematics professor at the [University of Jena](https://en.wikipedia.org/wiki/University_of_Jena 'University of Jena'), and is understood by many to be the father of [analytic philosophy](https://en.wikipedia.org/wiki/Analytic_philosophy 'Analytic philosophy'), concentrating on the [philosophy of language](https://en.wikipedia.org/wiki/Philosophy_of_language 'Philosophy of language'), [logic](https://en.wikipedia.org/wiki/Philosophy_of_logic 'Philosophy of logic'), and [mathematics](https://en.wikipedia.org/wiki/Philosophy_of_mathematics 'Philosophy of mathematics')." via <a href="https://en.wikipedia.org/wiki/Gottlob_Frege" target="_blank">Wikipedia.</a>
 
 ## 🚀 Technologies
 
@@ -45,16 +44,15 @@ The main technologies used are:
 - [Node.js](https://nodejs.org/en/)
 - [Yarn](https://classic.yarnpkg.com/), [NPM](https://www.npmjs.com/) or similar.
 
-
 ### Installing and configuring the project
 
-*Cloning Project*
+_Cloning Project_
 
 ```bash
 $ git clone https://github.com/etec-sa/frege && cd frege/
 ```
 
-*Next Steps:*
+_Next Steps:_
 
 ```bash
 # Install dependencies
@@ -73,7 +71,8 @@ $ npm run build
 
 Thanks for taking an interest in contributing. New features, bug fixes, better performance and better typing are extremely welcome. To get a broader view of the project, check out the <a target="_blank" href="https://github.com/Etec-SA/diagrams/tree/main/frege">diagram folder</a>.
 
-###  🚧 Advice:
+### 🚧 Advice:
+
 **(the folder are under construction, soon we will have a README to explain, in detail, how each module should work)**
 
 ## 📝 License

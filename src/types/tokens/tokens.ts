@@ -1,4 +1,4 @@
-import { PropositionalVariable } from "../operations/propositional-variable";
+import { PropositionalVariable } from '../operations/propositional-variable';
 
 export type Operator = '¬' | '∧' | '∨' | '->' | '<->';
 export type Boundary = '(' | ')';
@@ -11,5 +11,5 @@ export type TokenMap = {
 };
 
 export type Token = {
-  [K in keyof TokenMap]: {type: K, value: TokenMap[K]}
+  [K in keyof TokenMap]: { type: K; value: TokenMap[K] };
 }[keyof TokenMap];

@@ -1,4 +1,4 @@
-import { Frege } from "./frege/frege";
+import { Frege } from './frege/frege';
 
 const frege: Frege = new Frege();
 
