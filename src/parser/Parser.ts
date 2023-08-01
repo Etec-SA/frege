@@ -48,7 +48,7 @@ export class Parser {
 
         args.push(this.process());
       }
-      console.log(this.token);
+      
       if (this.token?.type === 'variable') {
         args.push(this.token.value);
         if (this.isUnary(operation)) return this.node(operation, args);
