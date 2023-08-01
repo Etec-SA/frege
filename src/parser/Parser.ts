@@ -40,20 +40,21 @@ export class Parser {
   private process(operation?: Operator): Formula {
     operation = operation || null;
     const args: Formula[] = [];
-
+    
     while (this.next()) {
-      if (this.token.type === 'boundary') {
+      if(this.token === undefined) break;
+      if (this.token?.type === 'boundary') {
         if (this.token.value === ')') return this.node(operation, args);
 
         args.push(this.process());
       }
-
-      if (this.token.type === 'variable') {
+      console.log(this.token);
+      if (this.token?.type === 'variable') {
         args.push(this.token.value);
         if (this.isUnary(operation)) return this.node(operation, args);
       }
 
-      if (this.token.type === 'operator') {
+      if (this.token?.type === 'operator') {
         if (this.isUnary(this.token.value)) {
           args.push(this.process(this.token.value));
           continue;
