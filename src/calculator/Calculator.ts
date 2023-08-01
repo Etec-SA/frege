@@ -2,19 +2,68 @@ import frege from 'src/index';
 import { Formula } from 'src/types/formulas/formula';
 import {
   Biconditional,
-  BinaryOperation,
   Conjunction,
   Disjunction,
   Implication,
 } from 'src/types/operations/binary-operations';
 import { PropositionalVariable } from 'src/types/operations/propositional-variable';
 import { Negation } from 'src/types/operations/unary-operation';
-
-type PropositionalVariableValues = {
-  [K in PropositionalVariable]?: boolean;
-};
+import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
+import { PropositionalVariableValues, TruthValue } from 'src/types/semantic/truth';
 
 export class Calculator {
+
+  public static generateTruthTable(
+    formula: Formula | string,
+    stringfiedFormula?: string
+  ): [string[], TruthValue[][], boolean[]] {
+    
+    if (typeof formula === 'string' && !isPropositionalVariable(formula)) {
+      const parsedFormula = frege.parse.toFormulaObject(formula);
+      return this.generateTruthTable(parsedFormula, formula);
+    }
+
+    const variables = new Set<PropositionalVariable>();
+    this.collectVariables(formula, variables);
+
+    const variableArray = Array.from(variables);
+
+    
+    const truthCombinations = this.generateTruthCombinations(
+      variableArray.length
+    );
+
+    const table: [string[], TruthValue[][], boolean[]] = [[], [], []];
+
+    
+    variableArray.forEach((variable) => {
+      table[0].push(variable);
+    });
+
+    
+    stringfiedFormula =
+      stringfiedFormula || frege.parse.toFormulaString(formula);
+    
+    table[0].push(stringfiedFormula);
+
+    
+    truthCombinations.forEach((combination) => {
+      const values: PropositionalVariableValues = {} as PropositionalVariableValues;
+
+      variableArray.forEach((variable, index) => {
+        values[variable] = combination[index] === 1 || combination[index] === true;
+      });
+
+      table[1].push(combination);
+
+      const result = this.evaluate(formula, values);
+
+      table[2].push(result);
+    });
+
+    return table;
+  }
+
   public static evaluate<T extends Formula>(
     formula: T | string,
     values: PropositionalVariableValues
@@ -91,5 +140,36 @@ export class Calculator {
   ): boolean {
     const value = this.evaluate(formula.value, values);
     return !value;
+  }
+
+  private static generateTruthCombinations(
+    numVariables: number
+  ): TruthValue[][] {
+    const combinations: TruthValue[][] = [];
+    const totalCombinations = 2 ** numVariables;
+
+    for (let i = 0; i < totalCombinations; i++) {
+      const binaryString = i.toString(2).padStart(numVariables, '0');
+      const combination: TruthValue[] = binaryString
+        .split('')
+        .map(Number) as TruthValue[];
+      combinations.push(combination);
+    }
+
+    return combinations;
+  }
+
+  private static collectVariables<T extends Formula>(
+    formula: T,
+    variables: Set<PropositionalVariable>
+  ) {
+    if (typeof formula === 'string') {
+      variables.add(formula as PropositionalVariable);
+    } else if (formula.operation === 'Negation') {
+      this.collectVariables(formula.value, variables);
+    } else {
+      this.collectVariables(formula.left, variables);
+      this.collectVariables(formula.right, variables);
+    }
   }
 }
