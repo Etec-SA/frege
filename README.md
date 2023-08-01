@@ -4,7 +4,7 @@
 <h3 align="center">
   Frege.js
 </h3>
-<img src="https://img.shields.io/github/commit-activity/t/Etec-SA/frege?style=for-the-badge"> <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/PeruibeTEC/Server?style=for-the-badge"> <img src="https://img.shields.io/github/last-commit/etec-sa/frege?style=for-the-badge"> <img alt="Repository size" src="https://img.shields.io/github/repo-size/etec-sa/frege?style=for-the-badge"> <img alt="Repository issues" src="https://img.shields.io/github/issues/etec-sa/frege?style=for-the-badge"> <img alt="GitHub" src="https://img.shields.io/github/license/etec-sa/frege?style=for-the-badge">
+<img src="https://img.shields.io/github/commit-activity/t/Etec-SA/frege?style=for-the-badge"> <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/etec-sa/frege?style=for-the-badge"> <img src="https://img.shields.io/github/last-commit/etec-sa/frege?style=for-the-badge"> <img alt="Repository size" src="https://img.shields.io/github/repo-size/etec-sa/frege?style=for-the-badge"> <img alt="Repository issues" src="https://img.shields.io/github/issues/etec-sa/frege?style=for-the-badge"> <img alt="GitHub" src="https://img.shields.io/github/license/etec-sa/frege?style=for-the-badge">
 </div>
 <hr>
   
