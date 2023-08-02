@@ -11,8 +11,31 @@ import { Negation } from 'src/types/operations/unary-operation';
 import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
 import { PropositionalVariableValues, TruthValue } from 'src/types/semantic/truth';
 
+/**
+ * Class responsible for performing semantic truth-value operations, such as evaluate formulas and generate truth tables.
+ */
 export class Calculator {
 
+  /**
+   * Generates a truth table for the given formula.
+   *
+   * @param formula - The logical formula to generate a truth table for.
+   * @param stringfiedFormula - An optional string representation of the formula.
+   * @returns The truth table as an array containing headers, truth combinations, and results.
+   *
+   * @example
+   * const output = Calculator.generateTruthTable('P -> Q');
+   * console.log(output);
+   * // Output:
+   * // [
+   * //   ['P', 'Q', '(P -> Q)'],
+   * //   [
+   * //     [0, 0], [0, 1],
+   * //     [1, 0], [1, 1]
+   * //   ],
+   * //   [true, true, false, true]
+   * // ]
+   */
   public static generateTruthTable(
     formula: Formula | string,
     stringfiedFormula?: string
@@ -64,6 +87,17 @@ export class Calculator {
     return table;
   }
 
+  /**
+   * Evaluates the given logical formula with the provided truth values for variables.
+   *
+   * @param formula - The logical formula to evaluate.
+   * @param values - An object representing truth values for propositional variables.
+   * @returns The result of the evaluation (true or false).
+   *
+   * @example
+   * const result = Calculator.evaluate('P -> Q', { P: true, Q: false });
+   * console.log(result); // Output: false
+   */
   public static evaluate<T extends Formula>(
     formula: T | string,
     values: PropositionalVariableValues
