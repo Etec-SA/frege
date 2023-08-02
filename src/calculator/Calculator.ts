@@ -1,4 +1,3 @@
-import frege from 'src/index';
 import { Formula } from 'src/types/formulas/formula';
 import {
   Biconditional,
@@ -10,11 +9,14 @@ import { PropositionalVariable } from 'src/types/operations/propositional-variab
 import { Negation } from 'src/types/operations/unary-operation';
 import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
 import { PropositionalVariableValues, TruthValue } from 'src/types/semantic/truth';
+import { Lexer } from 'src/lexer/Lexer';
+import { Parser } from 'src/parser/Parser';
+import { builder } from 'src/builder/Builder';
 
 /**
  * Class responsible for performing semantic truth-value operations, such as evaluate formulas and generate truth tables.
  */
-export class Calculator {
+export class calculator {
 
   /**
    * Generates a truth table for the given formula.
@@ -42,7 +44,8 @@ export class Calculator {
   ): [string[], TruthValue[][], boolean[]] {
     
     if (typeof formula === 'string' && !isPropositionalVariable(formula)) {
-      const parsedFormula = frege.parse.toFormulaObject(formula);
+      const tokens = new Lexer(formula).lex();
+      const parsedFormula = new Parser(tokens).parse();
       return this.generateTruthTable(parsedFormula, formula);
     }
 
@@ -65,7 +68,7 @@ export class Calculator {
 
     
     stringfiedFormula =
-      stringfiedFormula || frege.parse.toFormulaString(formula);
+      stringfiedFormula || builder.buildFormula(formula)
     
     table[0].push(stringfiedFormula);
 
@@ -103,7 +106,8 @@ export class Calculator {
     values: PropositionalVariableValues
   ): boolean {
     if (typeof formula === 'string' && formula.length > 1) {
-      const parsedFormula = frege.parse.toFormulaObject(formula);
+      const tokens = new Lexer(formula).lex();
+      const parsedFormula = new Parser(tokens).parse();
       return this.evaluate(parsedFormula as T, values);
     }
 

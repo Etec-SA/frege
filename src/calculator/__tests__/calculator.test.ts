@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { Calculator } from '../Calculator';
+import { calculator } from '../Calculator';
 import {
   Biconditional,
   Conjunction,
@@ -9,14 +9,14 @@ import {
 } from 'src/types/operations/binary-operations';
 import { Negation } from 'src/types/operations/unary-operation';
 
-describe('Calculator', () => {
+describe('calculator', () => {
   it('should be defined', () => {
-    assert.ok(Calculator, 'Calculator Class is defined.');
+    assert.ok(calculator, 'calculator Class is defined.');
   });
 
   describe('evaluate', () => {
     it('should be defined', () => {
-      assert.ok(Calculator.evaluate, 'evaluate method is defined');
+      assert.ok(calculator.evaluate, 'evaluate method is defined');
     });
 
     it('should evaluate correctly an implication', () => {
@@ -25,10 +25,10 @@ describe('Calculator', () => {
         left: 'A',
         right: 'B',
       };
-      const case1 = Calculator.evaluate(operation, { A: true, B: true });
-      const case2 = Calculator.evaluate(operation, { A: false, B: true });
-      const case3 = Calculator.evaluate(operation, { A: true, B: false });
-      const case4 = Calculator.evaluate(operation, { A: false, B: false });
+      const case1 = calculator.evaluate(operation, { A: true, B: true });
+      const case2 = calculator.evaluate(operation, { A: false, B: true });
+      const case3 = calculator.evaluate(operation, { A: true, B: false });
+      const case4 = calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -42,10 +42,10 @@ describe('Calculator', () => {
         left: 'A',
         right: 'B',
       };
-      const case1 = Calculator.evaluate(operation, { A: true, B: true });
-      const case2 = Calculator.evaluate(operation, { A: false, B: true });
-      const case3 = Calculator.evaluate(operation, { A: true, B: false });
-      const case4 = Calculator.evaluate(operation, { A: false, B: false });
+      const case1 = calculator.evaluate(operation, { A: true, B: true });
+      const case2 = calculator.evaluate(operation, { A: false, B: true });
+      const case3 = calculator.evaluate(operation, { A: true, B: false });
+      const case4 = calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, false);
@@ -59,10 +59,10 @@ describe('Calculator', () => {
         left: 'A',
         right: 'B',
       };
-      const case1 = Calculator.evaluate(operation, { A: true, B: true });
-      const case2 = Calculator.evaluate(operation, { A: false, B: true });
-      const case3 = Calculator.evaluate(operation, { A: true, B: false });
-      const case4 = Calculator.evaluate(operation, { A: false, B: false });
+      const case1 = calculator.evaluate(operation, { A: true, B: true });
+      const case2 = calculator.evaluate(operation, { A: false, B: true });
+      const case3 = calculator.evaluate(operation, { A: true, B: false });
+      const case4 = calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -76,10 +76,10 @@ describe('Calculator', () => {
         left: 'A',
         right: 'B',
       };
-      const case1 = Calculator.evaluate(operation, { A: true, B: true });
-      const case2 = Calculator.evaluate(operation, { A: false, B: true });
-      const case3 = Calculator.evaluate(operation, { A: true, B: false });
-      const case4 = Calculator.evaluate(operation, { A: false, B: false });
+      const case1 = calculator.evaluate(operation, { A: true, B: true });
+      const case2 = calculator.evaluate(operation, { A: false, B: true });
+      const case3 = calculator.evaluate(operation, { A: true, B: false });
+      const case4 = calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, false);
@@ -89,8 +89,8 @@ describe('Calculator', () => {
 
     it('should evaluate correctly a negation', () => {
       const operation: Negation = { operation: 'Negation', value: 'A' };
-      const case1 = Calculator.evaluate(operation, { A: true });
-      const case2 = Calculator.evaluate(operation, { A: false });
+      const case1 = calculator.evaluate(operation, { A: true });
+      const case2 = calculator.evaluate(operation, { A: false });
 
       assert.equal(case1, false);
       assert.equal(case2, true);
@@ -98,10 +98,10 @@ describe('Calculator', () => {
 
     it('should evaluate A->(B->A)', () => {
       const operation = 'A->(B->A)';
-      const case1 = Calculator.evaluate(operation, { A: true, B: true });
-      const case2 = Calculator.evaluate(operation, { A: false, B: true });
-      const case3 = Calculator.evaluate(operation, { A: true, B: false });
-      const case4 = Calculator.evaluate(operation, { A: false, B: false });
+      const case1 = calculator.evaluate(operation, { A: true, B: true });
+      const case2 = calculator.evaluate(operation, { A: false, B: true });
+      const case3 = calculator.evaluate(operation, { A: true, B: false });
+      const case4 = calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -111,10 +111,10 @@ describe('Calculator', () => {
 
     it('should evaluate ¬(¬(A ∧ ¬B) ∧ ¬(A ∧ ¬B))', () => {
       const operation = '¬A ∨ (¬B ∨ A)';
-      const case1 = Calculator.evaluate(operation, { A: true, B: true });
-      const case2 = Calculator.evaluate(operation, { A: false, B: true });
-      const case3 = Calculator.evaluate(operation, { A: true, B: false });
-      const case4 = Calculator.evaluate(operation, { A: false, B: false });
+      const case1 = calculator.evaluate(operation, { A: true, B: true });
+      const case2 = calculator.evaluate(operation, { A: false, B: true });
+      const case3 = calculator.evaluate(operation, { A: true, B: false });
+      const case4 = calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -125,10 +125,10 @@ describe('Calculator', () => {
     it('should evaluate ¬(¬ A ∧ ¬(B->A))', () => {
       const operation = '¬(A ∧ ¬¬(B ∧ ¬A))';
 
-      const case1 = Calculator.evaluate(operation, { A: true, B: true });
-      const case2 = Calculator.evaluate(operation, { A: false, B: true });
-      const case3 = Calculator.evaluate(operation, { A: true, B: false });
-      const case4 = Calculator.evaluate(operation, { A: false, B: false });
+      const case1 = calculator.evaluate(operation, { A: true, B: true });
+      const case2 = calculator.evaluate(operation, { A: false, B: true });
+      const case3 = calculator.evaluate(operation, { A: true, B: false });
+      const case4 = calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -139,7 +139,7 @@ describe('Calculator', () => {
 
   describe('generateTruthTable', () => {
     it('should generate a truth table for ¬P', () => {
-      const output = Calculator.generateTruthTable('¬P');
+      const output = calculator.generateTruthTable('¬P');
 
       const [formulas, truthCombinations, mainFormulaValues] = output;
       assert.deepStrictEqual(formulas, ['P', '¬P']);
@@ -148,7 +148,7 @@ describe('Calculator', () => {
     });
 
     it('should generate a truth table for P -> Q', () => {
-      const output = Calculator.generateTruthTable('P -> Q');
+      const output = calculator.generateTruthTable('P -> Q');
 
       const [formulas, truthCombinations, mainFormulaValues] = output;
       assert.deepStrictEqual(formulas, ['P', 'Q', 'P -> Q']);
@@ -162,7 +162,7 @@ describe('Calculator', () => {
     });
 
     it('should generate a truth table for P <-> Q', () => {
-      const output = Calculator.generateTruthTable('P <-> Q');
+      const output = calculator.generateTruthTable('P <-> Q');
 
       const [formulas, truthCombinations, mainFormulaValues] = output;
       assert.deepStrictEqual(formulas, ['P', 'Q', 'P <-> Q']);
@@ -176,7 +176,7 @@ describe('Calculator', () => {
     });
 
     it('should generate a truth table for P ∧ Q', () => {
-      const output = Calculator.generateTruthTable('P ∧ Q');
+      const output = calculator.generateTruthTable('P ∧ Q');
 
       const [formulas, truthCombinations, mainFormulaValues] = output;
       assert.deepStrictEqual(formulas, ['P', 'Q', 'P ∧ Q']);
@@ -190,7 +190,7 @@ describe('Calculator', () => {
     });
 
     it('should generate a truth table for P ∨ Q', () => {
-      const output = Calculator.generateTruthTable('P ∨ Q');
+      const output = calculator.generateTruthTable('P ∨ Q');
 
       const [formulas, truthCombinations, mainFormulaValues] = output;
       assert.deepStrictEqual(formulas, ['P', 'Q', 'P ∨ Q']);
@@ -204,7 +204,7 @@ describe('Calculator', () => {
     });
 
     it('should generate a truth table for (A ∨ B) -> ¬(¬C ∧ D)', () => {
-      const output = Calculator.generateTruthTable('(A ∨ B) -> ¬(¬C ∧ D)');
+      const output = calculator.generateTruthTable('(A ∨ B) -> ¬(¬C ∧ D)');
 
       const [formulas, truthCombinations, mainFormulaValues] = output;
       assert.deepStrictEqual(formulas, [
@@ -253,7 +253,7 @@ describe('Calculator', () => {
     });
 
     it('should generate a truth table for ¬(A ∧ B)', () => {
-      const output = Calculator.generateTruthTable('¬(A ∧ B)');
+      const output = calculator.generateTruthTable('¬(A ∧ B)');
 
       const [formulas, truthCombinations, mainFormulaValues] = output;
       assert.deepStrictEqual(formulas, ['A', 'B', '¬(A ∧ B)']);
@@ -267,7 +267,7 @@ describe('Calculator', () => {
     });
 
     it('should generate a truth table for (A -> B) ∧ (B -> A)', () => {
-      const output = Calculator.generateTruthTable('(A -> B) ∧ (B -> A)');
+      const output = calculator.generateTruthTable('(A -> B) ∧ (B -> A)');
 
       const [formulas, truthCombinations, mainFormulaValues] = output;
       assert.deepStrictEqual(formulas, ['A', 'B', '(A -> B) ∧ (B -> A)']);
@@ -281,7 +281,7 @@ describe('Calculator', () => {
     });
 
     it('should generate a truth table for (A ∨ B) -> (B -> A)', () => {
-      const output = Calculator.generateTruthTable('(A ∨ B) -> (B -> A)');
+      const output = calculator.generateTruthTable('(A ∨ B) -> (B -> A)');
 
       const [formulas, truthCombinations, mainFormulaValues] = output;
       assert.deepStrictEqual(formulas, ['A', 'B', '(A ∨ B) -> (B -> A)']);
