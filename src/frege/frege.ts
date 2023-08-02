@@ -6,10 +6,12 @@ import { BinaryOperationFormula } from 'src/types/formulas/binary-operation-form
 import { Formula } from 'src/types/formulas/formula';
 import { Negation } from 'src/types/operations/unary-operation';
 import { ReducedFormula } from 'src/types/conditional-types/reduced-formula';
+import { calculator } from 'src/calculator/Calculator';
 
 export class Frege {
   private builder = builder;
   private reducer = reducer;
+  private calculator =  calculator;
 
   /**
    * The `parse` property provides functions to build and parse formulas in propositional logic.
@@ -100,4 +102,8 @@ export class Frege {
 
     return reducedFormula as ReducedFormula<T>;
   };
+
+  public evaluate = this.calculator.evaluate;
+
+  public generateTruthTable = this.calculator.generateTruthTable;
 }
