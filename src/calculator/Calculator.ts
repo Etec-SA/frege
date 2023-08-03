@@ -10,6 +10,7 @@ import { Negation } from 'src/types/operations/unary-operation';
 import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
 import {
   PropositionalVariableValues,
+  TruthTable,
   TruthValue,
 } from 'src/types/semantic/truth';
 import { Lexer } from 'src/lexer/Lexer';
@@ -46,7 +47,7 @@ export class calculator {
   public static generateTruthTable(
     formula: Formula | string,
     stringfiedFormula?: string
-  ): [string[], TruthValue[][], boolean[]] {
+  ): TruthTable {
     if (typeof formula === 'string' && !isPropositionalVariable(formula)) {
       const tokens = new Lexer(formula).lex();
       const parsedFormula = new Parser(tokens).parse();
@@ -62,7 +63,7 @@ export class calculator {
       variableArray.length
     );
 
-    const table: [string[], TruthValue[][], boolean[]] = [[], [], []];
+    const table: TruthTable = [[], [], []];
 
     variableArray.forEach((variable) => {
       table[0].push(variable);
