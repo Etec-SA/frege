@@ -11,7 +11,7 @@ import { Negation } from 'src/types/operations/unary-operation';
 
 describe('calculator', () => {
   it('should be defined', () => {
-    assert.ok(calculator, 'calculator Class is defined.');
+    assert.ok(calculator, 'calculator class is defined.');
   });
 
   describe('evaluate', () => {
@@ -293,5 +293,187 @@ describe('calculator', () => {
       ]);
       assert.deepStrictEqual(mainFormulaValues, [true, false, true, true]);
     });
+  });
+
+  describe('isSemanticConsequence', () => {
+    describe('Inference Rules', () => {
+      it('should validate an application of Modus Ponens', () => {
+        const output = calculator.isSemanticConsequence(['P->Q', 'P'], 'Q');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Modus Tollens', () => {
+        const output = calculator.isSemanticConsequence(['P->Q', '¬Q'], '¬P');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Hypothetical Syllogism', () => {
+        const output = calculator.isSemanticConsequence(
+          ['P->Q', 'Q->R'],
+          'P->R'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Disjunctive Syllogism', () => {
+        const output = calculator.isSemanticConsequence(['P ∨ Q', '¬P'], 'Q');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Constructive Dilemma', () => {
+        const output = calculator.isSemanticConsequence(
+          ['P -> Q', 'R -> S', 'P ∨ R'],
+          'Q ∨ S'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Reductio ad Absurdum', () => {
+        const output = calculator.isSemanticConsequence(
+          ['P->(Q ∨ R)', 'R -> (P ∧ ¬P)', 'P', '¬Q'],
+          '¬P'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Conditional Proof', () => {
+        const output = calculator.isSemanticConsequence(
+          ['A->B', 'B->C', 'A'],
+          'A->C'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Contraposition', () => {
+        const output = calculator.isSemanticConsequence(
+          ['(P ∧ ¬Q) -> (¬Q ∧ X)'],
+          '¬(¬Q ∧ X) -> ¬(P ∧ ¬Q)'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Negation of Conditional', () => {
+        const output = calculator.isSemanticConsequence(['¬(P->Q)'], 'P ∧ ¬Q');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Associativity (Biconditional)', () => {
+        const output = calculator.isSemanticConsequence(
+          ['(P<->Q)<->R'],
+          'P<->(Q<->R)'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Associativity (Conjunction)', () => {
+        const output = calculator.isSemanticConsequence(
+          ['(P ∧ Q) ∧ R'],
+          'P ∧ (Q ∧ R)'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Associativity (Disjunction)', () => {
+        const output = calculator.isSemanticConsequence(
+          ['(P ∨ Q) ∨ R'],
+          'P ∨ (Q ∨ R)'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Commutativity (Biconditional)', () => {
+        const output = calculator.isSemanticConsequence(['(P<->Q)'], 'Q<->P');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Commutativity (Conjunction)', () => {
+        const output = calculator.isSemanticConsequence(['(P ∧ Q)'], 'Q ∧ P');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Commutativity (Disjunction)', () => {
+        const output = calculator.isSemanticConsequence(['(P ∨ Q)'], 'Q ∨ P');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Distribution', () => {
+        const output = calculator.isSemanticConsequence(
+          ['(P ∨ Q) ∧ R'],
+          '(P ∧ R) ∨ (Q ∧ R)'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of De Morgan (Conjunction)', () => {
+        const output = calculator.isSemanticConsequence(
+          ['¬(P ∧ Q)'],
+          '¬P ∨ ¬Q'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of De Morgan (Disjunction)', () => {
+        const output = calculator.isSemanticConsequence(
+          ['¬(P ∨ Q)'],
+          '¬P ∧ ¬Q'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Implication Introduction', () => {
+        const output = calculator.isSemanticConsequence(['P'], 'Q->P');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Biconditional Introduction', () => {
+        const output = calculator.isSemanticConsequence(
+          ['P->Q', 'Q->P'],
+          'P <-> Q'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Conjunction Introduction', () => {
+        const output = calculator.isSemanticConsequence(['P', 'Q'], 'P ∧ Q');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Disjunction Introduction', () => {
+        const output = calculator.isSemanticConsequence(['P'], 'P ∨ R');
+        assert.ok(output);
+      });
+
+      it('should validate an application of Biconditional Simplification', () => {
+        const output = calculator.isSemanticConsequence(
+          ['P <-> Q'],
+          '(P->Q) ∧ (Q->P)'
+        );
+        assert.ok(output);
+      });
+
+      it('should validate an application of Conjunction Simplification', () => {
+        const output = calculator.isSemanticConsequence(['P ∧ Q'], 'P');
+        const output2 = calculator.isSemanticConsequence(['P ∧ Q'], 'Q');
+        assert.ok(output);
+        assert.ok(output2);
+      });
+
+      it('should validate an application of Negation Simplification', () => {
+        const output = calculator.isSemanticConsequence(['¬¬¬¬P'], 'P');
+        assert.ok(output);
+      });
+    });
+
+    describe('Fallacies', ()=>{
+      it('should invalidate a fallacy of asserting the consequent', () => {
+        const output = calculator.isSemanticConsequence(['P->Q', 'Q'], 'P');
+        assert.ok(!output);
+      });
+
+      it('should invalidate a fallacy of asserting the disjunct', () => {
+        const output = calculator.isSemanticConsequence(['P ∨ Q', 'P'], '¬Q');
+        assert.ok(!output);
+      });
+    })
   });
 });
