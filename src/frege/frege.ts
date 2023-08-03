@@ -11,7 +11,7 @@ import { calculator } from 'src/calculator/Calculator';
 export class Frege {
   private builder = builder;
   private reducer = reducer;
-  private calculator =  calculator;
+  private calculator = calculator;
 
   /**
    * The `parse` property provides functions to build and parse formulas in propositional logic.
@@ -61,6 +61,12 @@ export class Frege {
     },
   };
 
+  public verifyConsequence = {
+    semantic: this.calculator.isSemanticConsequence,
+    syntactic: () => {
+
+    }
+  }
   /**
    * Reduces a formula object or a formula string to its reduced form.
    * @param formula - The formula object or formula string to reduce.

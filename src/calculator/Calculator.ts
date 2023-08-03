@@ -8,16 +8,21 @@ import {
 import { PropositionalVariable } from 'src/types/operations/propositional-variable';
 import { Negation } from 'src/types/operations/unary-operation';
 import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
-import { PropositionalVariableValues, TruthValue } from 'src/types/semantic/truth';
+import {
+  PropositionalVariableValues,
+  TruthValue,
+} from 'src/types/semantic/truth';
 import { Lexer } from 'src/lexer/Lexer';
 import { Parser } from 'src/parser/Parser';
 import { builder } from 'src/builder/Builder';
+import { isArrayString } from 'src/utils/isArrayString';
+import { parseToFormulaObject, parseToFormulaString } from 'src/utils/parse';
+import { buildConjunctionString } from 'src/utils/buildConjunctionString';
 
 /**
  * Class responsible for performing semantic truth-value operations, such as evaluate formulas and generate truth tables.
  */
 export class calculator {
-
   /**
    * Generates a truth table for the given formula.
    *
@@ -42,7 +47,6 @@ export class calculator {
     formula: Formula | string,
     stringfiedFormula?: string
   ): [string[], TruthValue[][], boolean[]] {
-    
     if (typeof formula === 'string' && !isPropositionalVariable(formula)) {
       const tokens = new Lexer(formula).lex();
       const parsedFormula = new Parser(tokens).parse();
@@ -54,30 +58,27 @@ export class calculator {
 
     const variableArray = Array.from(variables);
 
-    
     const truthCombinations = this.generateTruthCombinations(
       variableArray.length
     );
 
     const table: [string[], TruthValue[][], boolean[]] = [[], [], []];
 
-    
     variableArray.forEach((variable) => {
       table[0].push(variable);
     });
 
-    
-    stringfiedFormula =
-      stringfiedFormula || builder.buildFormula(formula)
-    
+    stringfiedFormula = stringfiedFormula || builder.buildFormula(formula);
+
     table[0].push(stringfiedFormula);
 
-    
     truthCombinations.forEach((combination) => {
-      const values: PropositionalVariableValues = {} as PropositionalVariableValues;
+      const values: PropositionalVariableValues =
+        {} as PropositionalVariableValues;
 
       variableArray.forEach((variable, index) => {
-        values[variable] = combination[index] === 1 || combination[index] === true;
+        values[variable] =
+          combination[index] === 1 || combination[index] === true;
       });
 
       table[1].push(combination);
@@ -136,6 +137,68 @@ export class calculator {
     throw new Error('Invalid formula operation');
   }
 
+  /**
+   * Checks if a given formula is a semantic consequence of the given premises.
+   * A semantic consequence holds if, in every possible truth assignment to the propositional variables,
+   * when all premises are true, the conclusion is also true.
+   *
+   * @param premises - An array of logical formulas or strings representing the premises.
+   * @param A - The conclusion formula to check as a semantic consequence.
+   * @returns True if the conclusion is a semantic consequence of the premises, false otherwise.
+   *
+   * @example
+   * const output = Calculator.isSemanticConsequence(['P->Q', 'P'], 'Q');
+   * console.log(output); // Output: true
+   */
+  public static isSemanticConsequence(
+    premises: Formula[] | string[],
+    A: Formula | string
+  ): boolean {
+    const variables = new Set<PropositionalVariable>();
+    let finalFormula: Formula;
+
+    if (typeof A === 'string' && !isPropositionalVariable(A))
+      A = parseToFormulaObject(A);
+
+    if (premises.length === 1) {
+      finalFormula =
+        typeof premises[0] === 'object'
+          ? premises[0]
+          : parseToFormulaObject(premises[0]);
+    } else {
+      if (!isArrayString(premises)) {
+        premises = premises.map((premise) => parseToFormulaString(premise));
+      }
+
+      let conjunctionFormulaString: string = buildConjunctionString(premises);
+      finalFormula = parseToFormulaObject(conjunctionFormulaString);
+    }
+
+    calculator.collectVariables(finalFormula, variables);
+    const variableArray = Array.from(variables);
+    const truthCombinations = calculator.generateTruthCombinations(
+      variableArray.length
+    );
+
+    for (const combination of truthCombinations) {
+      const values: PropositionalVariableValues =
+        {} as PropositionalVariableValues;
+
+      variableArray.forEach((variable, index) => {
+        values[variable] =
+          combination[index] === 1 || combination[index] === true;
+      });
+
+      const finalFormulaTrue = calculator.evaluate(finalFormula, values);
+
+      if (finalFormulaTrue && !calculator.evaluate(A as Formula, values)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   private static evaluateImplication(
     formula: Implication,
     values: PropositionalVariableValues
@@ -180,7 +243,7 @@ export class calculator {
     return !value;
   }
 
-  private static generateTruthCombinations(
+  protected static generateTruthCombinations(
     numVariables: number
   ): TruthValue[][] {
     const combinations: TruthValue[][] = [];
