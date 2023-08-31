@@ -51,15 +51,15 @@ export class calculator {
     if (typeof formula === 'string' && !isPropositionalVariable(formula)) {
       const tokens = new Lexer(formula).lex();
       const parsedFormula = new Parser(tokens).parse();
-      return this.generateTruthTable(parsedFormula, formula);
+      return calculator.generateTruthTable(parsedFormula, formula);
     }
 
     const variables = new Set<PropositionalVariable>();
-    this.collectVariables(formula, variables);
+    calculator.collectVariables(formula, variables);
 
     const variableArray = Array.from(variables);
 
-    const truthCombinations = this.generateTruthCombinations(
+    const truthCombinations = calculator.generateTruthCombinations(
       variableArray.length
     );
 
@@ -84,7 +84,7 @@ export class calculator {
 
       table[1].push(combination);
 
-      const result = this.evaluate(formula, values);
+      const result = calculator.evaluate(formula, values);
 
       table[2].push(result);
     });
@@ -110,29 +110,29 @@ export class calculator {
     if (typeof formula === 'string' && formula.length > 1) {
       const tokens = new Lexer(formula).lex();
       const parsedFormula = new Parser(tokens).parse();
-      return this.evaluate(parsedFormula as T, values);
+      return calculator.evaluate(parsedFormula as T, values);
     }
 
     if (typeof formula === 'string') return values[`${formula}`];
 
     if (formula.operation === 'Implication') {
-      return this.evaluateImplication(formula, values);
+      return calculator.evaluateImplication(formula, values);
     }
 
     if (formula.operation === 'Biconditional') {
-      return this.evaluateBiconditional(formula, values);
+      return calculator.evaluateBiconditional(formula, values);
     }
 
     if (formula.operation === 'Conjunction') {
-      return this.evaluateConjunction(formula, values);
+      return calculator.evaluateConjunction(formula, values);
     }
 
     if (formula.operation === 'Disjunction') {
-      return this.evaluateDisjunction(formula, values);
+      return calculator.evaluateDisjunction(formula, values);
     }
 
     if (formula.operation === 'Negation') {
-      return this.evaluateNegation(formula, values);
+      return calculator.evaluateNegation(formula, values);
     }
 
     throw new Error('Invalid formula operation');
@@ -204,8 +204,8 @@ export class calculator {
     formula: Implication,
     values: PropositionalVariableValues
   ): boolean {
-    const left = this.evaluate(formula.left, values);
-    const right = this.evaluate(formula.right, values);
+    const left = calculator.evaluate(formula.left, values);
+    const right = calculator.evaluate(formula.right, values);
     return !left || right;
   }
 
@@ -213,8 +213,8 @@ export class calculator {
     formula: Biconditional,
     values: PropositionalVariableValues
   ): boolean {
-    const left = this.evaluate(formula.left, values);
-    const right = this.evaluate(formula.right, values);
+    const left = calculator.evaluate(formula.left, values);
+    const right = calculator.evaluate(formula.right, values);
     return (left && right) || (!left && !right);
   }
 
@@ -222,8 +222,8 @@ export class calculator {
     formula: Conjunction,
     values: PropositionalVariableValues
   ): boolean {
-    const left = this.evaluate(formula.left, values);
-    const right = this.evaluate(formula.right, values);
+    const left = calculator.evaluate(formula.left, values);
+    const right = calculator.evaluate(formula.right, values);
     return left && right;
   }
 
@@ -231,8 +231,8 @@ export class calculator {
     formula: Disjunction,
     values: PropositionalVariableValues
   ): boolean {
-    const left = this.evaluate(formula.left, values);
-    const right = this.evaluate(formula.right, values);
+    const left = calculator.evaluate(formula.left, values);
+    const right = calculator.evaluate(formula.right, values);
     return left || right;
   }
 
@@ -240,7 +240,7 @@ export class calculator {
     formula: Negation,
     values: PropositionalVariableValues
   ): boolean {
-    const value = this.evaluate(formula.value, values);
+    const value = calculator.evaluate(formula.value, values);
     return !value;
   }
 
@@ -268,10 +268,10 @@ export class calculator {
     if (typeof formula === 'string') {
       variables.add(formula as PropositionalVariable);
     } else if (formula.operation === 'Negation') {
-      this.collectVariables(formula.value, variables);
+      calculator.collectVariables(formula.value, variables);
     } else {
-      this.collectVariables(formula.left, variables);
-      this.collectVariables(formula.right, variables);
+      calculator.collectVariables(formula.left, variables);
+      calculator.collectVariables(formula.right, variables);
     }
   }
 }

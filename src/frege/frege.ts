@@ -111,5 +111,5 @@ export class Frege {
 
   public evaluate = this.calculator.evaluate;
 
-  public generateTruthTable = this.calculator.generateTruthTable;
+  public generateTruthTable = calculator.generateTruthTable;
 }
