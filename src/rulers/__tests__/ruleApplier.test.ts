@@ -109,191 +109,6 @@ describe('RuleApplier', () => {
       });
     });
 
-    describe('Conditional Proof', () => {
-      it('should apply in hypothesis P v Q and end of hypothesis P ^ ¬P', () => {
-        const proof: Proof = {
-          1: {
-            id: 1,
-            expression: {
-              operation: 'Conjunction',
-              left: { operation: 'Negation', value: 'P' },
-              right: { operation: 'Negation', value: 'Q' }
-            },
-            type: 'Premisse'
-          },
-          2: {
-            id: 2,
-            expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-            type: 'Hypothesis',
-          },
-          3: {
-            id: 3,
-            expression: { operation: 'Negation', value: 'P' },
-            type: 'Knowledge',
-            from: [[1], 'Conjunction Elimination'],
-          },
-          4: {
-            id: 4,
-            expression: { operation: 'Negation', value: 'Q' },
-            type: 'Knowledge',
-            from: [[1], 'Conjunction Elimination'],
-          },
-          5: {
-            id: 5,
-            expression: 'P',
-            type: 'Knowledge',
-            from: [[4, 2], 'Disjunctive Syllogism']
-          },
-          6: {
-            id: 6,
-            expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
-            type: 'End of Hypothesis',
-            from: [[3, 5], 'Conjunction Introduction'],
-            hypothesisId: 2
-          },
-          7: {
-            id: 7,
-            expression: {
-              operation: 'Implication',
-              left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-              right: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
-            },
-            type: 'Knowledge',
-            from: [[2, 6], 'Conditional Proof'],
-          }
-        }
-
-        const item = proof[7] as ProofItemInferred;
-
-        assert.deepStrictEqual(
-          RuleApplier.conditionalProof(item, proof),
-          item.expression
-        );
-      });
-
-      it('should not apply if end of hypothesis id doesnt match', ()=>{
-        const proof: Proof = {
-          1: {
-            id: 1,
-            expression: {
-              operation: 'Conjunction',
-              left: { operation: 'Negation', value: 'P' },
-              right: { operation: 'Negation', value: 'Q' }
-            },
-            type: 'Premisse'
-          },
-          2: {
-            id: 2,
-            expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-            type: 'Hypothesis',
-          },
-          3: {
-            id: 3,
-            expression: { operation: 'Negation', value: 'P' },
-            type: 'Knowledge',
-            from: [[1], 'Conjunction Elimination'],
-          },
-          4: {
-            id: 4,
-            expression: { operation: 'Negation', value: 'Q' },
-            type: 'Knowledge',
-            from: [[1], 'Conjunction Elimination'],
-          },
-          5: {
-            id: 5,
-            expression: 'P',
-            type: 'Knowledge',
-            from: [[4, 2], 'Disjunctive Syllogism']
-          },
-          6: {
-            id: 6,
-            expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
-            type: 'End of Hypothesis',
-            from: [[3, 5], 'Conjunction Introduction'],
-            hypothesisId: 3
-          },
-          7: {
-            id: 7,
-            expression: {
-              operation: 'Implication',
-              left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-              right: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
-            },
-            type: 'Knowledge',
-            from: [[2, 6], 'Conditional Proof'],
-          }
-        }
-
-        const item = proof[7] as ProofItemInferred;
-
-        assert.throws(()=>
-          RuleApplier.conditionalProof(item, proof),
-          InferenceException
-        );
-      });
-
-      it('should not apply if knowledge references are incorrect', ()=>{
-        const proof: Proof = {
-          1: {
-            id: 1,
-            expression: {
-              operation: 'Conjunction',
-              left: { operation: 'Negation', value: 'P' },
-              right: { operation: 'Negation', value: 'Q' }
-            },
-            type: 'Premisse'
-          },
-          2: {
-            id: 2,
-            expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-            type: 'Hypothesis',
-          },
-          3: {
-            id: 3,
-            expression: { operation: 'Negation', value: 'P' },
-            type: 'Knowledge',
-            from: [[1], 'Conjunction Elimination'],
-          },
-          4: {
-            id: 4,
-            expression: { operation: 'Negation', value: 'Q' },
-            type: 'Knowledge',
-            from: [[1], 'Conjunction Elimination'],
-          },
-          5: {
-            id: 5,
-            expression: 'P',
-            type: 'Knowledge',
-            from: [[4, 2], 'Disjunctive Syllogism']
-          },
-          6: {
-            id: 6,
-            expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
-            type: 'End of Hypothesis',
-            from: [[3, 5], 'Conjunction Introduction'],
-            hypothesisId: 3
-          },
-          7: {
-            id: 7,
-            expression: {
-              operation: 'Implication',
-              left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-              right: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
-            },
-            type: 'Knowledge',
-            from: [[2, 4], 'Conditional Proof'],
-          }
-        }
-
-        const item = proof[7] as ProofItemInferred;
-
-        assert.throws(()=>
-          RuleApplier.conditionalProof(item, proof),
-          InferenceException
-        );
-      });
-    });
-
     describe('Conjunction', () => {
       it('should apply in P ^ (Q ^ R)', () => {
         const proof: Proof = {
@@ -594,6 +409,191 @@ describe('RuleApplier', () => {
     });
   });
 
+  describe('Conditional Proof', () => {
+    it('should apply in hypothesis P v Q and end of hypothesis P ^ ¬P', () => {
+      const proof: Proof = {
+        1: {
+          id: 1,
+          expression: {
+            operation: 'Conjunction',
+            left: { operation: 'Negation', value: 'P' },
+            right: { operation: 'Negation', value: 'Q' }
+          },
+          type: 'Premisse'
+        },
+        2: {
+          id: 2,
+          expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
+          type: 'Hypothesis',
+        },
+        3: {
+          id: 3,
+          expression: { operation: 'Negation', value: 'P' },
+          type: 'Knowledge',
+          from: [[1], 'Conjunction Elimination'],
+        },
+        4: {
+          id: 4,
+          expression: { operation: 'Negation', value: 'Q' },
+          type: 'Knowledge',
+          from: [[1], 'Conjunction Elimination'],
+        },
+        5: {
+          id: 5,
+          expression: 'P',
+          type: 'Knowledge',
+          from: [[4, 2], 'Disjunctive Syllogism']
+        },
+        6: {
+          id: 6,
+          expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+          type: 'End of Hypothesis',
+          from: [[3, 5], 'Conjunction Introduction'],
+          hypothesisId: 2
+        },
+        7: {
+          id: 7,
+          expression: {
+            operation: 'Implication',
+            left: { operation: 'Disjunction', left: 'P', right: 'Q' },
+            right: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+          },
+          type: 'Knowledge',
+          from: [[2, 6], 'Conditional Proof'],
+        }
+      }
+
+      const item = proof[7] as ProofItemInferred;
+
+      assert.deepStrictEqual(
+        RuleApplier.conditionalProof(item, proof),
+        item.expression
+      );
+    });
+
+    it('should not apply if end of hypothesis id doesnt match', ()=>{
+      const proof: Proof = {
+        1: {
+          id: 1,
+          expression: {
+            operation: 'Conjunction',
+            left: { operation: 'Negation', value: 'P' },
+            right: { operation: 'Negation', value: 'Q' }
+          },
+          type: 'Premisse'
+        },
+        2: {
+          id: 2,
+          expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
+          type: 'Hypothesis',
+        },
+        3: {
+          id: 3,
+          expression: { operation: 'Negation', value: 'P' },
+          type: 'Knowledge',
+          from: [[1], 'Conjunction Elimination'],
+        },
+        4: {
+          id: 4,
+          expression: { operation: 'Negation', value: 'Q' },
+          type: 'Knowledge',
+          from: [[1], 'Conjunction Elimination'],
+        },
+        5: {
+          id: 5,
+          expression: 'P',
+          type: 'Knowledge',
+          from: [[4, 2], 'Disjunctive Syllogism']
+        },
+        6: {
+          id: 6,
+          expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+          type: 'End of Hypothesis',
+          from: [[3, 5], 'Conjunction Introduction'],
+          hypothesisId: 3
+        },
+        7: {
+          id: 7,
+          expression: {
+            operation: 'Implication',
+            left: { operation: 'Disjunction', left: 'P', right: 'Q' },
+            right: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+          },
+          type: 'Knowledge',
+          from: [[2, 6], 'Conditional Proof'],
+        }
+      }
+
+      const item = proof[7] as ProofItemInferred;
+
+      assert.throws(()=>
+        RuleApplier.conditionalProof(item, proof),
+        InferenceException
+      );
+    });
+
+    it('should not apply if knowledge references are incorrect', ()=>{
+      const proof: Proof = {
+        1: {
+          id: 1,
+          expression: {
+            operation: 'Conjunction',
+            left: { operation: 'Negation', value: 'P' },
+            right: { operation: 'Negation', value: 'Q' }
+          },
+          type: 'Premisse'
+        },
+        2: {
+          id: 2,
+          expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
+          type: 'Hypothesis',
+        },
+        3: {
+          id: 3,
+          expression: { operation: 'Negation', value: 'P' },
+          type: 'Knowledge',
+          from: [[1], 'Conjunction Elimination'],
+        },
+        4: {
+          id: 4,
+          expression: { operation: 'Negation', value: 'Q' },
+          type: 'Knowledge',
+          from: [[1], 'Conjunction Elimination'],
+        },
+        5: {
+          id: 5,
+          expression: 'P',
+          type: 'Knowledge',
+          from: [[4, 2], 'Disjunctive Syllogism']
+        },
+        6: {
+          id: 6,
+          expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+          type: 'End of Hypothesis',
+          from: [[3, 5], 'Conjunction Introduction'],
+          hypothesisId: 3
+        },
+        7: {
+          id: 7,
+          expression: {
+            operation: 'Implication',
+            left: { operation: 'Disjunction', left: 'P', right: 'Q' },
+            right: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+          },
+          type: 'Knowledge',
+          from: [[2, 4], 'Conditional Proof'],
+        }
+      }
+
+      const item = proof[7] as ProofItemInferred;
+
+      assert.throws(()=>
+        RuleApplier.conditionalProof(item, proof),
+        InferenceException
+      );
+    });
+  });
+  
   describe('Commutativity', () => {
     it('should apply in P ^ Q', () => {
       const proof: Proof = {
