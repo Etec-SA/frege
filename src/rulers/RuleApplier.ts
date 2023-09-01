@@ -20,8 +20,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItens = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
-    this.throwsIfIndexDoesntExist(requiredItens, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItens, proof);
 
     const formulas = [
       proof[requiredItens[0]].expression,
@@ -33,9 +33,9 @@ export class RuleApplier extends RuleSetter {
         `Biconditional Introduction (Line ${line}): conditionals not found.`
       );
 
-    const inferenceResult = this.BiconditionalIntroduction(formulas[0], formulas[1]);
+    const inferenceResult = RuleApplier.BiconditionalIntroduction(formulas[0], formulas[1]);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -44,8 +44,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const biconditional = proof[requiredItem[0]].expression;
 
@@ -54,9 +54,9 @@ export class RuleApplier extends RuleSetter {
         `Biconditional Elimination (Line ${line}): biconditional not found.`
       );
 
-    const inferenceResult = this.BiconditionalElimination(biconditional);
+    const inferenceResult = RuleApplier.BiconditionalElimination(biconditional);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -65,8 +65,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     if (!isImplication(item.expression))
       throw new InferenceException(
@@ -80,9 +80,9 @@ export class RuleApplier extends RuleSetter {
         `Conditionalization (Line ${line}): formula not found.`
       );
 
-    const inferenceResult = this.Conditionalization(formula, item.expression);
+    const inferenceResult = RuleApplier.Conditionalization(formula, item.expression);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -91,8 +91,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItens = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
-    this.throwsIfIndexDoesntExist(requiredItens, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItens, proof);
 
     const firstFormula = proof[requiredItens[0]].expression;
 
@@ -108,9 +108,9 @@ export class RuleApplier extends RuleSetter {
         `Conjunction Introduction (Line ${line}): line ${requiredItens[1]} formula not found.`
       );
 
-    const inferenceResult = this.ConjunctionIntroduction(firstFormula, secondFormula);
+    const inferenceResult = RuleApplier.ConjunctionIntroduction(firstFormula, secondFormula);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -119,8 +119,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const conjunction = proof[requiredItem[0]].expression;
 
@@ -129,7 +129,7 @@ export class RuleApplier extends RuleSetter {
         `Conjunction Elimination (Line ${line}): conjunction not found.`
       );
 
-    const inferenceResults = this.ConjunctionElimination(conjunction);
+    const inferenceResults = RuleApplier.ConjunctionElimination(conjunction);
 
     if (
       !isDeepStrictEqual(item.expression, inferenceResults[0]) &&
@@ -151,17 +151,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const formula = proof[requiredItem[0]].expression;
 
     if (!isDisjunction(formula) && !isConjunction(formula) && !isBiconditional(formula))
       throw new InferenceException(`Commutativity (Line ${line}): cannot find any conjunction, biconditional or disjunction.`);
 
-    const inferenceResult = this.Commutativity(formula);
+    const inferenceResult = RuleApplier.Commutativity(formula);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -170,17 +170,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const formula = proof[requiredItem[0]].expression;
 
     if (!isImplication(formula))
       throw new InferenceException(`Contraposition (Line ${line}): implication not found.`);
 
-    const inferenceResult = this.Contraposition(formula);
+    const inferenceResult = RuleApplier.Contraposition(formula);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -189,17 +189,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const formula = proof[requiredItem[0]].expression;
 
     if (!isNegation(formula) && !isConjunction(formula) && !isDisjunction(formula))
       throw new InferenceException(`De Morgan (Line ${line}): formula is not a disjunction, conjunction or negation.`);
 
-    const inferenceResult = this.DeMorgan(formula);
+    const inferenceResult = RuleApplier.DeMorgan(formula);
 
-    this.throwsIfIsNotEqual(inferenceResult, item)
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item)
 
     return inferenceResult;
   }
@@ -208,8 +208,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     if (!isDisjunction(item.expression))
       throw new InferenceException(
@@ -223,9 +223,9 @@ export class RuleApplier extends RuleSetter {
         `Disjunction Introduction (Line ${line}): formula not found.`
       );
 
-    const inferenceResult = this.DisjunctionIntroduction(formula, item.expression);
+    const inferenceResult = RuleApplier.DisjunctionIntroduction(formula, item.expression);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -234,8 +234,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItens = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
-    this.throwsIfIndexDoesntExist(requiredItens, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItens, proof);
 
     const firstFormula = proof[requiredItens[0]].expression;
     const secondFormula = proof[requiredItens[1]].expression;
@@ -263,9 +263,9 @@ export class RuleApplier extends RuleSetter {
     if (!negation)
       throw new InferenceException(`Disjunctive Syllogism (Line ${line}): negation not found`);
 
-    const inferenceResult = this.DisjunctiveSyllogism(disjunction, negation);
+    const inferenceResult = RuleApplier.DisjunctiveSyllogism(disjunction, negation);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -274,17 +274,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const formula = proof[requiredItem[0]].expression;
 
     if (typeof formula === 'string' && !isPropositionalVariable(formula))
       throw new InferenceException(`Double Negation (Line ${line}): formula not found.`);
 
-    const inferenceResult = this.DoubleNegation(formula);
+    const inferenceResult = RuleApplier.DoubleNegation(formula);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -293,17 +293,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const formula = proof[requiredItem[0]].expression;
 
     if (typeof formula === 'string' && !isPropositionalVariable(formula))
       throw new InferenceException(`Double Negation Introduction (Line ${line}): negation not found.`);
 
-    const inferenceResult = this.DoubleNegationIntroduction(formula);
+    const inferenceResult = RuleApplier.DoubleNegationIntroduction(formula);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -312,8 +312,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItens = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
-    this.throwsIfIndexDoesntExist(requiredItens, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItens, proof);
 
     const firstFormula = proof[requiredItens[0]].expression;
     const secondFormula = proof[requiredItens[1]].expression;
@@ -321,9 +321,9 @@ export class RuleApplier extends RuleSetter {
     if (!isImplication(firstFormula) || !isImplication(secondFormula))
       throw new InferenceException(`Hypothetical Syllogism (Line ${line}): both formulas should be conditionals.`);
 
-    const inferenceResult = this.HypotheticalSyllogism(firstFormula, secondFormula);
+    const inferenceResult = RuleApplier.HypotheticalSyllogism(firstFormula, secondFormula);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -332,8 +332,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const formula = proof[requiredItem[0]].expression;
 
@@ -342,9 +342,9 @@ export class RuleApplier extends RuleSetter {
         `Implication Elimination (Line ${line}): implication not found.`
       );
 
-    const inferenceResult = this.ImplicationElimination(formula);
+    const inferenceResult = RuleApplier.ImplicationElimination(formula);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -353,17 +353,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     let formula = proof[requiredItem[0]].expression;
 
     if (!isNegation(formula))
       throw new InferenceException(`Implication Negation (Line ${line}): negation not found`);
 
-    const inferenceResult = this.ImplicationNegation(formula);
+    const inferenceResult = RuleApplier.ImplicationNegation(formula);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -372,8 +372,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItens = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
-    this.throwsIfIndexDoesntExist(requiredItens, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItens, proof);
 
     let firstFormula = proof[requiredItens[0]].expression;
     let secondFormula = proof[requiredItens[1]].expression;
@@ -398,9 +398,9 @@ export class RuleApplier extends RuleSetter {
     if (!isPropositionalVariable(antecedent) && typeof antecedent === 'string')
       throw new InferenceException(`Modus Ponens (Line ${line}): antecedent not found`);
 
-    const inferenceResult = this.ModusPonens(implication, antecedent);
+    const inferenceResult = RuleApplier.ModusPonens(implication, antecedent);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -409,8 +409,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItens = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
-    this.throwsIfIndexDoesntExist(requiredItens, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItens, proof);
 
     const firstFormula = proof[requiredItens[0]].expression;
     const secondFormula = proof[requiredItens[1]].expression;
@@ -435,9 +435,9 @@ export class RuleApplier extends RuleSetter {
     if (!isNegation(consequent))
       throw new InferenceException(`Modus Tollens (Line ${line}): negated consequent not found`);
 
-    const inferenceResult = this.ModusTollens(implication, consequent);
+    const inferenceResult = RuleApplier.ModusTollens(implication, consequent);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -446,17 +446,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const conjunction = proof[requiredItem[0]].expression;
 
     if (!isConjunction(conjunction))
       throw new InferenceException(`Distribution (Line ${line}): conjunction not found.`);
 
-    const inferenceResult = this.ConjunctionOverDisjunctionDistribution(conjunction);
+    const inferenceResult = RuleApplier.ConjunctionOverDisjunctionDistribution(conjunction);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -465,17 +465,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const disjunction = proof[requiredItem[0]].expression;
 
     if (!isDisjunction(disjunction))
       throw new InferenceException(`Distribution (Line ${line}): disjunction not found.`);
 
-    const inferenceResult = this.DisjunctionOverConjunctionDistribution(disjunction);
+    const inferenceResult = RuleApplier.DisjunctionOverConjunctionDistribution(disjunction);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -484,17 +484,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const conjunction = proof[requiredItem[0]].expression;
 
     if (!isConjunction(conjunction))
       throw new InferenceException(`Associativity (Line ${line}): conjunction not found.`);
 
-    const inferenceResult = this.ConjunctionAssociativity(conjunction);
+    const inferenceResult = RuleApplier.ConjunctionAssociativity(conjunction);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -503,17 +503,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const disjunction = proof[requiredItem[0]].expression;
 
     if (!isDisjunction(disjunction))
       throw new InferenceException(`Associativity (Line ${line}): disjunction not found.`);
 
-    const inferenceResult = this.DisjunctionAssociativity(disjunction);
+    const inferenceResult = RuleApplier.DisjunctionAssociativity(disjunction);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -522,17 +522,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const biconditional = proof[requiredItem[0]].expression;
 
     if (!isBiconditional(biconditional))
       throw new InferenceException(`Associativity (Line ${line}): disjunction not found.`);
 
-    const inferenceResult = this.BiconditionalAssociativity(biconditional);
+    const inferenceResult = RuleApplier.BiconditionalAssociativity(biconditional);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -541,8 +541,8 @@ export class RuleApplier extends RuleSetter {
     const requiredItens = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
-    this.throwsIfIndexDoesntExist(requiredItens, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 2, requiredItens.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItens, proof);
 
     const item1 = proof[requiredItens[0]];
     const item2 = proof[requiredItens[1]];
@@ -579,9 +579,9 @@ export class RuleApplier extends RuleSetter {
       throw new InferenceException(`Conditional Proof: end of hypothesis or hypothesis not found.`);
     }
 
-    const inferenceResult = this.ConditionalProof(hypothesis, endOfHypothesis);
+    const inferenceResult = RuleApplier.ConditionalProof(hypothesis, endOfHypothesis);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -590,17 +590,17 @@ export class RuleApplier extends RuleSetter {
     const requiredItem = item.from[0];
     const line = item.id;
 
-    this.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
-    this.throwsIfIndexDoesntExist(requiredItem, proof);
+    RuleApplier.throwsIfLengthDoesntMatch(item, 1, requiredItem.length);
+    RuleApplier.throwsIfIndexDoesntExist(requiredItem, proof);
 
     const conditional = proof[requiredItem[0]].expression;
 
     if (!isImplication(conditional))
       throw new InferenceException(`Reductio Ad Absurdum (Line ${line}): conditional not found.`);
 
-    const inferenceResult = this.ReductioAdAbsurdum(conditional);
+    const inferenceResult = RuleApplier.ReductioAdAbsurdum(conditional);
 
-    this.throwsIfIsNotEqual(inferenceResult, item);
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
