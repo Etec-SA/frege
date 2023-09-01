@@ -2,7 +2,7 @@ import { Proof, ProofItemInferred } from 'src/types/syntactic/proof';
 import { RuleSetter } from './RuleSetter';
 import { InferenceException } from 'src/exceptions/invalid-inference.exception';
 import { Formula } from 'src/types/formulas/formula';
-import { Disjunction, Implication } from 'src/types/operations/binary-operations';
+import { Biconditional, Disjunction, Implication } from 'src/types/operations/binary-operations';
 import { isImplication } from 'src/utils/isImplication';
 import { Negation } from 'src/types/operations/unary-operation';
 import { isNegation } from 'src/utils/isNegation';
@@ -608,8 +608,16 @@ export class RuleApplier extends RuleSetter {
   private static throwsIfIsNotEqual(expectedFormula: Formula, actualItem: ProofItemInferred) {
     const actualFormula = actualItem.expression as Formula;
     const inferenceMethod = actualItem.from[1];
+    let actualFormulaWithCommutativity: Formula;
 
-    if (!isDeepStrictEqual(expectedFormula, actualFormula)) {
+    if (isDisjunction(actualFormula) || isConjunction(actualFormula) || isBiconditional(actualFormula)) {
+      actualFormulaWithCommutativity = RuleApplier.Commutativity(actualFormula);
+    }
+
+    if (
+      !isDeepStrictEqual(expectedFormula, actualFormula)
+      && !isDeepStrictEqual(expectedFormula, actualFormulaWithCommutativity)
+    ) {
       throw new InferenceException(`
         ${inferenceMethod} (Line ${actualItem.id
         }): expected ${parseToFormulaString(
