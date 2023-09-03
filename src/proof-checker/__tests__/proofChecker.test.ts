@@ -124,6 +124,30 @@ describe('ProofChecker', () => {
 
 
             assert.throws(()=>ProofChecker.check(proof), InferenceException);
+        });
+
+
+        it('should not validate if we have a conclusion in the hypothesis', ()=>{
+            const proof: Proof = {
+                1: {
+                    id: 1,
+                    expression: 'A',
+                    type: 'Premisse'
+                },
+                2:{
+                    id: 2,
+                    expression: 'B',
+                    type: 'Hypothesis',
+                },
+                3: {
+                    id: 3,
+                    expression: {operation: 'Conjunction', left: 'A', right: 'B'},
+                    type: 'Conclusion',
+                    from: [[1,2], 'Conjunction Introduction']
+                }
+            }
+
+            assert.throws(()=>ProofChecker.check(proof));
         })
     });
 });

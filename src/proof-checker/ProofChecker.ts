@@ -74,6 +74,9 @@ export class ProofChecker {
         layerIdx--;
       } else {
         proof[idx]['scopeIdx'] = layerIdx === 0 ? [0, 0] : [layerIdx, blockIdx];
+
+        if(layerIdx !== 0 && proof[idx].type === 'Conclusion')
+          throw new Error(`(Line ${idx}): You cannot put your conclusion inside of a hypothesis.`);
       }
 
     });
