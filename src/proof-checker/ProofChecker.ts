@@ -55,7 +55,7 @@ export class ProofChecker {
    * @param {Proof} proof - The proof to be mapped.
    * @returns {MappedProof} - The mapped proof.
    */
-  
+
   private static createMappedProof(proof: Proof) {
     let layerIdx = 0;
     let blockIdx = 0;
@@ -82,7 +82,7 @@ export class ProofChecker {
 
   /**
    * Validates the scope of inferred items.
-   * @param {number[]} requiredItems - An array of required item IDs.
+   * @param {number[]} requiredItens - An array of required item IDs.
    * @param {ProofItemInferred} item - The inferred proof item to be validated.
    * @param {MappedProof} mappedProof - The mapped proof.
    */
