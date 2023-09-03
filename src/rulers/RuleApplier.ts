@@ -15,6 +15,9 @@ import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
 import { isHypothesis } from 'src/utils/isHypothesis';
 import { isEndOfHypothesis } from 'src/utils/isEndOfHypothesis';
 
+/**
+ * Class responsible for, through a test and its items, applying the inference rules defined by the RuleSetter class.
+ */
 export class RuleApplier extends RuleSetter {
   static biconditionalIntroduction(item: ProofItemInferred, proof: Proof) {
     const requiredItens = item.from[0];
@@ -641,4 +644,3 @@ export class RuleApplier extends RuleSetter {
     });
   }
 }
-

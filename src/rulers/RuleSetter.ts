@@ -19,6 +19,10 @@ import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
 import { isBiconditional } from 'src/utils/isBiconditional';
 import { isNegation } from 'src/utils/isNegation';
 
+
+/**
+ * Class responsible for defining the inference rules.
+ */
 export class RuleSetter {
   protected static BiconditionalIntroduction(
     conditional1: Implication,
