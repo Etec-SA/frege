@@ -53,6 +53,8 @@ export type ProofItem = ProofItemBase | ProofItemInferred | ProofEndOfHypothesis
 
 export type Proof = Record<number, ProofItem>;
 
+export type MappedProof = Record<number, ProofItem & {scopeIdx: number[]}>
+
 export const inferenceRulesMap: Record<InferenceRule, (
     proofItem: ProofItem, proof: Proof
   )=> Formula | Formula[]> = {
