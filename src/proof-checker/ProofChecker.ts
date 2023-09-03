@@ -1,86 +1,78 @@
-import { Proof, ProofItem, inferenceRulesMap } from "src/types/syntactic/proof";
+import { InferenceException } from "src/exceptions/invalid-inference.exception";
+import { Formula } from "src/types/formulas/formula";
+import { MappedProof, Proof, ProofItemInferred, inferenceRulesMap } from "src/types/syntactic/proof";
+import { isEndOfHypothesis } from "src/utils/isEndOfHypothesis";
+import { isHypothesis } from "src/utils/isHypothesis";
 import { isProofItemInferred } from "src/utils/isProofItemInferred";
-import { parseToFormulaObject } from "src/utils/parse";
+import { parseToFormulaString } from "src/utils/parse";
 
 export class ProofChecker {
   static check(proof: Proof) {
-    const premises: ProofItem['expression'][] = [];
+    const mappedProof = ProofChecker.createMappedProof(proof);
+    let premises: Array<string | Formula> = [];
+    let conclusion: string;
 
-    Object.keys(proof).forEach((_, idx) => {
-      const item = proof[idx + 1];
+    Object.keys(mappedProof).forEach((_, idx) => {
+      const item = mappedProof[idx + 1];
 
       if (isProofItemInferred(item)) {
-        const inferenceRule = item.from[1];
+        const [requiredItens, inferenceRule] = item.from;
+        ProofChecker.validateScope(requiredItens, item, mappedProof);
+
         inferenceRulesMap[inferenceRule](item, proof);
         console.log(
           '\x1b[32m',
           `Applied ${inferenceRule} with success at line ${item.id} ✔️`,
         );
-      } else if (item.type === 'Premisse') {
+      }
+
+      if (item.type === 'Premisse') {
         premises.push(item.expression);
       }
+
+      if (item.type === 'Conclusion') {
+        conclusion = parseToFormulaString(item.expression as Formula);
+      }
+
+      premises = premises.map((formula) => {
+        return parseToFormulaString(formula as Formula);
+      });
+    });
+
+    console.log('\x1b[0m', `\n{ ${premises.join(',')} } ⊢ ${conclusion}`);
+  }
+
+  private static createMappedProof(proof: Proof) {
+    let layerIdx = 0;
+    let blockIdx = 0;
+
+    Object.keys(proof).forEach((_, idx) => {
+      idx++;
+      const item = proof[idx];
+
+      if (isHypothesis(item)) {
+        blockIdx++; layerIdx++;
+        proof[idx]['scopeIdx'] = [layerIdx, blockIdx];
+      } else if (isEndOfHypothesis(item)) {
+        const itemBlockIdx = proof[item.hypothesisId]['scopeIdx'][1];
+        proof[idx]['scopeIdx'] = [layerIdx, itemBlockIdx];
+        layerIdx--;
+      } else {
+        proof[idx]['scopeIdx'] = layerIdx === 0 ? [0, 0] : [layerIdx, blockIdx];
+      }
+
+    });
+
+    return proof as MappedProof;
+  }
+
+  private static validateScope(requiredItens: number[], item: ProofItemInferred, mappedProof: MappedProof) {
+    requiredItens.forEach(requiredItemId => {
+      const [actualLayer, actualBlock] = mappedProof[item.id].scopeIdx;
+      const [requiredLayer, requiredBlock] = mappedProof[requiredItemId].scopeIdx;
+      const [, inferenceRule] = item.from;
+      if (actualLayer < requiredLayer && actualBlock != requiredBlock && inferenceRule != 'Conditional Proof')
+        throw new InferenceException(`Scope Error: cannot access line ${requiredItemId} by the ${item.id} line.`)
     });
   }
 }
-
-const proof: Proof = {
-  1: {
-    id: 1,
-    expression: {
-      operation: 'Conjunction',
-      left: { operation: 'Negation', value: 'P' },
-      right: { operation: 'Negation', value: 'Q' }
-    },
-    type: 'Premisse'
-  },
-  2: {
-    id: 2,
-    expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-    type: 'Hypothesis',
-  },
-  3: {
-    id: 3,
-    expression: { operation: 'Negation', value: 'P' },
-    type: 'Knowledge',
-    from: [[1], 'Conjunction Elimination'],
-  },
-  4: {
-    id: 4,
-    expression: { operation: 'Negation', value: 'Q' },
-    type: 'Knowledge',
-    from: [[1], 'Conjunction Elimination'],
-  },
-  5: {
-    id: 5,
-    expression: 'P',
-    type: 'Knowledge',
-    from: [[4, 2], 'Disjunctive Syllogism']
-  },
-  6: {
-    id: 6,
-    expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
-    type: 'End of Hypothesis',
-    from: [[3, 5], 'Conjunction Introduction'],
-    hypothesisId: 2
-  },
-  7: {
-    id: 7,
-    expression: {
-      operation: 'Implication',
-      left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-      right: { operation: 'Conjunction', left: { operation: 'Negation', value: 'P' }, right: 'P' },
-    },
-    type: 'Knowledge',
-    from: [[2, 6], 'Conditional Proof'],
-  },
-  8: {
-    id: 8,
-    expression: {
-      operation: 'Negation',
-      value: { operation: 'Disjunction', left: 'P', right: 'Q' }
-    },
-    type: 'Conclusion',
-    from: [[7], 'Reductio Ad Absurdum']
-  }
-}
-ProofChecker.check(proof);
