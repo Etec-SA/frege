@@ -2,6 +2,7 @@ import assert from "node:assert";
 import { it, describe } from 'node:test';
 import { ProofChecker } from "../ProofChecker";
 import { Proof } from "src/types/syntactic/proof";
+import { InferenceException } from "src/exceptions/invalid-inference.exception";
 
 describe('ProofChecker', () => {
     describe('check', ()=>{
@@ -81,5 +82,48 @@ describe('ProofChecker', () => {
             }
             assert.ok(ProofChecker.check(proof), 'Validate Modus Ponens')
         });
+
+        it('should not validate { P } ⊢ ¬P ^ P', ()=>{
+            const proof: Proof = {
+                1: {
+                    id: 1,
+                    expression: 'P',
+                    type: 'Premisse'
+                },
+                2:{
+                    id: 2,
+                    expression: { operation: 'Negation', value: 'P' },
+                    type: 'Hypothesis',
+                },
+                3: {
+                    id: 3,
+                    expression: {
+                        operation: 'Conjunction',
+                        left: 'P',
+                        right: { operation: 'Negation', value: 'P' }
+                    },
+                    from: [[1,2], 'Conjunction Introduction'],
+                    hypothesisId: 2,
+                    type: 'End of Hypothesis'
+                },
+                4: {
+                    id: 4,
+                    expression: {
+                        operation: 'Implication',
+                        left: 'P',
+                        right: {
+                            operation: 'Conjunction',
+                            left: 'P',
+                            right: { operation: 'Negation', value: 'P' }
+                        }
+                    },
+                    type: 'Conclusion',
+                    from: [[3], 'Conditionalization'],
+                }
+            }
+
+
+            assert.throws(()=>ProofChecker.check(proof), InferenceException);
+        })
     });
 });
