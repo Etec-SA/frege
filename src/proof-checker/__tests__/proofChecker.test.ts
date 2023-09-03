@@ -1,0 +1,85 @@
+import assert from "node:assert";
+import { it, describe } from 'node:test';
+import { ProofChecker } from "../ProofChecker";
+import { Proof } from "src/types/syntactic/proof";
+
+describe('ProofChecker', () => {
+    describe('check', ()=>{
+        it('should validate { P -> Q, P } ⊢ Q', ()=>{
+            const proof: Proof = {
+                1: {
+                    id: 1,
+                    expression: {operation: 'Implication', left: 'P', right: 'Q'},
+                    type: 'Premisse'
+                },
+                2: {
+                    id: 2,
+                    expression: 'P',
+                    type: 'Premisse'
+                },
+                3: {
+                    id: 3,
+                    expression: { operation: 'Negation', value: 'Q' },
+                    type: 'Hypothesis',
+                },
+                4: {
+                    id: 4,
+                    expression: { 
+                        operation: 'Disjunction',
+                        left: { operation: 'Negation', value: 'P' },
+                        right: 'Q'
+                    },
+                    from: [[1], 'Implication Elimination'],
+                    type: 'Knowledge'
+                },
+                5: {
+                    id: 5,
+                    expression: {operation: 'Negation', value: 'P'},
+                    type: 'Knowledge',
+                    from: [[3, 4], 'Disjunctive Syllogism'],
+                },
+                6: {
+                    id: 6,
+                    expression: {
+                        operation: 'Conjunction', 
+                        left: 'P', 
+                        right: {operation: 'Negation', value: 'P'}
+                    },
+                    type: 'End of Hypothesis',
+                    hypothesisId: 3,
+                    from: [[2, 5], 'Conjunction Introduction']
+                },
+                7: {
+                    id: 7,
+                    expression: {
+                        operation: 'Implication',
+                        left: {operation: 'Negation', value: 'Q'},
+                        right: {
+                            operation: 'Conjunction', 
+                            left: 'P', 
+                            right: {operation: 'Negation', value: 'P'}
+                        },
+                    },
+                    from: [[3,6], 'Conditional Proof'],
+                    type: 'Knowledge'
+                },
+                8: {
+                    id: 8,
+                    expression: {
+                        operation: 'Negation',
+                        value: {operation: 'Negation', value: 'Q'}
+                    },
+                    from: [[7], 'Reductio Ad Absurdum'],
+                    type: 'Knowledge',
+                },
+                9: {
+                    id: 9,
+                    expression: 'Q',
+                    from: [[8], 'Double Negation'],
+                    type: 'Conclusion'
+                }
+            }
+            assert.ok(ProofChecker.check(proof), 'Validate Modus Ponens')
+        });
+    });
+});

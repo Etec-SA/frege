@@ -47,7 +47,8 @@ export class ProofChecker {
       });
     });
 
-    console.log('\x1b[0m', `\n{ ${premises.join(',')} } ⊢ ${conclusion}`);
+    console.log('\x1b[0m', `\n{ ${premises.join(', ')} } ⊢ ${conclusion}`);
+    return true;
   }
 
   /**

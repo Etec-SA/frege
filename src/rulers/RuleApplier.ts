@@ -611,15 +611,9 @@ export class RuleApplier extends RuleSetter {
   private static throwsIfIsNotEqual(expectedFormula: Formula, actualItem: ProofItemInferred) {
     const actualFormula = actualItem.expression as Formula;
     const inferenceMethod = actualItem.from[1];
-    let actualFormulaWithCommutativity: Formula;
-
-    if (isDisjunction(actualFormula) || isConjunction(actualFormula) || isBiconditional(actualFormula)) {
-      actualFormulaWithCommutativity = RuleApplier.Commutativity(actualFormula);
-    }
-
+    
     if (
       !isDeepStrictEqual(expectedFormula, actualFormula)
-      && !isDeepStrictEqual(expectedFormula, actualFormulaWithCommutativity)
     ) {
       throw new InferenceException(`
         ${inferenceMethod} (Line ${actualItem.id
