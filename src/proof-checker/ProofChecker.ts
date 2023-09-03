@@ -14,7 +14,9 @@ export class ProofChecker {
    * Checks the given proof for validity.
    * 
    * @param {Proof} proof - The proof to be checked.
+   * @returns {boolean} - `true` if the proof is valid, `InferenceError` or `Error` otherwise.
    */
+
   static check(proof: Proof) {
     const mappedProof = ProofChecker.createMappedProof(proof);
     let premises: Array<string | Formula> = [];

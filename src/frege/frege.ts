@@ -7,11 +7,13 @@ import { Formula } from 'src/types/formulas/formula';
 import { Negation } from 'src/types/operations/unary-operation';
 import { ReducedFormula } from 'src/types/conditional-types/reduced-formula';
 import { calculator } from 'src/calculator/Calculator';
+import { ProofChecker } from 'src/proof-checker/ProofChecker';
 
 export class Frege {
   private builder = builder;
   private reducer = reducer;
   private calculator = calculator;
+  private proofChecker = ProofChecker;
 
   /**
    * The `parse` property provides functions to build and parse formulas in propositional logic.
@@ -109,7 +111,55 @@ export class Frege {
     return reducedFormula as ReducedFormula<T>;
   };
 
+  /**
+   * Evaluates the given logical formula with the provided truth values for variables.
+   *
+   * @param formula - The logical formula to evaluate.
+   * @param values - An object representing truth values for propositional variables.
+   * @returns The result of the evaluation (true or false).
+   *
+   * @example
+   * const result = Calculator.evaluate('P -> Q', { P: true, Q: false });
+   * console.log(result); // Output: false
+   */
   public evaluate = this.calculator.evaluate;
 
+  /**
+   * Generates a truth table for the given formula.
+   *
+   * @param formula - The logical formula to generate a truth table for.
+   * @param stringfiedFormula - An optional string representation of the formula.
+   * @returns The truth table as an array containing headers, truth combinations, and results.
+   *
+   * @example
+   * const output = Calculator.generateTruthTable('P -> Q');
+   * console.log(output);
+   * // Output:
+   * // [
+   * //   ['P', 'Q', '(P -> Q)'],
+   * //   [
+   * //     [0, 0], [0, 1],
+   * //     [1, 0], [1, 1]
+   * //   ],
+   * //   [true, true, false, true]
+   * // ]
+   */
   public generateTruthTable = calculator.generateTruthTable;
+
+  /**
+   * Checks the given proof for validity.
+   * 
+   * @param {Proof} proof - The proof to be checked.
+   * @returns {boolean} - `true` if the proof is valid, `InferenceError` or `Error` otherwise.
+   * @example
+   * ```
+   * const proof = {
+    // ... (Your proof object)
+    };
+
+    const isProofValid = ProofChecker.check(proof);
+    console.log(`The proof is valid: ${isProofValid}`);
+   * ```
+   */
+  public checkProof = this.proofChecker.check;
 }
