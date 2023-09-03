@@ -18,8 +18,8 @@
   },
   "keywords": [],
   "author": "iamthepoe",
-  "license": "ISC",
-  "description": "",
+  "license": "MIT",
+  "description": "A propositional logic library written in Typescript",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
