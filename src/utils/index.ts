@@ -11,7 +11,7 @@ export * from './isEndOfHypothesis';
 export * from './isMolecularFormula';
 export * from './isProofItemInferred';
 export * from './isPropositionalVariable';
-export * from './eliminateDoubleNegation'
-export * from './buildConjunctionString'
-export * from './haveEvenNumberOfNegations'
+export * from './eliminateDoubleNegation';
+export * from './buildConjunctionString';
+export * from './haveEvenNumberOfNegations';
 export * from './parse';

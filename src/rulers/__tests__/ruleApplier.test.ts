@@ -19,7 +19,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Biconditional',
               left: 'P',
-              right: { operation: 'Biconditional', left: 'Q', right: 'R' }
+              right: { operation: 'Biconditional', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -28,7 +28,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Biconditional',
               left: { operation: 'Biconditional', left: 'P', right: 'Q' },
-              right: 'R'
+              right: 'R',
             },
             type: 'Knowledge',
             from: [[1], 'Associativity (Biconditional)'],
@@ -50,7 +50,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Biconditional',
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-              right: { operation: 'Biconditional', left: 'Q', right: 'R' }
+              right: { operation: 'Biconditional', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -58,8 +58,12 @@ describe('RuleApplier', () => {
             id: 2,
             expression: {
               operation: 'Biconditional',
-              left: { operation: 'Biconditional', left: { operation: 'Disjunction', left: 'P', right: 'Q' }, right: 'Q' },
-              right: 'R'
+              left: {
+                operation: 'Biconditional',
+                left: { operation: 'Disjunction', left: 'P', right: 'Q' },
+                right: 'Q',
+              },
+              right: 'R',
             },
             type: 'Knowledge',
             from: [[1], 'Associativity (Biconditional)'],
@@ -81,7 +85,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Implication',
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-              right: { operation: 'Conjunction', left: 'Q', right: 'R' }
+              right: { operation: 'Conjunction', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -89,8 +93,12 @@ describe('RuleApplier', () => {
             id: 2,
             expression: {
               operation: 'Conjunction',
-              left: { operation: 'Conjunction', left: { operation: 'Disjunction', left: 'P', right: 'Q' }, right: 'Q' },
-              right: 'R'
+              left: {
+                operation: 'Conjunction',
+                left: { operation: 'Disjunction', left: 'P', right: 'Q' },
+                right: 'Q',
+              },
+              right: 'R',
             },
             type: 'Knowledge',
             from: [[1], 'Associativity (Biconditional)'],
@@ -99,8 +107,8 @@ describe('RuleApplier', () => {
 
         const item = proof[2] as ProofItemInferred;
 
-        assert.throws(() =>
-          RuleApplier.biconditionalAssociativity(item, proof),
+        assert.throws(
+          () => RuleApplier.biconditionalAssociativity(item, proof),
           InferenceException
         );
       });
@@ -114,7 +122,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Conjunction',
               left: 'P',
-              right: { operation: 'Conjunction', left: 'Q', right: 'R' }
+              right: { operation: 'Conjunction', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -123,7 +131,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Conjunction',
               left: { operation: 'Conjunction', left: 'P', right: 'Q' },
-              right: 'R'
+              right: 'R',
             },
             type: 'Knowledge',
             from: [[1], 'Associativity (Conjunction)'],
@@ -145,7 +153,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Conjunction',
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-              right: { operation: 'Conjunction', left: 'Q', right: 'R' }
+              right: { operation: 'Conjunction', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -153,8 +161,12 @@ describe('RuleApplier', () => {
             id: 2,
             expression: {
               operation: 'Conjunction',
-              left: { operation: 'Conjunction', left: { operation: 'Disjunction', left: 'P', right: 'Q' }, right: 'Q' },
-              right: 'R'
+              left: {
+                operation: 'Conjunction',
+                left: { operation: 'Disjunction', left: 'P', right: 'Q' },
+                right: 'Q',
+              },
+              right: 'R',
             },
             type: 'Knowledge',
             from: [[1], 'Associativity (Conjunction)'],
@@ -176,7 +188,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Implication',
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-              right: { operation: 'Conjunction', left: 'Q', right: 'R' }
+              right: { operation: 'Conjunction', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -184,8 +196,12 @@ describe('RuleApplier', () => {
             id: 2,
             expression: {
               operation: 'Conjunction',
-              left: { operation: 'Conjunction', left: { operation: 'Disjunction', left: 'P', right: 'Q' }, right: 'Q' },
-              right: 'R'
+              left: {
+                operation: 'Conjunction',
+                left: { operation: 'Disjunction', left: 'P', right: 'Q' },
+                right: 'Q',
+              },
+              right: 'R',
             },
             type: 'Knowledge',
             from: [[1], 'Associativity (Conjunction)'],
@@ -194,8 +210,8 @@ describe('RuleApplier', () => {
 
         const item = proof[2] as ProofItemInferred;
 
-        assert.throws(() =>
-          RuleApplier.conjunctionAssociativity(item, proof),
+        assert.throws(
+          () => RuleApplier.conjunctionAssociativity(item, proof),
           InferenceException
         );
       });
@@ -209,7 +225,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Disjunction',
               left: 'P',
-              right: { operation: 'Disjunction', left: 'Q', right: 'R' }
+              right: { operation: 'Disjunction', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -218,7 +234,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Disjunction',
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-              right: 'R'
+              right: 'R',
             },
             type: 'Knowledge',
             from: [[1], 'Associativity (Disjunction)'],
@@ -240,7 +256,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Disjunction',
               left: { operation: 'Conjunction', left: 'P', right: 'Q' },
-              right: { operation: 'Disjunction', left: 'Q', right: 'R' }
+              right: { operation: 'Disjunction', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -248,8 +264,12 @@ describe('RuleApplier', () => {
             id: 2,
             expression: {
               operation: 'Disjunction',
-              left: { operation: 'Disjunction', left: { operation: 'Conjunction', left: 'P', right: 'Q' }, right: 'Q' },
-              right: 'R'
+              left: {
+                operation: 'Disjunction',
+                left: { operation: 'Conjunction', left: 'P', right: 'Q' },
+                right: 'Q',
+              },
+              right: 'R',
             },
             type: 'Knowledge',
             from: [[1], 'Associativity (Disjunction)'],
@@ -271,7 +291,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Implication',
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-              right: { operation: 'Conjunction', left: 'Q', right: 'R' }
+              right: { operation: 'Conjunction', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -279,8 +299,12 @@ describe('RuleApplier', () => {
             id: 2,
             expression: {
               operation: 'Conjunction',
-              left: { operation: 'Conjunction', left: { operation: 'Disjunction', left: 'P', right: 'Q' }, right: 'Q' },
-              right: 'R'
+              left: {
+                operation: 'Conjunction',
+                left: { operation: 'Disjunction', left: 'P', right: 'Q' },
+                right: 'Q',
+              },
+              right: 'R',
             },
             type: 'Knowledge',
             from: [[1], 'Associativity (Conjunction)'],
@@ -289,18 +313,16 @@ describe('RuleApplier', () => {
 
         const item = proof[2] as ProofItemInferred;
 
-        assert.throws(() =>
-          RuleApplier.disjunctionAssociativity(item, proof),
+        assert.throws(
+          () => RuleApplier.disjunctionAssociativity(item, proof),
           InferenceException
         );
       });
     });
-
-  })
+  });
   describe('Biconditional Introduction', () => {
     it('should apply in P->Q, Q->P', () => {
-      const proof: Proof =
-      {
+      const proof: Proof = {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
@@ -316,8 +338,8 @@ describe('RuleApplier', () => {
           expression: { operation: 'Biconditional', left: 'P', right: 'Q' },
           type: 'Knowledge',
           from: [[1, 2], 'Biconditional Introduction'],
-        }
-      }
+        },
+      };
 
       const item = proof[3] as ProofItemInferred;
 
@@ -414,9 +436,9 @@ describe('RuleApplier', () => {
           expression: {
             operation: 'Conjunction',
             left: { operation: 'Negation', value: 'P' },
-            right: { operation: 'Negation', value: 'Q' }
+            right: { operation: 'Negation', value: 'Q' },
           },
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -439,26 +461,34 @@ describe('RuleApplier', () => {
           id: 5,
           expression: 'P',
           type: 'Knowledge',
-          from: [[4, 2], 'Disjunctive Syllogism']
+          from: [[4, 2], 'Disjunctive Syllogism'],
         },
         6: {
           id: 6,
-          expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+          expression: {
+            operation: 'Conjunction',
+            left: 'P',
+            right: { operation: 'Negation', value: 'P' },
+          },
           type: 'End of Hypothesis',
           from: [[3, 5], 'Conjunction Introduction'],
-          hypothesisId: 2
+          hypothesisId: 2,
         },
         7: {
           id: 7,
           expression: {
             operation: 'Implication',
             left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-            right: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+            right: {
+              operation: 'Conjunction',
+              left: 'P',
+              right: { operation: 'Negation', value: 'P' },
+            },
           },
           type: 'Knowledge',
           from: [[2, 6], 'Conditional Proof'],
-        }
-      }
+        },
+      };
 
       const item = proof[7] as ProofItemInferred;
 
@@ -468,16 +498,16 @@ describe('RuleApplier', () => {
       );
     });
 
-    it('should not apply if end of hypothesis id doesnt match', ()=>{
+    it('should not apply if end of hypothesis id doesnt match', () => {
       const proof: Proof = {
         1: {
           id: 1,
           expression: {
             operation: 'Conjunction',
             left: { operation: 'Negation', value: 'P' },
-            right: { operation: 'Negation', value: 'Q' }
+            right: { operation: 'Negation', value: 'Q' },
           },
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -500,45 +530,53 @@ describe('RuleApplier', () => {
           id: 5,
           expression: 'P',
           type: 'Knowledge',
-          from: [[4, 2], 'Disjunctive Syllogism']
+          from: [[4, 2], 'Disjunctive Syllogism'],
         },
         6: {
           id: 6,
-          expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+          expression: {
+            operation: 'Conjunction',
+            left: 'P',
+            right: { operation: 'Negation', value: 'P' },
+          },
           type: 'End of Hypothesis',
           from: [[3, 5], 'Conjunction Introduction'],
-          hypothesisId: 3
+          hypothesisId: 3,
         },
         7: {
           id: 7,
           expression: {
             operation: 'Implication',
             left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-            right: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+            right: {
+              operation: 'Conjunction',
+              left: 'P',
+              right: { operation: 'Negation', value: 'P' },
+            },
           },
           type: 'Knowledge',
           from: [[2, 6], 'Conditional Proof'],
-        }
-      }
+        },
+      };
 
       const item = proof[7] as ProofItemInferred;
 
-      assert.throws(()=>
-        RuleApplier.conditionalProof(item, proof),
+      assert.throws(
+        () => RuleApplier.conditionalProof(item, proof),
         InferenceException
       );
     });
 
-    it('should not apply if knowledge references are incorrect', ()=>{
+    it('should not apply if knowledge references are incorrect', () => {
       const proof: Proof = {
         1: {
           id: 1,
           expression: {
             operation: 'Conjunction',
             left: { operation: 'Negation', value: 'P' },
-            right: { operation: 'Negation', value: 'Q' }
+            right: { operation: 'Negation', value: 'Q' },
           },
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -561,50 +599,58 @@ describe('RuleApplier', () => {
           id: 5,
           expression: 'P',
           type: 'Knowledge',
-          from: [[4, 2], 'Disjunctive Syllogism']
+          from: [[4, 2], 'Disjunctive Syllogism'],
         },
         6: {
           id: 6,
-          expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+          expression: {
+            operation: 'Conjunction',
+            left: 'P',
+            right: { operation: 'Negation', value: 'P' },
+          },
           type: 'End of Hypothesis',
           from: [[3, 5], 'Conjunction Introduction'],
-          hypothesisId: 3
+          hypothesisId: 3,
         },
         7: {
           id: 7,
           expression: {
             operation: 'Implication',
             left: { operation: 'Disjunction', left: 'P', right: 'Q' },
-            right: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'P' } },
+            right: {
+              operation: 'Conjunction',
+              left: 'P',
+              right: { operation: 'Negation', value: 'P' },
+            },
           },
           type: 'Knowledge',
           from: [[2, 4], 'Conditional Proof'],
-        }
-      }
+        },
+      };
 
       const item = proof[7] as ProofItemInferred;
 
-      assert.throws(()=>
-        RuleApplier.conditionalProof(item, proof),
+      assert.throws(
+        () => RuleApplier.conditionalProof(item, proof),
         InferenceException
       );
     });
   });
-  
+
   describe('Commutativity', () => {
     it('should apply in P ^ Q', () => {
       const proof: Proof = {
         1: {
           id: 1,
           expression: { operation: 'Conjunction', left: 'P', right: 'Q' },
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Conjunction', left: 'Q', right: 'P' },
           type: 'Knowledge',
-          from: [[1], 'Commutativity']
-        }
+          from: [[1], 'Commutativity'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -620,14 +666,14 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Disjunction', left: 'Q', right: 'P' },
           type: 'Knowledge',
-          from: [[1], 'Commutativity']
-        }
+          from: [[1], 'Commutativity'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -643,14 +689,14 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Biconditional', left: 'P', right: 'Q' },
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Biconditional', left: 'Q', right: 'P' },
           type: 'Knowledge',
-          from: [[1], 'Commutativity']
-        }
+          from: [[1], 'Commutativity'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -666,20 +712,22 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'Q', right: 'P' },
           type: 'Knowledge',
-          from: [[1], 'Commutativity']
-        }
+          from: [[1], 'Commutativity'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
-      assert.throws(() => RuleApplier.commutativity(item, proof), InferenceException);
+      assert.throws(
+        () => RuleApplier.commutativity(item, proof),
+        InferenceException
+      );
     });
-
   });
 
   describe('Conjunction Introduction', () => {
@@ -707,7 +755,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(
         RuleApplier.conjunctionIntroduction(item, proof),
@@ -823,11 +871,11 @@ describe('RuleApplier', () => {
           expression: {
             operation: 'Implication',
             left: { operation: 'Negation', value: 'Q' },
-            right: { operation: 'Negation', value: 'P' }
+            right: { operation: 'Negation', value: 'P' },
           },
           type: 'Knowledge',
-          from: [[1], 'Contraposition']
-        }
+          from: [[1], 'Contraposition'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -845,15 +893,15 @@ describe('RuleApplier', () => {
           expression: {
             operation: 'Implication',
             left: { operation: 'Negation', value: 'Q' },
-            right: { operation: 'Negation', value: 'P' }
+            right: { operation: 'Negation', value: 'P' },
           },
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
           type: 'Knowledge',
-          from: [[1], 'Contraposition']
+          from: [[1], 'Contraposition'],
         },
       };
 
@@ -870,17 +918,17 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('¬¬P->¬¬Q'),
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: {
             operation: 'Implication',
             left: { operation: 'Negation', value: 'Q' },
-            right: { operation: 'Negation', value: 'P' }
+            right: { operation: 'Negation', value: 'P' },
           },
           type: 'Knowledge',
-          from: [[1], 'Contraposition']
+          from: [[1], 'Contraposition'],
         },
       };
 
@@ -897,13 +945,13 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('(¬¬¬Q)->(¬¬¬P)'),
-          type: 'Premise'
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
           type: 'Knowledge',
-          from: [[1], 'Contraposition']
+          from: [[1], 'Contraposition'],
         },
       };
 
@@ -926,15 +974,17 @@ describe('RuleApplier', () => {
           id: 2,
           expression: { operation: 'Implication', left: 'Q', right: 'P' },
           type: 'Knowledge',
-          from: [[1], 'Contraposition']
-        }
+          from: [[1], 'Contraposition'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
 
-      assert.throws(() => RuleApplier.contraposition(item, proof), InferenceException);
+      assert.throws(
+        () => RuleApplier.contraposition(item, proof),
+        InferenceException
+      );
     });
-
   });
 
   describe('Disjunction Introduction', () => {
@@ -1028,7 +1078,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Conjunction',
               left: 'P',
-              right: { operation: 'Disjunction', left: 'Q', right: 'R' }
+              right: { operation: 'Disjunction', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -1042,7 +1092,7 @@ describe('RuleApplier', () => {
             type: 'Knowledge',
             from: [[1], 'Distribution (Conjunction over Disjunction)'],
           },
-        }
+        };
 
         const item = proof[2] as ProofItemInferred;
 
@@ -1070,18 +1120,18 @@ describe('RuleApplier', () => {
               left: {
                 operation: 'Disjunction',
                 left: { operation: 'Conjunction', left: 'P', right: 'R' },
-                right: { operation: 'Conjunction', left: 'P', right: 'S' }
+                right: { operation: 'Conjunction', left: 'P', right: 'S' },
               },
               right: {
                 operation: 'Disjunction',
                 left: { operation: 'Conjunction', left: 'Q', right: 'R' },
-                right: { operation: 'Conjunction', left: 'Q', right: 'S' }
-              }
+                right: { operation: 'Conjunction', left: 'Q', right: 'S' },
+              },
             },
             type: 'Knowledge',
             from: [[1], 'Distribution (Conjunction over Disjunction)'],
           },
-        }
+        };
 
         const item = proof[2] as ProofItemInferred;
 
@@ -1112,7 +1162,7 @@ describe('RuleApplier', () => {
             type: 'Knowledge',
             from: [[1], 'Distribution (Conjunction over Disjunction)'],
           },
-        }
+        };
 
         const item = proof[2] as ProofItemInferred;
         assert.throws(
@@ -1130,7 +1180,7 @@ describe('RuleApplier', () => {
             expression: {
               operation: 'Disjunction',
               left: 'P',
-              right: { operation: 'Conjunction', left: 'Q', right: 'R' }
+              right: { operation: 'Conjunction', left: 'Q', right: 'R' },
             },
             type: 'Premise',
           },
@@ -1144,7 +1194,7 @@ describe('RuleApplier', () => {
             type: 'Knowledge',
             from: [[1], 'Distribution (Disjunction over Conjunction)'],
           },
-        }
+        };
 
         const item = proof[2] as ProofItemInferred;
 
@@ -1172,18 +1222,18 @@ describe('RuleApplier', () => {
               left: {
                 operation: 'Conjunction',
                 left: { operation: 'Disjunction', left: 'P', right: 'R' },
-                right: { operation: 'Disjunction', left: 'P', right: 'S' }
+                right: { operation: 'Disjunction', left: 'P', right: 'S' },
               },
               right: {
                 operation: 'Conjunction',
                 left: { operation: 'Disjunction', left: 'Q', right: 'R' },
-                right: { operation: 'Disjunction', left: 'Q', right: 'S' }
-              }
+                right: { operation: 'Disjunction', left: 'Q', right: 'S' },
+              },
             },
             type: 'Knowledge',
             from: [[1], 'Distribution (Disjunction over Conjunction)'],
           },
-        }
+        };
 
         const item = proof[2] as ProofItemInferred;
 
@@ -1214,7 +1264,7 @@ describe('RuleApplier', () => {
             type: 'Knowledge',
             from: [[1], 'Distribution (Disjunction over Conjunction)'],
           },
-        }
+        };
 
         const item = proof[2] as ProofItemInferred;
         assert.throws(
@@ -1230,7 +1280,10 @@ describe('RuleApplier', () => {
       const proof: Proof = {
         1: {
           id: 1,
-          expression: { operation: 'Negation', value: { operation: 'Disjunction', left: 'P', right: 'Q' } },
+          expression: {
+            operation: 'Negation',
+            value: { operation: 'Disjunction', left: 'P', right: 'Q' },
+          },
           type: 'Premise',
         },
         2: {
@@ -1241,8 +1294,8 @@ describe('RuleApplier', () => {
             right: { operation: 'Negation', value: 'Q' },
           },
           type: 'Knowledge',
-          from: [[1], 'De Morgan']
-        }
+          from: [[1], 'De Morgan'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -1256,7 +1309,10 @@ describe('RuleApplier', () => {
       const proof: Proof = {
         1: {
           id: 1,
-          expression: { operation: 'Negation', value: { operation: 'Conjunction', left: 'P', right: 'Q' } },
+          expression: {
+            operation: 'Negation',
+            value: { operation: 'Conjunction', left: 'P', right: 'Q' },
+          },
           type: 'Premise',
         },
         2: {
@@ -1267,8 +1323,8 @@ describe('RuleApplier', () => {
             right: { operation: 'Negation', value: 'Q' },
           },
           type: 'Knowledge',
-          from: [[1], 'De Morgan']
-        }
+          from: [[1], 'De Morgan'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -1283,11 +1339,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: {
-            operation: 'Negation', value: {
+            operation: 'Negation',
+            value: {
               operation: 'Conjunction',
               left: { operation: 'Negation', value: 'P' },
-              right: { operation: 'Negation', value: 'Q' }
-            }
+              right: { operation: 'Negation', value: 'Q' },
+            },
           },
           type: 'Premise',
         },
@@ -1295,12 +1352,18 @@ describe('RuleApplier', () => {
           id: 2,
           expression: {
             operation: 'Disjunction',
-            left: { operation: 'Negation', value: { operation: 'Negation', value: 'P' } },
-            right: { operation: 'Negation', value: { operation: 'Negation', value: 'Q' } },
+            left: {
+              operation: 'Negation',
+              value: { operation: 'Negation', value: 'P' },
+            },
+            right: {
+              operation: 'Negation',
+              value: { operation: 'Negation', value: 'Q' },
+            },
           },
           type: 'Knowledge',
-          from: [[1], 'De Morgan']
-        }
+          from: [[1], 'De Morgan'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -1328,8 +1391,8 @@ describe('RuleApplier', () => {
             value: { operation: 'Disjunction', left: 'P', right: 'Q' },
           },
           type: 'Knowledge',
-          from: [[1], 'De Morgan']
-        }
+          from: [[1], 'De Morgan'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -1357,8 +1420,8 @@ describe('RuleApplier', () => {
             value: { operation: 'Conjunction', left: 'P', right: 'Q' },
           },
           type: 'Knowledge',
-          from: [[1], 'De Morgan']
-        }
+          from: [[1], 'De Morgan'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -1373,11 +1436,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: {
-            operation: 'Negation', value: {
+            operation: 'Negation',
+            value: {
               operation: 'Disjunction',
               left: { operation: 'Negation', value: 'P' },
-              right: { operation: 'Negation', value: 'Q' }
-            }
+              right: { operation: 'Negation', value: 'Q' },
+            },
           },
           type: 'Premise',
         },
@@ -1385,12 +1449,18 @@ describe('RuleApplier', () => {
           id: 2,
           expression: {
             operation: 'Conjunction',
-            left: { operation: 'Negation', value: { operation: 'Negation', value: 'P' } },
-            right: { operation: 'Negation', value: { operation: 'Negation', value: 'Q' } },
+            left: {
+              operation: 'Negation',
+              value: { operation: 'Negation', value: 'P' },
+            },
+            right: {
+              operation: 'Negation',
+              value: { operation: 'Negation', value: 'Q' },
+            },
           },
           type: 'Knowledge',
-          from: [[1], 'De Morgan']
-        }
+          from: [[1], 'De Morgan'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -1405,14 +1475,15 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: {
-            operation: 'Negation', value: {
+            operation: 'Negation',
+            value: {
               operation: 'Negation',
               value: {
                 operation: 'Conjunction',
                 left: 'P',
-                right: 'Q'
-              }
-            }
+                right: 'Q',
+              },
+            },
           },
           type: 'Premise',
         },
@@ -1424,13 +1495,16 @@ describe('RuleApplier', () => {
             right: { operation: 'Negation', value: 'Q' },
           },
           type: 'Knowledge',
-          from: [[1], 'De Morgan']
-        }
+          from: [[1], 'De Morgan'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
 
-      assert.throws(() => RuleApplier.deMorgan(item, proof), InferenceException);
+      assert.throws(
+        () => RuleApplier.deMorgan(item, proof),
+        InferenceException
+      );
     });
   });
 
@@ -1455,7 +1529,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(
         RuleApplier.disjunctiveSyllogism(item, proof),
@@ -1483,7 +1557,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(
         RuleApplier.disjunctiveSyllogism(item, proof),
@@ -1511,7 +1585,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.throws(() => {
         RuleApplier.disjunctiveSyllogism(item, proof);
@@ -1538,7 +1612,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.throws(() => {
         RuleApplier.disjunctiveSyllogism(item, proof);
@@ -1653,15 +1727,22 @@ describe('RuleApplier', () => {
       const proof: Proof = {
         1: {
           id: 1,
-          expression: { operation: 'Negation', value: { operation: 'Implication', left: 'P', right: 'Q' } },
+          expression: {
+            operation: 'Negation',
+            value: { operation: 'Implication', left: 'P', right: 'Q' },
+          },
           type: 'Premise',
         },
         2: {
           id: 2,
-          expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'Q' } },
+          expression: {
+            operation: 'Conjunction',
+            left: 'P',
+            right: { operation: 'Negation', value: 'Q' },
+          },
           type: 'Knowledge',
-          from: [[1], 'Implication Negation']
-        }
+          from: [[1], 'Implication Negation'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
@@ -1676,20 +1757,30 @@ describe('RuleApplier', () => {
       const proof: Proof = {
         1: {
           id: 1,
-          expression: { operation: 'Negation', value: { operation: 'Biconditional', left: 'P', right: 'Q' } },
+          expression: {
+            operation: 'Negation',
+            value: { operation: 'Biconditional', left: 'P', right: 'Q' },
+          },
           type: 'Premise',
         },
         2: {
           id: 2,
-          expression: { operation: 'Conjunction', left: 'P', right: { operation: 'Negation', value: 'Q' } },
+          expression: {
+            operation: 'Conjunction',
+            left: 'P',
+            right: { operation: 'Negation', value: 'Q' },
+          },
           type: 'Knowledge',
-          from: [[1], 'Implication Negation']
-        }
+          from: [[1], 'Implication Negation'],
+        },
       };
 
       const item = proof[2] as ProofItemInferred;
 
-      assert.throws(() => RuleApplier.implicationNegation(item, proof), InferenceException);
+      assert.throws(
+        () => RuleApplier.implicationNegation(item, proof),
+        InferenceException
+      );
     });
   });
 
@@ -1714,7 +1805,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.equal(RuleApplier.modusPonens(item, proof), item.expression);
     });
@@ -1743,7 +1834,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(RuleApplier.modusPonens(item, proof), item.expression);
     });
@@ -1778,7 +1869,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[5] as ProofItemInferred;;
+      const item = proof[5] as ProofItemInferred;
 
       assert.equal(RuleApplier.modusPonens(item, proof), item.expression);
     });
@@ -1807,7 +1898,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(RuleApplier.modusPonens(item, proof), item.expression);
     });
@@ -1844,9 +1935,9 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
-      assert.deepEqual(RuleApplier.modusPonens(item, proof), item.expression)
+      assert.deepEqual(RuleApplier.modusPonens(item, proof), item.expression);
     });
 
     it('should not apply in P->Q, Q', () => {
@@ -1869,7 +1960,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.throws(() => {
         RuleApplier.modusPonens(item, proof);
@@ -1896,7 +1987,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.throws(() => {
         RuleApplier.modusPonens(item, proof);
@@ -1925,7 +2016,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(RuleApplier.modusTollens(item, proof), item.expression);
     });
@@ -1960,7 +2051,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(RuleApplier.modusTollens(item, proof), item.expression);
     });
@@ -1985,7 +2076,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.throws(() => {
         RuleApplier.modusTollens(item, proof);
@@ -2012,7 +2103,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.throws(() => {
         RuleApplier.modusTollens(item, proof);
@@ -2176,9 +2267,12 @@ describe('RuleApplier', () => {
         },
         2: {
           id: 2,
-          expression: { operation: 'Negation', value: { operation: 'Negation', value: 'P' } },
+          expression: {
+            operation: 'Negation',
+            value: { operation: 'Negation', value: 'P' },
+          },
           type: 'Knowledge',
-          from: [[1], 'Double Negation Introduction']
+          from: [[1], 'Double Negation Introduction'],
         },
       };
 
@@ -2196,22 +2290,24 @@ describe('RuleApplier', () => {
           id: 2,
           expression: 'P',
           type: 'Knowledge',
-          from: [[1], 'Double Negation Introduction']
+          from: [[1], 'Double Negation Introduction'],
         },
         1: {
           id: 1,
-          expression: { operation: 'Negation', value: { operation: 'Negation', value: 'P' } },
-          type: 'Premise'
+          expression: {
+            operation: 'Negation',
+            value: { operation: 'Negation', value: 'P' },
+          },
+          type: 'Premise',
         },
       };
 
       const item = proof[2] as ProofItemInferred;
 
-      assert.throws(() =>
-        RuleApplier.doubleNegationIntroduction(item, proof),
+      assert.throws(
+        () => RuleApplier.doubleNegationIntroduction(item, proof),
         InferenceException
       );
-
     });
   });
 
@@ -2236,7 +2332,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(
         RuleApplier.hypotheticalSyllogism(item, proof),
@@ -2264,7 +2360,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(
         RuleApplier.hypotheticalSyllogism(item, proof),
@@ -2292,7 +2388,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.deepEqual(
         RuleApplier.hypotheticalSyllogism(item, proof),
@@ -2324,7 +2420,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.throws(() => {
         RuleApplier.hypotheticalSyllogism(item, proof);
@@ -2351,7 +2447,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[3] as ProofItemInferred;;
+      const item = proof[3] as ProofItemInferred;
 
       assert.throws(() => {
         RuleApplier.hypotheticalSyllogism(item, proof);
@@ -2383,7 +2479,7 @@ describe('RuleApplier', () => {
         },
       };
 
-      const item = proof[4] as ProofItemInferred;;
+      const item = proof[4] as ProofItemInferred;
 
       assert.throws(() => {
         RuleApplier.hypotheticalSyllogism(item, proof);

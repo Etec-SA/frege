@@ -1,4 +1,4 @@
-import { ProofItem } from "types/syntactic/proof";
+import { ProofItem } from 'types/syntactic/proof';
 
 export function isHypothesis(x: ProofItem) {
   return x.type === 'Hypothesis';

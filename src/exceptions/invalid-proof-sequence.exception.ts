@@ -1,1 +1,1 @@
-export class InvalidProofSequenceException extends Error {};
+export class InvalidProofSequenceException extends Error {}

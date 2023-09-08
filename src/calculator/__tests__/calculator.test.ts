@@ -1,7 +1,13 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import { calculator } from '../Calculator';
-import { Implication, Conjunction, Disjunction, Biconditional, Negation } from 'types';
+import {
+  Implication,
+  Conjunction,
+  Disjunction,
+  Biconditional,
+  Negation,
+} from 'types';
 
 describe('calculator', () => {
   it('should be defined', () => {
@@ -458,7 +464,7 @@ describe('calculator', () => {
       });
     });
 
-    describe('Fallacies', ()=>{
+    describe('Fallacies', () => {
       it('should invalidate a fallacy of asserting the consequent', () => {
         const output = calculator.isSemanticConsequence(['P->Q', 'Q'], 'P');
         assert.ok(!output);
@@ -468,6 +474,6 @@ describe('calculator', () => {
         const output = calculator.isSemanticConsequence(['P ∨ Q', 'P'], '¬Q');
         assert.ok(!output);
       });
-    })
+    });
   });
 });

@@ -7,23 +7,22 @@ import {
   Implication,
   Formula,
   Negation,
-  BinaryOperationFormula
+  BinaryOperationFormula,
 } from 'types';
 
-import { 
-  eliminateDoubleNegations, 
-  isBiconditional, 
-  isConjunction, 
-  isContradiction, 
-  isDisjunction, 
-  isImplication, 
-  isNegation, 
-  isPropositionalVariable, 
-  parseToFormulaString 
+import {
+  eliminateDoubleNegations,
+  isBiconditional,
+  isConjunction,
+  isContradiction,
+  isDisjunction,
+  isImplication,
+  isNegation,
+  isPropositionalVariable,
+  parseToFormulaString,
 } from 'utils';
 
 import { isDeepStrictEqual } from 'util';
-
 
 /**
  * Class responsible for defining the inference rules.
@@ -49,7 +48,9 @@ export class RuleSetter {
     throw new InferenceException(errorMsg);
   }
 
-  protected static BiconditionalElimination(biconditional: Biconditional): Conjunction {
+  protected static BiconditionalElimination(
+    biconditional: Biconditional
+  ): Conjunction {
     const implication1 = {
       operation: 'Implication',
       left: biconditional.left,
@@ -68,7 +69,10 @@ export class RuleSetter {
     } as Conjunction;
   }
 
-  protected static ConditionalProof(hypothesis: Formula, conclusionOfHypothesis: Formula) {
+  protected static ConditionalProof(
+    hypothesis: Formula,
+    conclusionOfHypothesis: Formula
+  ) {
     const conditional: Implication = {
       operation: 'Implication',
       left: hypothesis,
@@ -91,7 +95,9 @@ export class RuleSetter {
     );
   }
 
-  protected static Commutativity(formula: Conjunction | Disjunction | Biconditional) {
+  protected static Commutativity(
+    formula: Conjunction | Disjunction | Biconditional
+  ) {
     const right = formula.right;
     formula.right = formula.left;
     formula.left = right;
@@ -126,7 +132,6 @@ export class RuleSetter {
   }
 
   protected static DeMorgan(formula: Negation | Disjunction | Conjunction) {
-
     if (isNegation(formula)) {
       if (isDisjunction(formula.value)) {
         return {
@@ -147,7 +152,9 @@ export class RuleSetter {
 
     if (isDisjunction(formula)) {
       if (!(isNegation(formula.left) && isNegation(formula.right)))
-        throw new InferenceException(`De Morgan: cannot apply in ${parseToFormulaString(formula)}`);
+        throw new InferenceException(
+          `De Morgan: cannot apply in ${parseToFormulaString(formula)}`
+        );
 
       return {
         operation: 'Negation',
@@ -155,13 +162,15 @@ export class RuleSetter {
           operation: 'Conjunction',
           left: formula.left.value,
           right: formula.right.value,
-        }
+        },
       } as Negation;
     }
 
     if (isConjunction(formula)) {
       if (!(isNegation(formula.left) && isNegation(formula.right)))
-        throw new InferenceException(`De Morgan: cannot apply in ${parseToFormulaString(formula)}`);
+        throw new InferenceException(
+          `De Morgan: cannot apply in ${parseToFormulaString(formula)}`
+        );
 
       return {
         operation: 'Negation',
@@ -169,11 +178,13 @@ export class RuleSetter {
           operation: 'Disjunction',
           left: formula.left.value,
           right: formula.right.value,
-        }
+        },
       } as Negation;
     }
 
-    throw new InferenceException(`De Morgan: cannot apply in ${parseToFormulaString(formula)}`);
+    throw new InferenceException(
+      `De Morgan: cannot apply in ${parseToFormulaString(formula)}`
+    );
   }
 
   protected static DisjunctionIntroduction(
@@ -215,13 +226,17 @@ export class RuleSetter {
 
   protected static ImplicationNegation(negation: Negation) {
     if (!isImplication(negation.value))
-      throw new InferenceException(`Implication Negation: cannot apply in ${parseToFormulaString(negation)}`)
+      throw new InferenceException(
+        `Implication Negation: cannot apply in ${parseToFormulaString(
+          negation
+        )}`
+      );
 
     return {
       operation: 'Conjunction',
       left: negation.value.left,
-      right: { operation: 'Negation', value: negation.value.right }
-    } as Conjunction
+      right: { operation: 'Negation', value: negation.value.right },
+    } as Conjunction;
   }
 
   protected static DoubleNegation(formula: Formula) {
@@ -231,17 +246,21 @@ export class RuleSetter {
   protected static DoubleNegationIntroduction(formula: Formula) {
     const negation: Negation = {
       operation: 'Negation',
-      value: { operation: 'Negation', value: formula }
-    }
+      value: { operation: 'Negation', value: formula },
+    };
 
     return negation;
   }
 
-  protected static ConjunctionOverDisjunctionDistribution(formula: Conjunction) {
+  protected static ConjunctionOverDisjunctionDistribution(
+    formula: Conjunction
+  ) {
     return this.Distribute(formula, isDisjunction);
   }
 
-  protected static DisjunctionOverConjunctionDistribution(formula: Disjunction) {
+  protected static DisjunctionOverConjunctionDistribution(
+    formula: Disjunction
+  ) {
     return this.Distribute(formula, isConjunction);
   }
 
@@ -318,10 +337,10 @@ export class RuleSetter {
     );
   }
 
-  private static DistributeRecursively<T extends BinaryOperationFormula, K extends BinaryOperationFormula>(
-    formula: T,
-    isK: (x: any) => x is K
-  ) {
+  private static DistributeRecursively<
+    T extends BinaryOperationFormula,
+    K extends BinaryOperationFormula,
+  >(formula: T, isK: (x: any) => x is K) {
     try {
       return this.Distribute(formula, isK);
     } catch {
@@ -329,10 +348,10 @@ export class RuleSetter {
     }
   }
 
-  private static Distribute<T extends BinaryOperationFormula, K extends BinaryOperationFormula>(
-    formula: T,
-    isK: (x: any) => x is K
-  ) {
+  private static Distribute<
+    T extends BinaryOperationFormula,
+    K extends BinaryOperationFormula,
+  >(formula: T, isK: (x: any) => x is K) {
     let KFormula: K;
     let otherFormula: Formula;
 
@@ -340,23 +359,38 @@ export class RuleSetter {
       KFormula = formula.left;
       otherFormula = formula.right;
     } else if (isK(formula.right)) {
-      KFormula = formula.right,
-        otherFormula = formula.left;
+      (KFormula = formula.right), (otherFormula = formula.left);
     } else {
-      throw new InferenceException(`Distribution: cannot apply in ${parseToFormulaString(formula)}`);
+      throw new InferenceException(
+        `Distribution: cannot apply in ${parseToFormulaString(formula)}`
+      );
     }
 
     let distributedFormula = {
       operation: KFormula.operation,
-      left: { operation: formula.operation, left: otherFormula, right: KFormula.left },
-      right: { operation: formula.operation, left: otherFormula, right: KFormula.right },
+      left: {
+        operation: formula.operation,
+        left: otherFormula,
+        right: KFormula.left,
+      },
+      right: {
+        operation: formula.operation,
+        left: otherFormula,
+        right: KFormula.right,
+      },
     };
 
     if (!isPropositionalVariable(distributedFormula.left))
-      distributedFormula.left = this.DistributeRecursively(distributedFormula.left, isK);
+      distributedFormula.left = this.DistributeRecursively(
+        distributedFormula.left,
+        isK
+      );
 
     if (!isPropositionalVariable(distributedFormula.right))
-      distributedFormula.right = this.DistributeRecursively(distributedFormula.right, isK);
+      distributedFormula.right = this.DistributeRecursively(
+        distributedFormula.right,
+        isK
+      );
 
     return distributedFormula;
   }
@@ -378,8 +412,8 @@ export class RuleSetter {
         right: {
           operation: formula.operation,
           left: mainFormula.right,
-          right: otherFormula
-        }
+          right: otherFormula,
+        },
       } as T;
     }
 
@@ -392,12 +426,14 @@ export class RuleSetter {
         left: {
           operation: formula.operation,
           left: otherFormula,
-          right: mainFormula.left
+          right: mainFormula.left,
         },
-        right: mainFormula.right
+        right: mainFormula.right,
       } as T;
     }
 
-    throw new InferenceException(`Associativity: cannot apply in ${parseToFormulaString(formula)}`);
+    throw new InferenceException(
+      `Associativity: cannot apply in ${parseToFormulaString(formula)}`
+    );
   }
 }

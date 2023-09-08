@@ -3,8 +3,17 @@
   "llang is MIT licensed. Feel free to use it, contribute or spread the word. Created with love by Petr Nevyhoštěný."
 */
 
-import { Token, Formula, Operator, Negation, Disjunction, Conjunction, Implication, Biconditional, PropositionalVariable } from "types";
-
+import {
+  Token,
+  Formula,
+  Operator,
+  Negation,
+  Disjunction,
+  Conjunction,
+  Implication,
+  Biconditional,
+  PropositionalVariable,
+} from 'types';
 
 /**
  * Parser class for analyzing tokens and creating a logical formula tree.
@@ -32,15 +41,15 @@ export class Parser {
   private process(operation?: Operator): Formula {
     operation = operation || null;
     const args: Formula[] = [];
-    
+
     while (this.next()) {
-      if(this.token === undefined) break;
+      if (this.token === undefined) break;
       if (this.token?.type === 'boundary') {
         if (this.token.value === ')') return this.node(operation, args);
 
         args.push(this.process());
       }
-      
+
       if (this.token?.type === 'variable') {
         args.push(this.token.value);
         if (this.isUnary(operation)) return this.node(operation, args);

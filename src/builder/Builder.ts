@@ -1,5 +1,5 @@
 import { InvalidFormulaException } from 'exceptions';
-import { Formula } from 'types'
+import { Formula } from 'types';
 
 /**
  * A class that provides methods to build formulas with

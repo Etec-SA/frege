@@ -1,12 +1,11 @@
-import { builder } from "builder/Builder";
-import { calculator } from "calculator/Calculator";
-import { Lexer } from "lexer/Lexer";
-import { Parser } from "parser/Parser";
-import { ProofChecker } from "proof-checker/ProofChecker";
-import { reducer } from "reducer/Reducer";
-import { Formula, BinaryOperationFormula, Negation } from "types";
-import { ReducedFormula } from "types/conditional-types/reduced-formula";
-
+import { builder } from 'builder/Builder';
+import { calculator } from 'calculator/Calculator';
+import { Lexer } from 'lexer/Lexer';
+import { Parser } from 'parser/Parser';
+import { ProofChecker } from 'proof-checker/ProofChecker';
+import { reducer } from 'reducer/Reducer';
+import { Formula, BinaryOperationFormula, Negation } from 'types';
+import { ReducedFormula } from 'types/conditional-types/reduced-formula';
 
 export class Frege {
   private builder = builder;
@@ -64,10 +63,8 @@ export class Frege {
 
   public verifyConsequence = {
     semantic: this.calculator.isSemanticConsequence,
-    syntactic: () => {
-
-    }
-  }
+    syntactic: () => {},
+  };
   /**
    * Reduces a formula object or a formula string to its reduced form.
    * @param formula - The formula object or formula string to reduce.

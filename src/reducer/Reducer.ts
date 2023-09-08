@@ -1,4 +1,11 @@
-import { Formula, Biconditional, Conjunction, Implication, Disjunction, Negation } from "types";
+import {
+  Formula,
+  Biconditional,
+  Conjunction,
+  Implication,
+  Disjunction,
+  Negation,
+} from 'types';
 
 /**
  * A class that provides methods to reduce formulas, which use implication or biconditional, to use only negations, conjunctions and disjunctions.

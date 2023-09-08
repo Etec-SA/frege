@@ -1,1 +1,1 @@
-export class InferenceException extends Error { }
+export class InferenceException extends Error {}

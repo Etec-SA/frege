@@ -2,8 +2,13 @@ import assert from 'node:assert';
 import { describe, it } from 'node:test';
 import { reducer } from '../Reducer';
 import { builder } from 'builder/Builder';
-import { Implication, Biconditional, Disjunction, Conjunction, Negation } from 'types';
-
+import {
+  Implication,
+  Biconditional,
+  Disjunction,
+  Conjunction,
+  Negation,
+} from 'types';
 
 describe('Reducer', () => {
   it('should reduce (P -> Q) to (¬(P) v Q)', () => {

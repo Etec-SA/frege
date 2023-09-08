@@ -1,7 +1,24 @@
 import { InferenceException } from 'exceptions';
-import { ProofItemInferred, Proof, Formula, Disjunction, Negation, Implication } from 'types';
+import {
+  ProofItemInferred,
+  Proof,
+  Formula,
+  Disjunction,
+  Negation,
+  Implication,
+} from 'types';
 import { isDeepStrictEqual } from 'util';
-import { isImplication, isBiconditional, isPropositionalVariable, isConjunction, parseToFormulaString, isDisjunction, isNegation, isHypothesis, isEndOfHypothesis } from 'utils';
+import {
+  isImplication,
+  isBiconditional,
+  isPropositionalVariable,
+  isConjunction,
+  parseToFormulaString,
+  isDisjunction,
+  isNegation,
+  isHypothesis,
+  isEndOfHypothesis,
+} from 'utils';
 import { RuleSetter } from './RuleSetter';
 
 /**
@@ -17,7 +34,7 @@ export class RuleApplier extends RuleSetter {
 
     const formulas = [
       proof[requiredItens[0]].expression,
-      proof[requiredItens[1]].expression
+      proof[requiredItens[1]].expression,
     ];
 
     if (!isImplication(formulas[0]) || !isImplication(formulas[1]))
@@ -25,7 +42,10 @@ export class RuleApplier extends RuleSetter {
         `Biconditional Introduction (Line ${line}): conditionals not found.`
       );
 
-    const inferenceResult = RuleApplier.BiconditionalIntroduction(formulas[0], formulas[1]);
+    const inferenceResult = RuleApplier.BiconditionalIntroduction(
+      formulas[0],
+      formulas[1]
+    );
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
@@ -72,7 +92,10 @@ export class RuleApplier extends RuleSetter {
         `Conditionalization (Line ${line}): formula not found.`
       );
 
-    const inferenceResult = RuleApplier.Conditionalization(formula, item.expression);
+    const inferenceResult = RuleApplier.Conditionalization(
+      formula,
+      item.expression
+    );
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
@@ -88,19 +111,28 @@ export class RuleApplier extends RuleSetter {
 
     const firstFormula = proof[requiredItens[0]].expression;
 
-    if (typeof firstFormula === 'string' && !isPropositionalVariable(firstFormula))
+    if (
+      typeof firstFormula === 'string' &&
+      !isPropositionalVariable(firstFormula)
+    )
       throw new InferenceException(
         `Conjunction Introduction (Line ${line}): line ${requiredItens[0]} formula not found.`
       );
 
     const secondFormula = proof[requiredItens[1]].expression;
 
-    if (typeof secondFormula === 'string' && !isPropositionalVariable(secondFormula))
+    if (
+      typeof secondFormula === 'string' &&
+      !isPropositionalVariable(secondFormula)
+    )
       throw new InferenceException(
         `Conjunction Introduction (Line ${line}): line ${requiredItens[1]} formula not found.`
       );
 
-    const inferenceResult = RuleApplier.ConjunctionIntroduction(firstFormula, secondFormula);
+    const inferenceResult = RuleApplier.ConjunctionIntroduction(
+      firstFormula,
+      secondFormula
+    );
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
@@ -148,8 +180,14 @@ export class RuleApplier extends RuleSetter {
 
     const formula = proof[requiredItem[0]].expression;
 
-    if (!isDisjunction(formula) && !isConjunction(formula) && !isBiconditional(formula))
-      throw new InferenceException(`Commutativity (Line ${line}): cannot find any conjunction, biconditional or disjunction.`);
+    if (
+      !isDisjunction(formula) &&
+      !isConjunction(formula) &&
+      !isBiconditional(formula)
+    )
+      throw new InferenceException(
+        `Commutativity (Line ${line}): cannot find any conjunction, biconditional or disjunction.`
+      );
 
     const inferenceResult = RuleApplier.Commutativity(formula);
 
@@ -168,7 +206,9 @@ export class RuleApplier extends RuleSetter {
     const formula = proof[requiredItem[0]].expression;
 
     if (!isImplication(formula))
-      throw new InferenceException(`Contraposition (Line ${line}): implication not found.`);
+      throw new InferenceException(
+        `Contraposition (Line ${line}): implication not found.`
+      );
 
     const inferenceResult = RuleApplier.Contraposition(formula);
 
@@ -186,12 +226,18 @@ export class RuleApplier extends RuleSetter {
 
     const formula = proof[requiredItem[0]].expression;
 
-    if (!isNegation(formula) && !isConjunction(formula) && !isDisjunction(formula))
-      throw new InferenceException(`De Morgan (Line ${line}): formula is not a disjunction, conjunction or negation.`);
+    if (
+      !isNegation(formula) &&
+      !isConjunction(formula) &&
+      !isDisjunction(formula)
+    )
+      throw new InferenceException(
+        `De Morgan (Line ${line}): formula is not a disjunction, conjunction or negation.`
+      );
 
     const inferenceResult = RuleApplier.DeMorgan(formula);
 
-    RuleApplier.throwsIfIsNotEqual(inferenceResult, item)
+    RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
@@ -215,7 +261,10 @@ export class RuleApplier extends RuleSetter {
         `Disjunction Introduction (Line ${line}): formula not found.`
       );
 
-    const inferenceResult = RuleApplier.DisjunctionIntroduction(formula, item.expression);
+    const inferenceResult = RuleApplier.DisjunctionIntroduction(
+      formula,
+      item.expression
+    );
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
@@ -246,16 +295,23 @@ export class RuleApplier extends RuleSetter {
     }
 
     if (!disjunction)
-      throw new InferenceException(`Disjunctive Syllogism (Line ${line}): disjunction not found`);
+      throw new InferenceException(
+        `Disjunctive Syllogism (Line ${line}): disjunction not found`
+      );
 
     let negation: Negation;
 
     if (isNegation(remainingFormula)) negation = remainingFormula;
 
     if (!negation)
-      throw new InferenceException(`Disjunctive Syllogism (Line ${line}): negation not found`);
+      throw new InferenceException(
+        `Disjunctive Syllogism (Line ${line}): negation not found`
+      );
 
-    const inferenceResult = RuleApplier.DisjunctiveSyllogism(disjunction, negation);
+    const inferenceResult = RuleApplier.DisjunctiveSyllogism(
+      disjunction,
+      negation
+    );
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
@@ -272,7 +328,9 @@ export class RuleApplier extends RuleSetter {
     const formula = proof[requiredItem[0]].expression;
 
     if (typeof formula === 'string' && !isPropositionalVariable(formula))
-      throw new InferenceException(`Double Negation (Line ${line}): formula not found.`);
+      throw new InferenceException(
+        `Double Negation (Line ${line}): formula not found.`
+      );
 
     const inferenceResult = RuleApplier.DoubleNegation(formula);
 
@@ -291,7 +349,9 @@ export class RuleApplier extends RuleSetter {
     const formula = proof[requiredItem[0]].expression;
 
     if (typeof formula === 'string' && !isPropositionalVariable(formula))
-      throw new InferenceException(`Double Negation Introduction (Line ${line}): negation not found.`);
+      throw new InferenceException(
+        `Double Negation Introduction (Line ${line}): negation not found.`
+      );
 
     const inferenceResult = RuleApplier.DoubleNegationIntroduction(formula);
 
@@ -311,9 +371,14 @@ export class RuleApplier extends RuleSetter {
     const secondFormula = proof[requiredItens[1]].expression;
 
     if (!isImplication(firstFormula) || !isImplication(secondFormula))
-      throw new InferenceException(`Hypothetical Syllogism (Line ${line}): both formulas should be conditionals.`);
+      throw new InferenceException(
+        `Hypothetical Syllogism (Line ${line}): both formulas should be conditionals.`
+      );
 
-    const inferenceResult = RuleApplier.HypotheticalSyllogism(firstFormula, secondFormula);
+    const inferenceResult = RuleApplier.HypotheticalSyllogism(
+      firstFormula,
+      secondFormula
+    );
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
@@ -351,7 +416,9 @@ export class RuleApplier extends RuleSetter {
     let formula = proof[requiredItem[0]].expression;
 
     if (!isNegation(formula))
-      throw new InferenceException(`Implication Negation (Line ${line}): negation not found`);
+      throw new InferenceException(
+        `Implication Negation (Line ${line}): negation not found`
+      );
 
     const inferenceResult = RuleApplier.ImplicationNegation(formula);
 
@@ -383,12 +450,17 @@ export class RuleApplier extends RuleSetter {
       remainingFormula = firstFormula;
     }
 
-    if (!implication) throw new InferenceException(`Modus Ponens (Line ${line}): implication not found`);
+    if (!implication)
+      throw new InferenceException(
+        `Modus Ponens (Line ${line}): implication not found`
+      );
 
     const antecedent = remainingFormula;
 
     if (!isPropositionalVariable(antecedent) && typeof antecedent === 'string')
-      throw new InferenceException(`Modus Ponens (Line ${line}): antecedent not found`);
+      throw new InferenceException(
+        `Modus Ponens (Line ${line}): antecedent not found`
+      );
 
     const inferenceResult = RuleApplier.ModusPonens(implication, antecedent);
 
@@ -420,12 +492,17 @@ export class RuleApplier extends RuleSetter {
       remainingFormula = firstFormula;
     }
 
-    if (!implication) throw new InferenceException(`Modus Tollens (Line ${line}): implication not found`);
+    if (!implication)
+      throw new InferenceException(
+        `Modus Tollens (Line ${line}): implication not found`
+      );
 
     const consequent = remainingFormula;
 
     if (!isNegation(consequent))
-      throw new InferenceException(`Modus Tollens (Line ${line}): negated consequent not found`);
+      throw new InferenceException(
+        `Modus Tollens (Line ${line}): negated consequent not found`
+      );
 
     const inferenceResult = RuleApplier.ModusTollens(implication, consequent);
 
@@ -434,7 +511,10 @@ export class RuleApplier extends RuleSetter {
     return inferenceResult;
   }
 
-  static conjunctionOverDisjunctionDistribution(item: ProofItemInferred, proof: Proof) {
+  static conjunctionOverDisjunctionDistribution(
+    item: ProofItemInferred,
+    proof: Proof
+  ) {
     const requiredItem = item.from[0];
     const line = item.id;
 
@@ -444,16 +524,22 @@ export class RuleApplier extends RuleSetter {
     const conjunction = proof[requiredItem[0]].expression;
 
     if (!isConjunction(conjunction))
-      throw new InferenceException(`Distribution (Line ${line}): conjunction not found.`);
+      throw new InferenceException(
+        `Distribution (Line ${line}): conjunction not found.`
+      );
 
-    const inferenceResult = RuleApplier.ConjunctionOverDisjunctionDistribution(conjunction);
+    const inferenceResult =
+      RuleApplier.ConjunctionOverDisjunctionDistribution(conjunction);
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
     return inferenceResult;
   }
 
-  static disjunctionOverConjunctionDistribution(item: ProofItemInferred, proof: Proof) {
+  static disjunctionOverConjunctionDistribution(
+    item: ProofItemInferred,
+    proof: Proof
+  ) {
     const requiredItem = item.from[0];
     const line = item.id;
 
@@ -463,9 +549,12 @@ export class RuleApplier extends RuleSetter {
     const disjunction = proof[requiredItem[0]].expression;
 
     if (!isDisjunction(disjunction))
-      throw new InferenceException(`Distribution (Line ${line}): disjunction not found.`);
+      throw new InferenceException(
+        `Distribution (Line ${line}): disjunction not found.`
+      );
 
-    const inferenceResult = RuleApplier.DisjunctionOverConjunctionDistribution(disjunction);
+    const inferenceResult =
+      RuleApplier.DisjunctionOverConjunctionDistribution(disjunction);
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
@@ -482,7 +571,9 @@ export class RuleApplier extends RuleSetter {
     const conjunction = proof[requiredItem[0]].expression;
 
     if (!isConjunction(conjunction))
-      throw new InferenceException(`Associativity (Line ${line}): conjunction not found.`);
+      throw new InferenceException(
+        `Associativity (Line ${line}): conjunction not found.`
+      );
 
     const inferenceResult = RuleApplier.ConjunctionAssociativity(conjunction);
 
@@ -501,7 +592,9 @@ export class RuleApplier extends RuleSetter {
     const disjunction = proof[requiredItem[0]].expression;
 
     if (!isDisjunction(disjunction))
-      throw new InferenceException(`Associativity (Line ${line}): disjunction not found.`);
+      throw new InferenceException(
+        `Associativity (Line ${line}): disjunction not found.`
+      );
 
     const inferenceResult = RuleApplier.DisjunctionAssociativity(disjunction);
 
@@ -520,9 +613,12 @@ export class RuleApplier extends RuleSetter {
     const biconditional = proof[requiredItem[0]].expression;
 
     if (!isBiconditional(biconditional))
-      throw new InferenceException(`Associativity (Line ${line}): disjunction not found.`);
+      throw new InferenceException(
+        `Associativity (Line ${line}): disjunction not found.`
+      );
 
-    const inferenceResult = RuleApplier.BiconditionalAssociativity(biconditional);
+    const inferenceResult =
+      RuleApplier.BiconditionalAssociativity(biconditional);
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
@@ -539,11 +635,21 @@ export class RuleApplier extends RuleSetter {
     const item1 = proof[requiredItens[0]];
     const item2 = proof[requiredItens[1]];
 
-    if (!isPropositionalVariable(item2.expression) && typeof item2.expression === 'string')
-      throw new InferenceException(`Conditional Proof (Line ${line}): cannot find a formula at line ${item2.id}`);
+    if (
+      !isPropositionalVariable(item2.expression) &&
+      typeof item2.expression === 'string'
+    )
+      throw new InferenceException(
+        `Conditional Proof (Line ${line}): cannot find a formula at line ${item2.id}`
+      );
 
-    if (!isPropositionalVariable(item1.expression) && typeof item1.expression === 'string')
-      throw new InferenceException(`Conditional Proof (Line ${line}): cannot find a formula at line ${item1.id}`);
+    if (
+      !isPropositionalVariable(item1.expression) &&
+      typeof item1.expression === 'string'
+    )
+      throw new InferenceException(
+        `Conditional Proof (Line ${line}): cannot find a formula at line ${item1.id}`
+      );
 
     let hypothesis: Formula;
     let endOfHypothesis: Formula;
@@ -558,7 +664,6 @@ export class RuleApplier extends RuleSetter {
 
       endOfHypothesis = item2.expression;
     } else if (isHypothesis(item2) && isEndOfHypothesis(item1)) {
-
       hypothesis = item2.expression;
 
       if (item1.hypothesisId != item2.id)
@@ -568,10 +673,15 @@ export class RuleApplier extends RuleSetter {
 
       endOfHypothesis = item1.expression;
     } else {
-      throw new InferenceException(`Conditional Proof: end of hypothesis or hypothesis not found.`);
+      throw new InferenceException(
+        `Conditional Proof: end of hypothesis or hypothesis not found.`
+      );
     }
 
-    const inferenceResult = RuleApplier.ConditionalProof(hypothesis, endOfHypothesis);
+    const inferenceResult = RuleApplier.ConditionalProof(
+      hypothesis,
+      endOfHypothesis
+    );
 
     RuleApplier.throwsIfIsNotEqual(inferenceResult, item);
 
@@ -588,7 +698,9 @@ export class RuleApplier extends RuleSetter {
     const conditional = proof[requiredItem[0]].expression;
 
     if (!isImplication(conditional))
-      throw new InferenceException(`Reductio Ad Absurdum (Line ${line}): conditional not found.`);
+      throw new InferenceException(
+        `Reductio Ad Absurdum (Line ${line}): conditional not found.`
+      );
 
     const inferenceResult = RuleApplier.ReductioAdAbsurdum(conditional);
 
@@ -597,15 +709,17 @@ export class RuleApplier extends RuleSetter {
     return inferenceResult;
   }
 
-  private static throwsIfIsNotEqual(expectedFormula: Formula, actualItem: ProofItemInferred) {
+  private static throwsIfIsNotEqual(
+    expectedFormula: Formula,
+    actualItem: ProofItemInferred
+  ) {
     const actualFormula = actualItem.expression as Formula;
     const inferenceMethod = actualItem.from[1];
-    
-    if (
-      !isDeepStrictEqual(expectedFormula, actualFormula)
-    ) {
+
+    if (!isDeepStrictEqual(expectedFormula, actualFormula)) {
       throw new InferenceException(`
-        ${inferenceMethod} (Line ${actualItem.id
+        ${inferenceMethod} (Line ${
+          actualItem.id
         }): expected ${parseToFormulaString(
           expectedFormula
         )} but received ${parseToFormulaString(actualFormula)}
@@ -613,17 +727,27 @@ export class RuleApplier extends RuleSetter {
     }
   }
 
-  private static throwsIfLengthDoesntMatch(item: ProofItemInferred, expected: number, received: number) {
+  private static throwsIfLengthDoesntMatch(
+    item: ProofItemInferred,
+    expected: number,
+    received: number
+  ) {
     const rule = item.from[1];
     const line = item.id;
 
     if (expected !== received)
-      throw new InferenceException(`${rule} (Line ${line}): expect ${expected} formulas to apply the rule but received ${received}.`);
+      throw new InferenceException(
+        `${rule} (Line ${line}): expect ${expected} formulas to apply the rule but received ${received}.`
+      );
   }
 
-  private static throwsIfIndexDoesntExist(requiredItens: number[], proof: Proof) {
-    requiredItens.forEach(idx => {
-      if (!proof[idx]) throw new InferenceException(`Cannot find a formula at index ${idx}`);
+  private static throwsIfIndexDoesntExist(
+    requiredItens: number[],
+    proof: Proof
+  ) {
+    requiredItens.forEach((idx) => {
+      if (!proof[idx])
+        throw new InferenceException(`Cannot find a formula at index ${idx}`);
     });
   }
 }

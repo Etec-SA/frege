@@ -3,8 +3,8 @@
   "llang is MIT licensed. Feel free to use it, contribute or spread the word. Created with love by Petr Nevyhoštěný."
 */
 
-import { UnrecognizedTokenException } from "exceptions";
-import { Token, PropositionalVariable, Boundary, Operator } from "types";
+import { UnrecognizedTokenException } from 'exceptions';
+import { Token, PropositionalVariable, Boundary, Operator } from 'types';
 
 /**
  * Lexer class for tokenizing propositional logic formulas.
