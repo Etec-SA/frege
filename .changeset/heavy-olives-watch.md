@@ -1,0 +1,5 @@
+---
+'fregejs': minor
+---
+
+add changeset.
