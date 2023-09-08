@@ -1,13 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import { calculator } from '../Calculator';
-import {
-  Biconditional,
-  Conjunction,
-  Disjunction,
-  Implication,
-} from 'src/types/operations/binary-operations';
-import { Negation } from 'src/types/operations/unary-operation';
+import { Implication, Conjunction, Disjunction, Biconditional, Negation } from 'types';
 
 describe('calculator', () => {
   it('should be defined', () => {

@@ -1,5 +1,5 @@
-import { Formula } from "src/types/formulas/formula";
-import { PropositionalVariable } from "src/types/operations/propositional-variable";
+import { Formula } from "types/formulas/formula";
+import { PropositionalVariable } from "types/operations/propositional-variable";
 
 const propositionalVariablesList: string[] = [
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',

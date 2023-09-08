@@ -1,8 +1,8 @@
 import assert from "node:assert";
 import { it, describe } from 'node:test';
 import { ProofChecker } from "../ProofChecker";
-import { Proof } from "src/types/syntactic/proof";
-import { InferenceException } from "src/exceptions/invalid-inference.exception";
+import { InferenceException } from "exceptions";
+import { Proof } from "types";
 
 describe('ProofChecker', () => {
     describe('check', ()=>{
@@ -11,12 +11,12 @@ describe('ProofChecker', () => {
                 1: {
                     id: 1,
                     expression: {operation: 'Implication', left: 'P', right: 'Q'},
-                    type: 'Premisse'
+                    type: 'Premise'
                 },
                 2: {
                     id: 2,
                     expression: 'P',
-                    type: 'Premisse'
+                    type: 'Premise'
                 },
                 3: {
                     id: 3,
@@ -88,7 +88,7 @@ describe('ProofChecker', () => {
                 1: {
                     id: 1,
                     expression: 'P',
-                    type: 'Premisse'
+                    type: 'Premise'
                 },
                 2:{
                     id: 2,
@@ -132,7 +132,7 @@ describe('ProofChecker', () => {
                 1: {
                     id: 1,
                     expression: 'A',
-                    type: 'Premisse'
+                    type: 'Premise'
                 },
                 2:{
                     id: 2,

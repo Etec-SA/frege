@@ -3,16 +3,8 @@
   "llang is MIT licensed. Feel free to use it, contribute or spread the word. Created with love by Petr Nevyhoštěný."
 */
 
-import { Formula } from 'src/types/formulas/formula';
-import {
-  Biconditional,
-  Conjunction,
-  Disjunction,
-  Implication,
-} from 'src/types/operations/binary-operations';
-import { PropositionalVariable } from 'src/types/operations/propositional-variable';
-import { Negation } from 'src/types/operations/unary-operation';
-import { Operator, Token } from 'src/types/tokens/tokens';
+import { Token, Formula, Operator, Negation, Disjunction, Conjunction, Implication, Biconditional, PropositionalVariable } from "types";
+
 
 /**
  * Parser class for analyzing tokens and creating a logical formula tree.

@@ -1,10 +1,7 @@
-import { InferenceException } from "src/exceptions/invalid-inference.exception";
-import { Formula } from "src/types/formulas/formula";
-import { MappedProof, Proof, ProofItemInferred, inferenceRulesMap } from "src/types/syntactic/proof";
-import { isEndOfHypothesis } from "src/utils/isEndOfHypothesis";
-import { isHypothesis } from "src/utils/isHypothesis";
-import { isProofItemInferred } from "src/utils/isProofItemInferred";
-import { parseToFormulaString } from "src/utils/parse";
+import { InferenceException } from "exceptions";
+import { Proof, Formula, inferenceRulesMap, MappedProof, ProofItemInferred } from "types";
+import { isProofItemInferred, parseToFormulaString, isHypothesis, isEndOfHypothesis } from "utils";
+
 
 /**
  * Class responsible for checking the syntactic validity of proofs.
@@ -36,7 +33,7 @@ export class ProofChecker {
         );
       }
 
-      if (item.type === 'Premisse') {
+      if (item.type === 'Premise') {
         premises.push(item.expression);
       }
 

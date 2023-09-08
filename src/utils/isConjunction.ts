@@ -1,4 +1,4 @@
-import { Conjunction } from 'src/types/operations/binary-operations';
+import { Conjunction } from 'types/operations/binary-operations';
 import { isBinaryOperationFormula } from './isBinaryOperation';
 
 export function isConjunction(formula: any): formula is Conjunction {

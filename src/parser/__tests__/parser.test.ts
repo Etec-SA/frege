@@ -1,14 +1,8 @@
 import assert from 'node:assert';
 import { describe, it, beforeEach } from 'node:test';
 import { Parser } from '../Parser';
-import { Negation, UnaryOperation } from 'src/types/operations/unary-operation';
-import {
-  Biconditional,
-  BinaryOperation,
-  Conjunction,
-  Disjunction,
-  Implication,
-} from 'src/types/operations/binary-operations';
+import { Negation, UnaryOperation, Implication, BinaryOperation, Biconditional, Conjunction, Disjunction } from 'types';
+
 
 describe('Parser', () => {
   let parser: Parser;

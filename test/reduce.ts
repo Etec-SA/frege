@@ -1,10 +1,7 @@
+import { frege } from 'index';
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import frege from 'src/index';
-import {
-  Biconditional,
-  Conjunction,
-} from 'src/types/operations/binary-operations';
+import { Biconditional, Conjunction } from 'types';
 
 describe('frege.reduce', () => {
   it('should be defined', () => {

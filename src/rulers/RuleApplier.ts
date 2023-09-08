@@ -1,19 +1,8 @@
-import { Proof, ProofItemInferred } from 'src/types/syntactic/proof';
+import { InferenceException } from 'exceptions';
+import { ProofItemInferred, Proof, Formula, Disjunction, Negation, Implication } from 'types';
+import { isDeepStrictEqual } from 'util';
+import { isImplication, isBiconditional, isPropositionalVariable, isConjunction, parseToFormulaString, isDisjunction, isNegation, isHypothesis, isEndOfHypothesis } from 'utils';
 import { RuleSetter } from './RuleSetter';
-import { InferenceException } from 'src/exceptions/invalid-inference.exception';
-import { Formula } from 'src/types/formulas/formula';
-import { Biconditional, Disjunction, Implication } from 'src/types/operations/binary-operations';
-import { isImplication } from 'src/utils/isImplication';
-import { Negation } from 'src/types/operations/unary-operation';
-import { isNegation } from 'src/utils/isNegation';
-import { isDisjunction } from 'src/utils/isDisjunction';
-import { isDeepStrictEqual } from 'node:util';
-import { parseToFormulaString } from 'src/utils/parse';
-import { isBiconditional } from 'src/utils/isBiconditional';
-import { isConjunction } from 'src/utils/isConjunction';
-import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
-import { isHypothesis } from 'src/utils/isHypothesis';
-import { isEndOfHypothesis } from 'src/utils/isEndOfHypothesis';
 
 /**
  * Class responsible for, through a test and its items, applying the inference rules defined by the RuleSetter class.

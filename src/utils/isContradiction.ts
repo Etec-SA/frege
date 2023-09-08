@@ -1,4 +1,4 @@
-import { Conjunction } from 'src/types/operations/binary-operations';
+import { Conjunction } from 'types/operations/binary-operations';
 import { isDeepStrictEqual } from 'util';
 import { eliminateDoubleNegations } from './eliminateDoubleNegation';
 

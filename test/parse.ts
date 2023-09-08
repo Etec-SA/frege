@@ -1,12 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import frege from 'src/index';
-import {
-  Biconditional,
-  Conjunction,
-  Implication,
-} from 'src/types/operations/binary-operations';
-import { Negation } from 'src/types/operations/unary-operation';
+import { frege } from 'index';
+import { Implication, Negation, Biconditional, Conjunction } from 'types';
+
 
 describe('frege.parse', () => {
   it('should be defined', () => {

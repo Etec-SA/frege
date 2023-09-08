@@ -7,6 +7,9 @@ import {
   Biconditional,
 } from '../operations/binary-operations';
 
+/**
+   * Represents a generic logical formula.
+   */
 export type Formula =
   | PropositionalVariable
   | Negation

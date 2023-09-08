@@ -181,7 +181,7 @@ const  proof: Proof = {
 	1: {
 		id:  1,
 		expression:  toFormulaObject('¬P ∧ ¬Q'),
-		type:  'Premisse'
+		type:  'Premise'
 	},
 	2: {
 		id:  2,
@@ -247,12 +247,12 @@ const proof: Proof = {
   1: {
     id: 1,
     expression: toFormulaObject('P -> Q'),
-    type: 'Premisse'
+    type: 'Premise'
   },
   2: {
     id: 2,
     expression: toFormulaObject('Q'),
-    type: 'Premisse'
+    type: 'Premise'
   },
   3: {
     id: 3,

@@ -1,24 +1,9 @@
-import { Formula } from 'src/types/formulas/formula';
-import {
-  Biconditional,
-  Conjunction,
-  Disjunction,
-  Implication,
-} from 'src/types/operations/binary-operations';
-import { PropositionalVariable } from 'src/types/operations/propositional-variable';
-import { Negation } from 'src/types/operations/unary-operation';
-import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
-import {
-  PropositionalVariableValues,
-  TruthTable,
-  TruthValue,
-} from 'src/types/semantic/truth';
-import { Lexer } from 'src/lexer/Lexer';
-import { Parser } from 'src/parser/Parser';
-import { builder } from 'src/builder/Builder';
-import { isArrayString } from 'src/utils/isArrayString';
-import { parseToFormulaObject, parseToFormulaString } from 'src/utils/parse';
-import { buildConjunctionString } from 'src/utils/buildConjunctionString';
+import { builder } from "builder/Builder";
+import { Lexer } from "lexer/Lexer";
+import { Parser } from "parser/Parser";
+import { Formula, TruthTable, PropositionalVariable, PropositionalVariableValues, Implication, Biconditional, Conjunction, Disjunction, Negation, TruthValue } from "types";
+import { isPropositionalVariable, parseToFormulaObject, isArrayString, parseToFormulaString, buildConjunctionString } from "utils";
+
 
 /**
  * Class responsible for performing semantic truth-value operations, such as evaluate formulas and generate truth tables.

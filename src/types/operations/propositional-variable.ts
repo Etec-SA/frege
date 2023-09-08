@@ -1,3 +1,6 @@
+/**
+   * Represents a set of propositional variables.
+   */
 export type PropositionalVariable =
   | 'A'
   | 'B'

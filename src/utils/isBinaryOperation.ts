@@ -1,4 +1,4 @@
-import { BinaryOperationFormula } from 'src/types/formulas/binary-operation-formula';
+import { BinaryOperationFormula } from 'types/formulas/binary-operation-formula';
 
 export function isBinaryOperationFormula(
   formula: any

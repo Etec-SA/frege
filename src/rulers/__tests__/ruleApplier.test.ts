@@ -1,12 +1,9 @@
 import assert from 'assert';
 import { it, describe } from 'node:test';
 import { RuleApplier } from '../RuleApplier';
-import { Proof } from 'src/types/syntactic/proof';
-import { Negation } from 'src/types/operations/unary-operation';
-import { parseToFormulaObject } from 'src/utils/parse';
-import { InferenceException } from 'src/exceptions/invalid-inference.exception';
-import { Formula } from 'src/types/formulas/formula';
-import { ProofItemInferred } from 'src/types/syntactic/proof';
+import { InferenceException } from 'exceptions';
+import { Proof, ProofItemInferred, Formula, Negation } from 'types';
+import { parseToFormulaObject } from 'utils';
 
 describe('RuleApplier', () => {
   it('should be defined', () => {
@@ -24,7 +21,7 @@ describe('RuleApplier', () => {
               left: 'P',
               right: { operation: 'Biconditional', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -55,7 +52,7 @@ describe('RuleApplier', () => {
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
               right: { operation: 'Biconditional', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -86,7 +83,7 @@ describe('RuleApplier', () => {
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
               right: { operation: 'Conjunction', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -119,7 +116,7 @@ describe('RuleApplier', () => {
               left: 'P',
               right: { operation: 'Conjunction', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -150,7 +147,7 @@ describe('RuleApplier', () => {
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
               right: { operation: 'Conjunction', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -181,7 +178,7 @@ describe('RuleApplier', () => {
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
               right: { operation: 'Conjunction', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -214,7 +211,7 @@ describe('RuleApplier', () => {
               left: 'P',
               right: { operation: 'Disjunction', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -245,7 +242,7 @@ describe('RuleApplier', () => {
               left: { operation: 'Conjunction', left: 'P', right: 'Q' },
               right: { operation: 'Disjunction', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -276,7 +273,7 @@ describe('RuleApplier', () => {
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
               right: { operation: 'Conjunction', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -307,12 +304,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'Q', right: 'P' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -335,12 +332,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'R', right: 'P' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -364,7 +361,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Biconditional', left: 'A', right: 'B' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -391,7 +388,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -419,7 +416,7 @@ describe('RuleApplier', () => {
             left: { operation: 'Negation', value: 'P' },
             right: { operation: 'Negation', value: 'Q' }
           },
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -480,7 +477,7 @@ describe('RuleApplier', () => {
             left: { operation: 'Negation', value: 'P' },
             right: { operation: 'Negation', value: 'Q' }
           },
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -541,7 +538,7 @@ describe('RuleApplier', () => {
             left: { operation: 'Negation', value: 'P' },
             right: { operation: 'Negation', value: 'Q' }
           },
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -600,7 +597,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Conjunction', left: 'P', right: 'Q' },
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -623,7 +620,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -646,7 +643,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Biconditional', left: 'P', right: 'Q' },
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -669,7 +666,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -691,12 +688,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'Q', right: 'P' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -723,7 +720,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: 'P',
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -747,7 +744,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Conjunction', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -771,7 +768,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Conjunction', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -795,7 +792,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Conjunction', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -819,7 +816,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -850,7 +847,7 @@ describe('RuleApplier', () => {
             left: { operation: 'Negation', value: 'Q' },
             right: { operation: 'Negation', value: 'P' }
           },
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -873,7 +870,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('¬¬P->¬¬Q'),
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -900,7 +897,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('(¬¬¬Q)->(¬¬¬P)'),
-          type: 'Premisse'
+          type: 'Premise'
         },
         2: {
           id: 2,
@@ -923,7 +920,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -946,7 +943,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: 'P',
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -973,7 +970,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: 'P',
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1000,7 +997,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: 'R',
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1033,7 +1030,7 @@ describe('RuleApplier', () => {
               left: 'P',
               right: { operation: 'Disjunction', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -1064,7 +1061,7 @@ describe('RuleApplier', () => {
               left: { operation: 'Disjunction', left: 'P', right: 'Q' },
               right: { operation: 'Disjunction', left: 'R', right: 'S' },
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -1103,7 +1100,7 @@ describe('RuleApplier', () => {
               left: 'P',
               right: { operation: 'Disjunction', left: 'R', right: 'S' },
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -1135,7 +1132,7 @@ describe('RuleApplier', () => {
               left: 'P',
               right: { operation: 'Conjunction', left: 'Q', right: 'R' }
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -1166,7 +1163,7 @@ describe('RuleApplier', () => {
               left: { operation: 'Conjunction', left: 'P', right: 'Q' },
               right: { operation: 'Conjunction', left: 'R', right: 'S' },
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -1205,7 +1202,7 @@ describe('RuleApplier', () => {
               left: 'P',
               right: { operation: 'Conjunction', left: 'R', right: 'S' },
             },
-            type: 'Premisse',
+            type: 'Premise',
           },
           2: {
             id: 2,
@@ -1234,7 +1231,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Negation', value: { operation: 'Disjunction', left: 'P', right: 'Q' } },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1260,7 +1257,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Negation', value: { operation: 'Conjunction', left: 'P', right: 'Q' } },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1292,7 +1289,7 @@ describe('RuleApplier', () => {
               right: { operation: 'Negation', value: 'Q' }
             }
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1322,7 +1319,7 @@ describe('RuleApplier', () => {
             left: { operation: 'Negation', value: 'P' },
             right: { operation: 'Negation', value: 'Q' },
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1351,7 +1348,7 @@ describe('RuleApplier', () => {
             left: { operation: 'Negation', value: 'P' },
             right: { operation: 'Negation', value: 'Q' },
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1382,7 +1379,7 @@ describe('RuleApplier', () => {
               right: { operation: 'Negation', value: 'Q' }
             }
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1417,7 +1414,7 @@ describe('RuleApplier', () => {
               }
             }
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1443,12 +1440,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Negation', value: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1471,12 +1468,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Negation', value: 'P' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1499,12 +1496,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: 'P',
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: 'Q',
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1526,12 +1523,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Negation', value: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1555,7 +1552,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: 'P',
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1578,7 +1575,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: 'P',
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1602,7 +1599,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1629,7 +1626,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Conjunction', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1657,7 +1654,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Negation', value: { operation: 'Implication', left: 'P', right: 'Q' } },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1680,7 +1677,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Negation', value: { operation: 'Biconditional', left: 'P', right: 'Q' } },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1702,12 +1699,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: 'P',
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1731,12 +1728,12 @@ describe('RuleApplier', () => {
             left: { operation: 'Negation', value: 'P' },
             right: { operation: 'Negation', value: 'Q' },
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Negation', value: 'P' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1756,22 +1753,22 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: 'P',
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
           expression: 'R',
-          type: 'Premisse',
+          type: 'Premise',
         },
         4: {
           id: 4,
           expression: 'S',
-          type: 'Premisse',
+          type: 'Premise',
         },
         5: {
           id: 5,
@@ -1791,7 +1788,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Biconditional', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1800,7 +1797,7 @@ describe('RuleApplier', () => {
             left: { operation: 'Biconditional', left: 'P', right: 'Q' },
             right: { operation: 'Negation', value: 'A' },
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1824,7 +1821,7 @@ describe('RuleApplier', () => {
             left: 'P',
             right: 'Q',
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1833,7 +1830,7 @@ describe('RuleApplier', () => {
             left: { operation: 'Biconditional', left: 'P', right: 'Q' },
             right: { operation: 'Biconditional', left: 'Q', right: 'P' },
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1857,12 +1854,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('P->Q'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: parseToFormulaObject('Q'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1884,12 +1881,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('P->Q'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: parseToFormulaObject('P'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1913,12 +1910,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Negation', value: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1942,7 +1939,7 @@ describe('RuleApplier', () => {
             left: { operation: 'Negation', value: 'P' },
             right: { operation: 'Conjunction', left: 'P', right: 'Q' },
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -1950,7 +1947,7 @@ describe('RuleApplier', () => {
             operation: 'Negation',
             value: { operation: 'Conjunction', left: 'P', right: 'Q' },
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -1973,12 +1970,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('¬P->Q'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: parseToFormulaObject('¬Q'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -2000,12 +1997,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('¬(P ∧ Q)->Q'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: parseToFormulaObject('¬Q'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -2032,7 +2029,7 @@ describe('RuleApplier', () => {
             operation: 'Negation',
             value: { operation: 'Negation', value: 'P' },
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -2072,7 +2069,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: complexFormula,
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -2101,7 +2098,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: complexFormula,
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -2128,7 +2125,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: complexFormula,
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -2151,7 +2148,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('¬¬¬P'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -2175,7 +2172,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: 'P',
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -2204,7 +2201,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Negation', value: { operation: 'Negation', value: 'P' } },
-          type: 'Premisse'
+          type: 'Premise'
         },
       };
 
@@ -2224,12 +2221,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'Q', right: 'R' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -2252,12 +2249,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'Q', right: 'R' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -2280,12 +2277,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('(P->Q)->(Q->P)'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: parseToFormulaObject('(Q->P)->(A->B)'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -2308,12 +2305,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Disjunction', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Negation', value: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -2339,12 +2336,12 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'Q', right: 'A' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
@@ -2366,17 +2363,17 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: { operation: 'Implication', left: 'P', right: 'Q' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
           expression: { operation: 'Implication', left: 'Q', right: 'A' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         3: {
           id: 3,
           expression: { operation: 'Implication', left: 'A', right: 'B' },
-          type: 'Premisse',
+          type: 'Premise',
         },
         4: {
           id: 4,
@@ -2408,7 +2405,7 @@ describe('RuleApplier', () => {
               right: { operation: 'Negation', value: 'Q' },
             },
           },
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -2431,7 +2428,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('P->(Q ∧ (¬¬¬Q))'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,
@@ -2454,7 +2451,7 @@ describe('RuleApplier', () => {
         1: {
           id: 1,
           expression: parseToFormulaObject('P->(Q ∧ (¬¬Q))'),
-          type: 'Premisse',
+          type: 'Premise',
         },
         2: {
           id: 2,

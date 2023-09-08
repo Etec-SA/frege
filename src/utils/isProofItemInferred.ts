@@ -1,4 +1,4 @@
-import { ProofItem, ProofItemInferred } from "src/types/syntactic/proof";
+import { ProofItem, ProofItemInferred } from "types/syntactic/proof";
 
 export function isProofItemInferred(x: ProofItem): x is ProofItemInferred{
     if(!x?.type) return false;

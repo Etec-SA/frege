@@ -1,7 +1,7 @@
-import { Formula } from "src/types/formulas/formula";
-import { Lexer } from "src/lexer/Lexer";
-import { Parser } from "src/parser/Parser";
-import { builder } from "src/builder/Builder";
+import { Formula } from "types/formulas/formula";
+import { Lexer } from "lexer/Lexer";
+import { Parser } from "parser/Parser";
+import { builder } from "builder/Builder";
 
 export function parseToFormulaObject(formula: string): Formula{
     const tokens = new Lexer(formula).lex();

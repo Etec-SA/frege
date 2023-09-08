@@ -1,5 +1,10 @@
-import { Frege } from './frege/frege';
+import { Frege } from './frege/Frege';
+import { inferenceRulesMap } from 'types';
 
 const frege: Frege = new Frege();
 
-export default frege;
+export type * from 'types';
+export * from 'utils';
+export * from 'exceptions';
+
+export { frege, Frege, inferenceRulesMap };

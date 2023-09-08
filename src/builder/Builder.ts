@@ -1,5 +1,5 @@
-import { InvalidFormulaException } from 'src/exceptions/invalid-formula.exception';
-import { Formula } from '../types/formulas/formula';
+import { InvalidFormulaException } from 'exceptions';
+import { Formula } from 'types'
 
 /**
  * A class that provides methods to build formulas with

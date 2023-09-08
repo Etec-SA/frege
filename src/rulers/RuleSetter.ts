@@ -1,23 +1,28 @@
-import { InferenceException } from 'src/exceptions/invalid-inference.exception';
-import { Formula } from 'src/types/formulas/formula';
+import { InferenceException } from 'exceptions';
+
 import {
   Biconditional,
   Conjunction,
   Disjunction,
   Implication,
-} from 'src/types/operations/binary-operations';
-import { parseToFormulaString } from 'src/utils/parse';
+  Formula,
+  Negation,
+  BinaryOperationFormula
+} from 'types';
+
+import { 
+  eliminateDoubleNegations, 
+  isBiconditional, 
+  isConjunction, 
+  isContradiction, 
+  isDisjunction, 
+  isImplication, 
+  isNegation, 
+  isPropositionalVariable, 
+  parseToFormulaString 
+} from 'utils';
+
 import { isDeepStrictEqual } from 'util';
-import { Negation } from 'src/types/operations/unary-operation';
-import { eliminateDoubleNegations } from 'src/utils/eliminateDoubleNegation';
-import { isContradiction } from 'src/utils/isContradiction';
-import { isDisjunction } from 'src/utils/isDisjunction';
-import { isConjunction } from 'src/utils/isConjunction';
-import { isImplication } from 'src/utils/isImplication';
-import { BinaryOperationFormula } from 'src/types/formulas/binary-operation-formula';
-import { isPropositionalVariable } from 'src/utils/isPropositionalVariable';
-import { isBiconditional } from 'src/utils/isBiconditional';
-import { isNegation } from 'src/utils/isNegation';
 
 
 /**

@@ -1,13 +1,12 @@
-import { builder } from 'src/builder/Builder';
-import { Lexer } from 'src/lexer/Lexer';
-import { Parser } from 'src/parser/Parser';
-import { reducer } from 'src/reducer/Reducer';
-import { BinaryOperationFormula } from 'src/types/formulas/binary-operation-formula';
-import { Formula } from 'src/types/formulas/formula';
-import { Negation } from 'src/types/operations/unary-operation';
-import { ReducedFormula } from 'src/types/conditional-types/reduced-formula';
-import { calculator } from 'src/calculator/Calculator';
-import { ProofChecker } from 'src/proof-checker/ProofChecker';
+import { builder } from "builder/Builder";
+import { calculator } from "calculator/Calculator";
+import { Lexer } from "lexer/Lexer";
+import { Parser } from "parser/Parser";
+import { ProofChecker } from "proof-checker/ProofChecker";
+import { reducer } from "reducer/Reducer";
+import { Formula, BinaryOperationFormula, Negation } from "types";
+import { ReducedFormula } from "types/conditional-types/reduced-formula";
+
 
 export class Frege {
   private builder = builder;

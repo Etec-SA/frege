@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { describe, it, beforeEach } from 'node:test';
 import { Lexer } from '../Lexer';
-import { Token } from 'src/types/tokens/tokens';
+import { Token } from 'types';
 
 let lexer: Lexer;
 

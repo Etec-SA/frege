@@ -1,8 +1,11 @@
 {
-  "name": "frege",
+  "name": "fregejs",
   "version": "1.0.0",
-  "main": "index.js",
-  "devDependencies": {
+  "main": "dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "devDependencies": 
+  {
     "@types/node": "^20.4.1",
     "cz-conventional-changelog": "^3.3.0",
     "prettier": "^3.0.0",
@@ -10,14 +13,31 @@
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
   },
-  "scripts": {
+  "scripts": 
+  {
     "test": "npx tsx --test src/**/__tests__/*.test.ts",
     "style:check": "prettier --check src/**/*.ts src/**/__tests__/*.test.ts",
     "style:fix": "prettier --write src/**/*.ts src/**/__tests__/*.test.ts",
-    "build": "npx tsup src/"
+    "build": "npx tsup src/index.ts --format cjs,esm --dts ",
+    "lint": "tsc"
   },
-  "keywords": [],
-  "author": "iamthepoe",
+  "keywords": ["logic", "propositional-logic", "proof-assistant", "logic-client"],
+  "author": 
+  {
+    "name": "Luca Poe",
+    "url": "https://github.com/iamthepoe"
+  },
+  "homepage": "https://github.com/etec-sa",
+  "repository": 
+  {
+    "type": "git",
+    "url": "https://github.com/etec-sa/frege.git"
+  },
+  "bugs":
+  {
+    "url": "https://github.com/Etec-SA/frege/issues",
+    "email": "etecsa.contato@gmail.com"
+  },
   "license": "MIT",
   "description": "A propositional logic library written in Typescript",
   "config": {

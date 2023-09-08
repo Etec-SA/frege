@@ -1,4 +1,4 @@
-import { Formula } from 'src/types/formulas/formula';
+import { Formula } from 'types/formulas/formula';
 import { isBinaryOperationFormula } from './isBinaryOperation';
 import { isNegation } from './isNegation';
 
