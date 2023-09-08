@@ -1,5 +1,6 @@
 
 
+
 # Frege
 
 <div align="center">
@@ -14,6 +15,9 @@
 
 ## 📋 Table of Contents
 
+- [Installation](#-installation)
+	- [Requirements](#requirements)
+	- [Installing](#installing)
 - [Overview](#-overview)
 	- [Symbols and Variables](#symbols-and-variables)
 	- [Parse](#parse)
@@ -25,13 +29,23 @@
 	- [Check Proof](#check-proof)
 	- [Semantic Consequence](#semantic-consequence)
 - [Technologies](#-technologies)
-- [Getting started](#-getting-started)
   - [Requirements](#requirements)
   - [Installing and configuring the project](#installing-and-configuring-the-project)
- - [But why "Frege?"](#but-why-frege)
+ - [But why "Frege"?](#but-why-frege)
 - [How to contribute](#-how-to-contribute)
 - [License](#-license)
 
+## 💻 Installation
+
+### Requirements
+
+- [Node.js](https://nodejs.org/en/)
+- [Yarn](https://classic.yarnpkg.com/), [NPM](https://www.npmjs.com/) or similar.
+
+### Installing
+```bash
+$ npm -i fregejs
+```
 ## 👀 Overview
 
 **"Frege"** is a lib created by the <a href="https://github.com/etec-sa/" target="_blank">Boolestation Team</a> in order to assist in tasks involving propositional logic.
@@ -68,7 +82,7 @@ Frege allows the developer to work with object formulas or with string formulas.
 
 #### Formula string to Object:
 ```typescript
-import frege from 'src';
+import { frege } from 'fregejs';
 
 frege.parse.toFormulaObject('P -> Q'); // {1} Implication
 frege.parse.toFormulaObject('P <-> Q'); // {2} Biconditional
@@ -105,7 +119,7 @@ frege.parse.toFormulaString({ operation:  'Negation', value:  'P' }); // {5} Neg
 ### Evaluate
 The "evaluate" function calculates the truth value of a molecular formula according to the truth value of its atomic formulas.
 ```typescript
-import frege from 'src';
+import { frege } from 'fregejs';
 
 const first = frege.evaluate('P->(Q->P)', { P:  false, Q:  true }); // {1}
 
@@ -133,7 +147,7 @@ third: true
 ### Reduce
 The "reduce" function reduces any logical formula that uses implications or biconditionals to a logical formula that uses only the operators of: conjunction, negation and disjunction.
 ```typescript
-import  frege  from  'src';
+import { frege } from  'fregejs';
 frege.reduce('( P -> Q ) ∨ (A ∧ B)'); // {1}
 frege.reduce('P <-> ( Q -> P )'); // {2}
 ```
@@ -147,7 +161,7 @@ frege.reduce('P <-> ( Q -> P )'); // {2}
 The "generateTruthTable" function generates a truth table for the formula passed in the parameter. The returned value will be an array, which contains a **header**, with the propositional variables and the formula in question; the **truth-value combinations** for propositional variables (where `1 == true` and `0 == false`); the **truth values of the formula** according to each combination.
 
 ```typescript
-import  frege  from  'src';
+import { frege } from  'fregejs';
 
 frege.generateTruthTable('P->(Q->P)'); // {1}
 frege.generateTruthTable({operation:  'Conjunction', left:  'P', right:  'Q'}); // {2}
@@ -173,8 +187,7 @@ frege.generateTruthTable({operation:  'Conjunction', left:  'P', right:  'Q'}); 
 The "checkproof" function evaluates the validity of the logical test passed in the parameter. If it is valid, it displays the application of the rules in the `console` and returns `true`. Otherwise, it throws an `InferenceException`, explaining the reason for its **invalidity**.
 
 ```typescript
-import  frege  from  'src';
-import { Proof } from  'src/types/syntactic/proof';
+import { frege, Proof } from  'fregejs';
 const { toFormulaObject } = frege.parse;
 
 const  proof: Proof = {
@@ -275,7 +288,7 @@ The function "verifyConsequence.semantic" identifies if there is a case where, i
 
 If so, it returns `false`. Else, returns `true`.
 ```typescript
-import frege from 'src';
+import { frege } from  'fregejs';
 
 const first = frege.verifyConsequence.semantic(['P->Q', 'Q'], 'P'); // {1}
 const second = frege.verifyConsequence.semantic(['P->Q', 'P'], 'Q'); // {2}
@@ -296,36 +309,6 @@ The main technologies used are:
 - [Node.js](https://nodejs.org/en/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [llang](https://github.com/pnevyk/llang)
-
-## 💻 Getting started
-
-### Requirements
-
-- [Node.js](https://nodejs.org/en/)
-- [Yarn](https://classic.yarnpkg.com/), [NPM](https://www.npmjs.com/) or similar.
-
-### Installing and configuring the project
-
-_Cloning Project_
-
-```bash
-$ git clone https://github.com/etec-sa/frege && cd frege/
-```
-
-_Next Steps:_
-
-```bash
-# Install dependencies
-$ npm install
-
-# Now you can explore the code.
-
-#Run tests
-$ npm run test
-
-#Build
-$ npm run build
-```
 
 ## But why Frege?
 > "**Friedrich Ludwig Gottlob Frege** ([/ˈfreɪɡə/](https://en.wikipedia.org/wiki/Help:IPA/English 'Help:IPA/English');[[15]](https://en.wikipedia.org/wiki/Gottlob_Frege#cite_note-15) German: [[ˈɡɔtloːp ˈfreːɡə]](https://en.wikipedia.org/wiki/Help:IPA/Standard_German "Help:IPA/Standard German"); 8 November 1848 – 26 July 1925) was a German [philosopher](https://en.wikipedia.org/wiki/Philosopher 'Philosopher'), [logician](https://en.wikipedia.org/wiki/Mathematical_logic 'Mathematical logic'), and [mathematician](https://en.wikipedia.org/wiki/Mathematician 'Mathematician'). He was a mathematics professor at the [University of Jena](https://en.wikipedia.org/wiki/University_of_Jena 'University of Jena'), and is understood by many to be the father of [analytic philosophy](https://en.wikipedia.org/wiki/Analytic_philosophy 'Analytic philosophy'), concentrating on the [philosophy of language](https://en.wikipedia.org/wiki/Philosophy_of_language 'Philosophy of language'), [logic](https://en.wikipedia.org/wiki/Philosophy_of_logic 'Philosophy of logic'), and [mathematics](https://en.wikipedia.org/wiki/Philosophy_of_mathematics 'Philosophy of mathematics')." via <a href="https://en.wikipedia.org/wiki/Gottlob_Frege" target="_blank">Wikipedia.</a>
