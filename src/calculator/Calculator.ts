@@ -39,8 +39,8 @@ export class calculator {
    * // {
    * //   headers: ['P', 'Q', '(P -> Q)'],
    * //   truthCombinations: [
-   * //     [0, 0], [0, 1],
-   * //     [1, 0], [1, 1]
+   * //     [false, false], [false, true],
+   * //     [true, false], [true, true]
    * //   ],
    * //   truthValues: [true, true, false, true]
    * // }
@@ -81,8 +81,7 @@ export class calculator {
       const values: PropositionalVariableValues = {};
 
       variableArray.forEach((variable, index) => {
-        values[variable] =
-          combination[index] === 1 || combination[index] === true;
+        values[variable] = !!(combination[index]);
       });
 
       table.truthCombinations.push(combination);
@@ -187,8 +186,7 @@ export class calculator {
       const values: PropositionalVariableValues = {};
 
       variableArray.forEach((variable, index) => {
-        values[variable] =
-          combination[index] === 1 || combination[index] === true;
+        values[variable] = !!(combination[index]);
       });
 
       const allPremisesAreTrue = calculator.evaluate(conjunctionOfPremises, values);
@@ -244,22 +242,21 @@ export class calculator {
     return !value;
   }
 
-  protected static generateTruthCombinations(
-    numVariables: number
-  ): TruthValue[][] {
-    const combinations: TruthValue[][] = [];
+  protected static generateTruthCombinations(numVariables: number): boolean[][] {
+    const combinations: boolean[][] = [];
     const totalCombinations = 2 ** numVariables;
-
+  
     for (let i = 0; i < totalCombinations; i++) {
       const binaryString = i.toString(2).padStart(numVariables, '0');
-      const combination: TruthValue[] = binaryString
+      const combination: boolean[] = binaryString
         .split('')
-        .map(Number) as TruthValue[];
+        .map((bit) => bit === '1');
       combinations.push(combination);
     }
-
+  
     return combinations;
   }
+  
 
   private static collectVariables<T extends Formula>(
     formula: T,

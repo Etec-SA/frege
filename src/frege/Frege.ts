@@ -134,8 +134,8 @@ export class Frege {
    * {
    *    headers: ['P', 'Q', '(P -> Q)'],
    *    truthCombinations: [
-   *      [0, 0], [0, 1],
-   *      [1, 0], [1, 1]
+   *      [false, false], [false, true],
+   *      [true, false], [true, true]
    *    ],
    *    truthValues: [true, true, false, true]
    *  }

@@ -143,7 +143,7 @@ describe('calculator', () => {
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', '¬P']);
-      assert.deepStrictEqual(truthCombinations, [[0], [1]]);
+      assert.deepStrictEqual(truthCombinations, [[false], [true]]);
       assert.deepStrictEqual(truthValues, [true, false]);
     });
 
@@ -153,10 +153,10 @@ describe('calculator', () => {
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', 'Q', 'P -> Q']);
       assert.deepStrictEqual(truthCombinations, [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1],
+        [false, false],
+        [false, true],
+        [true, false],
+        [true, true],
       ]);
       assert.deepStrictEqual(truthValues, [true, true, false, true]);
     });
@@ -167,10 +167,10 @@ describe('calculator', () => {
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', 'Q', 'P <-> Q']);
       assert.deepStrictEqual(truthCombinations, [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1],
+        [false, false],
+        [false, true],
+        [true, false],
+        [true, true],
       ]);
       assert.deepStrictEqual(truthValues, [true, false, false, true]);
     });
@@ -181,10 +181,10 @@ describe('calculator', () => {
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', 'Q', 'P ∧ Q']);
       assert.deepStrictEqual(truthCombinations, [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1],
+        [false, false],
+        [false, true],
+        [true, false],
+        [true, true],
       ]);
       assert.deepStrictEqual(truthValues, [false, false, false, true]);
     });
@@ -195,10 +195,10 @@ describe('calculator', () => {
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', 'Q', 'P ∨ Q']);
       assert.deepStrictEqual(truthCombinations, [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1],
+        [false, false],
+        [false, true],
+        [true, false],
+        [true, true],
       ]);
       assert.deepStrictEqual(truthValues, [false, true, true, true]);
     });
@@ -215,22 +215,22 @@ describe('calculator', () => {
         '(A ∨ B) -> ¬(¬C ∧ D)',
       ]);
       assert.deepStrictEqual(truthCombinations, [
-        [0, 0, 0, 0],
-        [0, 0, 0, 1],
-        [0, 0, 1, 0],
-        [0, 0, 1, 1],
-        [0, 1, 0, 0],
-        [0, 1, 0, 1],
-        [0, 1, 1, 0],
-        [0, 1, 1, 1],
-        [1, 0, 0, 0],
-        [1, 0, 0, 1],
-        [1, 0, 1, 0],
-        [1, 0, 1, 1],
-        [1, 1, 0, 0],
-        [1, 1, 0, 1],
-        [1, 1, 1, 0],
-        [1, 1, 1, 1],
+        [false, false, false, false],
+        [false, false, false, true],
+        [false, false, true, false],
+        [false, false, true, true],
+        [false, true, false, false],
+        [false, true, false, true],
+        [false, true, true, false],
+        [false, true, true, true],
+        [true, false, false, false],
+        [true, false, false, true],
+        [true, false, true, false],
+        [true, false, true, true],
+        [true, true, false, false],
+        [true, true, false, true],
+        [true, true, true, false],
+        [true, true, true, true],
       ]);
       assert.deepStrictEqual(truthValues, [
         true,
@@ -258,10 +258,10 @@ describe('calculator', () => {
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['A', 'B', '¬(A ∧ B)']);
       assert.deepStrictEqual(truthCombinations, [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1],
+        [false, false],
+        [false, true],
+        [true, false],
+        [true, true],
       ]);
       assert.deepStrictEqual(truthValues, [true, true, true, false]);
     });
@@ -272,10 +272,10 @@ describe('calculator', () => {
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['A', 'B', '(A -> B) ∧ (B -> A)']);
       assert.deepStrictEqual(truthCombinations, [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1],
+        [false, false],
+        [false, true],
+        [true, false],
+        [true, true],
       ]);
       assert.deepStrictEqual(truthValues, [true, false, false, true]);
     });
@@ -286,10 +286,10 @@ describe('calculator', () => {
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['A', 'B', '(A ∨ B) -> (B -> A)']);
       assert.deepStrictEqual(truthCombinations, [
-        [0, 0],
-        [0, 1],
-        [1, 0],
-        [1, 1],
+        [false, false],
+        [false, true],
+        [true, false],
+        [true, true],
       ]);
       assert.deepStrictEqual(truthValues, [true, false, true, true]);
     });
