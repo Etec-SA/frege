@@ -15,3 +15,4 @@ export * from './eliminateDoubleNegation';
 export * from './buildConjunctionString';
 export * from './haveEvenNumberOfNegations';
 export * from './parse';
+export * from './printTruthTable';
