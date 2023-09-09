@@ -1,6 +1,4 @@
 
-
-
 # Frege
 
 <div align="center">
@@ -26,6 +24,11 @@
 	- [Evaluate](#evaluate)
 	- [Reduce](#reduce)
 	- [Truth Tables](#generate-truth-table)
+		- [Print Truth Table](#print-truth-table)
+	- [Formula Properties](#formula-properties)
+		- [isTautology](#istautology)
+		- [isContingency](#iscontingency)
+		- [isContradiction](#iscontradiction) 
 	- [Check Proof](#check-proof)
 	- [Semantic Consequence](#semantic-consequence)
 - [Technologies](#-technologies)
@@ -158,7 +161,7 @@ frege.reduce('P <-> ( Q -> P )'); // {2}
 ```
 
 ### Generate Truth Table:
-The "generateTruthTable" function generates a truth table for the formula passed in the parameter. The returned value will be an array, which contains a **header**, with the propositional variables and the formula in question; the **truth-value combinations** for propositional variables (where `1 == true` and `0 == false`); the **truth values of the formula** according to each combination.
+The "generateTruthTable" function generates a truth table for the formula passed in the parameter. The returned value will be an object, which contains a **header**, with the propositional variables and the formula in question; the **truth-value combinations** for propositional variables; the **truth values of the formula** according to each combination.
 
 ```typescript
 import { frege } from  'fregejs';
@@ -169,20 +172,59 @@ frege.generateTruthTable({operation:  'Conjunction', left:  'P', right:  'Q'}); 
 **output:**
 ```typescript
 // {1}
-[
-  [ 'P', 'Q', 'P->(Q->P)' ], // headers 
-  [ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ] ], // truth combinations
-  [ true, true, true, true ] // truth values
-]
+{
+	headers: [ 'P', 'Q', 'P->(Q->P)' ],
+	truthCombinations: [ [ false, false ], [ false, true ], [ true, false ], [ true, true ] ],
+	truthValues: [ true, true, true, true ]
+}
 
 // {2}
-[
-  [ 'P', 'Q', '(P ∧ Q)' ],
-  [ [ 0, 0 ], [ 0, 1 ], [ 1, 0 ], [ 1, 1 ] ],
-  [ false, false, false, true ]
-]
+{
+	headers: [ 'P', 'Q', '(P ∧ Q)' ],
+	truthCombinations: [ [ false, false ], [ false, true ], [ true, false ], [ true, true ] ],
+	truthValues: [ false, false, false, true ]
+}
+```
+#### Print Truth Table
+```typescript
+import { printTruthTable, frege } from 'fregejs';
+
+const truthTable = frege.generateTruthTable('P->Q');
+printTruthTable(truthTable);
+```
+**output:**
+```bash
+P       Q       P->Q
+F       F       T
+F       T       T
+T       F       F
+T       T       T
 ```
 
+### Formula Properties
+We can also check some properties of a formula using the "isContingency", "isTautology" or "isContradiction" functions.
+
+#### isTautology
+```typescript
+const formula = 'P->(Q->P)';
+const isTautology = frege.isTautology(formula);
+console.log(`Is "${formula}" a tautology? ${isTautology}`); // Output: Is "P->(Q->P)" a tautology? true
+```
+
+#### isContingency
+
+```typescript
+const formula = 'P <-> Q';
+const isContingency = frege.isContingency(formula);
+console.log(`Is "${formula}" a contingency? ${isContingency}`); // Output: Is "P <-> Q" a contingency? true
+```
+
+#### isContradiction
+```typescript
+const formula = 'P ∧ ¬P';
+const isContradiction = frege.isContradiction(formula);
+console.log(`Is "${formula}" a contradiction? ${isContradiction}`); // Output: Is "P ∧ ¬P" a contradiction? true
+```
 ### Check Proof:
 The "checkproof" function evaluates the validity of the logical test passed in the parameter. If it is valid, it displays the application of the rules in the `console` and returns `true`. Otherwise, it throws an `InferenceException`, explaining the reason for its **invalidity**.
 
