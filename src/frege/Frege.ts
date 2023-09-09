@@ -4,7 +4,7 @@ import { Lexer } from 'lexer/Lexer';
 import { Parser } from 'parser/Parser';
 import { ProofChecker } from 'proof-checker/ProofChecker';
 import { reducer } from 'reducer/Reducer';
-import { Formula, BinaryOperationFormula, Negation } from 'types';
+import { Formula, BinaryOperationFormula, Negation, TruthValue } from 'types';
 import { ReducedFormula } from 'types/conditional-types/reduced-formula';
 
 export class Frege {
@@ -140,7 +140,7 @@ export class Frege {
    *    truthValues: [true, true, false, true]
    *  }
    */
-  public generateTruthTable = calculator.generateTruthTable;
+  public generateTruthTable = this.calculator.generateTruthTable;
 
   /**
    * Checks the given proof for validity.
@@ -158,4 +158,51 @@ export class Frege {
    * ```
    */
   public checkProof = this.proofChecker.check;
+
+  /**
+   * Checks if the given formula is a tautology.
+   *
+   * @param {Formula | string} formula - The formula to check.
+   */
+  public isTautology = (formula: Formula | string) => {
+    const { truthValues } = this.calculator.generateTruthTable(formula);
+
+    for (let i = 0; i < truthValues.length; i++) {
+      if (!truthValues[i]) return false;
+    }
+
+    return true;
+  };
+  /**
+   * Checks if the given formula is a contradiction.
+   *
+   * @param {Formula | string} formula - The formula to check.
+   */
+  public isContradiction = (formula: Formula | string) => {
+    const { truthValues } = this.calculator.generateTruthTable(formula);
+
+    for (let i = 0; i < truthValues.length; i++) {
+      if (truthValues[i]) return false;
+    }
+
+    return true;
+  };
+
+  /**
+   * Checks if the given formula is a contingency.
+   *
+   * @param {Formula | string} formula - The formula to check.
+   */
+  public isContingency = (formula: Formula | string) => {
+    let firstTruthValue: TruthValue;
+    const { truthValues } = this.calculator.generateTruthTable(formula);
+
+    firstTruthValue = truthValues[0];
+
+    for (let i = 1; i < truthValues.length; i++) {
+      if (truthValues[i] != firstTruthValue) return true;
+    }
+
+    return false;
+  };
 }
