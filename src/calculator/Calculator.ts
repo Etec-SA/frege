@@ -1,6 +1,5 @@
 import { builder } from 'builder/Builder';
-import { Lexer } from 'lexer/Lexer';
-import { Parser } from 'parser/Parser';
+
 import {
   Formula,
   TruthTable,
@@ -19,6 +18,7 @@ import {
   isArrayString,
   parseToFormulaString,
   buildConjunctionString,
+  isNegation,
 } from 'utils';
 
 /**
@@ -36,22 +36,21 @@ export class calculator {
    * const output = Calculator.generateTruthTable('P -> Q');
    * console.log(output);
    * // Output:
-   * // [
-   * //   ['P', 'Q', '(P -> Q)'],
-   * //   [
+   * // {
+   * //   headers: ['P', 'Q', '(P -> Q)'],
+   * //   truthCombinations: [
    * //     [0, 0], [0, 1],
    * //     [1, 0], [1, 1]
    * //   ],
-   * //   [true, true, false, true]
-   * // ]
+   * //   truthValues: [true, true, false, true]
+   * // }
    */
   public static generateTruthTable(
     formula: Formula | string,
     stringfiedFormula?: string
   ): TruthTable {
     if (typeof formula === 'string' && !isPropositionalVariable(formula)) {
-      const tokens = new Lexer(formula).lex();
-      const parsedFormula = new Parser(tokens).parse();
+      const parsedFormula = parseToFormulaObject(formula);
       return calculator.generateTruthTable(parsedFormula, formula);
     }
 
@@ -64,30 +63,33 @@ export class calculator {
       variableArray.length
     );
 
-    const table: TruthTable = [[], [], []];
-
+    const table: TruthTable = {
+      headers: [],
+      truthCombinations: [],
+      truthValues: []
+    };
+    
     variableArray.forEach((variable) => {
-      table[0].push(variable);
+      table.headers.push(variable);
     });
 
     stringfiedFormula = stringfiedFormula || builder.buildFormula(formula);
 
-    table[0].push(stringfiedFormula);
+    table.headers.push(stringfiedFormula);
 
     truthCombinations.forEach((combination) => {
-      const values: PropositionalVariableValues =
-        {} as PropositionalVariableValues;
+      const values: PropositionalVariableValues = {};
 
       variableArray.forEach((variable, index) => {
         values[variable] =
           combination[index] === 1 || combination[index] === true;
       });
 
-      table[1].push(combination);
+      table.truthCombinations.push(combination);
 
       const result = calculator.evaluate(formula, values);
 
-      table[2].push(result);
+      table.truthValues.push(result);
     });
 
     return table;
@@ -108,10 +110,9 @@ export class calculator {
     formula: T | string,
     values: PropositionalVariableValues
   ): boolean {
-    if (typeof formula === 'string' && formula.length > 1) {
-      const tokens = new Lexer(formula).lex();
-      const parsedFormula = new Parser(tokens).parse();
-      return calculator.evaluate(parsedFormula as T, values);
+    if (typeof formula === 'string' && !isPropositionalVariable(formula)) {
+      const parsedFormula = parseToFormulaObject(formula);
+      return calculator.evaluate(parsedFormula, values);
     }
 
     if (typeof formula === 'string') return values[`${formula}`];
@@ -145,7 +146,7 @@ export class calculator {
    * when all premises are true, the conclusion is also true.
    *
    * @param premises - An array of logical formulas or strings representing the premises.
-   * @param A - The conclusion formula to check as a semantic consequence.
+   * @param conclusion - The conclusion formula to check as a semantic consequence.
    * @returns True if the conclusion is a semantic consequence of the premises, false otherwise.
    *
    * @example
@@ -154,48 +155,46 @@ export class calculator {
    */
   public static isSemanticConsequence(
     premises: Formula[] | string[],
-    A: Formula | string
+    conclusion: Formula | string
   ): boolean {
     const variables = new Set<PropositionalVariable>();
-    let finalFormula: Formula;
+    let conjunctionOfPremises: Formula;
 
-    if (typeof A === 'string' && !isPropositionalVariable(A))
-      A = parseToFormulaObject(A);
+    if (typeof conclusion === 'string' && !isPropositionalVariable(conclusion))
+      conclusion = parseToFormulaObject(conclusion);
 
     if (premises.length === 1) {
-      finalFormula =
-        typeof premises[0] === 'object'
+      conjunctionOfPremises = typeof premises[0] === 'object'
           ? premises[0]
           : parseToFormulaObject(premises[0]);
-    } else {
+
+    }else{
+      
       if (!isArrayString(premises)) {
         premises = premises.map((premise) => parseToFormulaString(premise));
       }
 
       let conjunctionFormulaString: string = buildConjunctionString(premises);
-      finalFormula = parseToFormulaObject(conjunctionFormulaString);
+      conjunctionOfPremises = parseToFormulaObject(conjunctionFormulaString);
+
     }
 
-    calculator.collectVariables(finalFormula, variables);
+    calculator.collectVariables(conjunctionOfPremises, variables);
     const variableArray = Array.from(variables);
-    const truthCombinations = calculator.generateTruthCombinations(
-      variableArray.length
-    );
+    const truthCombinations = calculator.generateTruthCombinations(variableArray.length);
 
     for (const combination of truthCombinations) {
-      const values: PropositionalVariableValues =
-        {} as PropositionalVariableValues;
+      const values: PropositionalVariableValues = {};
 
       variableArray.forEach((variable, index) => {
         values[variable] =
           combination[index] === 1 || combination[index] === true;
       });
 
-      const finalFormulaTrue = calculator.evaluate(finalFormula, values);
+      const allPremisesAreTrue = calculator.evaluate(conjunctionOfPremises, values);
 
-      if (finalFormulaTrue && !calculator.evaluate(A as Formula, values)) {
+      if (allPremisesAreTrue && !calculator.evaluate(conclusion, values))
         return false;
-      }
     }
 
     return true;
@@ -266,9 +265,9 @@ export class calculator {
     formula: T,
     variables: Set<PropositionalVariable>
   ) {
-    if (typeof formula === 'string') {
-      variables.add(formula as PropositionalVariable);
-    } else if (formula.operation === 'Negation') {
+    if (isPropositionalVariable(formula)) {
+      variables.add(formula);
+    } else if (isNegation(formula)) {
       calculator.collectVariables(formula.value, variables);
     } else {
       calculator.collectVariables(formula.left, variables);

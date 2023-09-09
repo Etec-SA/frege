@@ -131,14 +131,14 @@ export class Frege {
    * const output = Calculator.generateTruthTable('P -> Q');
    * console.log(output);
    * // Output:
-   * // [
-   * //   ['P', 'Q', '(P -> Q)'],
-   * //   [
-   * //     [0, 0], [0, 1],
-   * //     [1, 0], [1, 1]
-   * //   ],
-   * //   [true, true, false, true]
-   * // ]
+   * {
+   *    headers: ['P', 'Q', '(P -> Q)'],
+   *    truthCombinations: [
+   *      [0, 0], [0, 1],
+   *      [1, 0], [1, 1]
+   *    ],
+   *    truthValues: [true, true, false, true]
+   *  }
    */
   public generateTruthTable = calculator.generateTruthTable;
 

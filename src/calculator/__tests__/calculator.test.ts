@@ -141,73 +141,73 @@ describe('calculator', () => {
     it('should generate a truth table for ¬P', () => {
       const output = calculator.generateTruthTable('¬P');
 
-      const [formulas, truthCombinations, mainFormulaValues] = output;
-      assert.deepStrictEqual(formulas, ['P', '¬P']);
+      const {headers, truthCombinations, truthValues} = output;
+      assert.deepStrictEqual(headers, ['P', '¬P']);
       assert.deepStrictEqual(truthCombinations, [[0], [1]]);
-      assert.deepStrictEqual(mainFormulaValues, [true, false]);
+      assert.deepStrictEqual(truthValues, [true, false]);
     });
 
     it('should generate a truth table for P -> Q', () => {
       const output = calculator.generateTruthTable('P -> Q');
 
-      const [formulas, truthCombinations, mainFormulaValues] = output;
-      assert.deepStrictEqual(formulas, ['P', 'Q', 'P -> Q']);
+      const {headers, truthCombinations, truthValues} = output;
+      assert.deepStrictEqual(headers, ['P', 'Q', 'P -> Q']);
       assert.deepStrictEqual(truthCombinations, [
         [0, 0],
         [0, 1],
         [1, 0],
         [1, 1],
       ]);
-      assert.deepStrictEqual(mainFormulaValues, [true, true, false, true]);
+      assert.deepStrictEqual(truthValues, [true, true, false, true]);
     });
 
     it('should generate a truth table for P <-> Q', () => {
       const output = calculator.generateTruthTable('P <-> Q');
 
-      const [formulas, truthCombinations, mainFormulaValues] = output;
-      assert.deepStrictEqual(formulas, ['P', 'Q', 'P <-> Q']);
+      const {headers, truthCombinations, truthValues} = output;
+      assert.deepStrictEqual(headers, ['P', 'Q', 'P <-> Q']);
       assert.deepStrictEqual(truthCombinations, [
         [0, 0],
         [0, 1],
         [1, 0],
         [1, 1],
       ]);
-      assert.deepStrictEqual(mainFormulaValues, [true, false, false, true]);
+      assert.deepStrictEqual(truthValues, [true, false, false, true]);
     });
 
     it('should generate a truth table for P ∧ Q', () => {
       const output = calculator.generateTruthTable('P ∧ Q');
 
-      const [formulas, truthCombinations, mainFormulaValues] = output;
-      assert.deepStrictEqual(formulas, ['P', 'Q', 'P ∧ Q']);
+      const {headers, truthCombinations, truthValues} = output;
+      assert.deepStrictEqual(headers, ['P', 'Q', 'P ∧ Q']);
       assert.deepStrictEqual(truthCombinations, [
         [0, 0],
         [0, 1],
         [1, 0],
         [1, 1],
       ]);
-      assert.deepStrictEqual(mainFormulaValues, [false, false, false, true]);
+      assert.deepStrictEqual(truthValues, [false, false, false, true]);
     });
 
     it('should generate a truth table for P ∨ Q', () => {
       const output = calculator.generateTruthTable('P ∨ Q');
 
-      const [formulas, truthCombinations, mainFormulaValues] = output;
-      assert.deepStrictEqual(formulas, ['P', 'Q', 'P ∨ Q']);
+      const {headers, truthCombinations, truthValues} = output;
+      assert.deepStrictEqual(headers, ['P', 'Q', 'P ∨ Q']);
       assert.deepStrictEqual(truthCombinations, [
         [0, 0],
         [0, 1],
         [1, 0],
         [1, 1],
       ]);
-      assert.deepStrictEqual(mainFormulaValues, [false, true, true, true]);
+      assert.deepStrictEqual(truthValues, [false, true, true, true]);
     });
 
     it('should generate a truth table for (A ∨ B) -> ¬(¬C ∧ D)', () => {
       const output = calculator.generateTruthTable('(A ∨ B) -> ¬(¬C ∧ D)');
 
-      const [formulas, truthCombinations, mainFormulaValues] = output;
-      assert.deepStrictEqual(formulas, [
+      const {headers, truthCombinations, truthValues} = output;
+      assert.deepStrictEqual(headers, [
         'A',
         'B',
         'C',
@@ -232,7 +232,7 @@ describe('calculator', () => {
         [1, 1, 1, 0],
         [1, 1, 1, 1],
       ]);
-      assert.deepStrictEqual(mainFormulaValues, [
+      assert.deepStrictEqual(truthValues, [
         true,
         true,
         true,
@@ -255,43 +255,43 @@ describe('calculator', () => {
     it('should generate a truth table for ¬(A ∧ B)', () => {
       const output = calculator.generateTruthTable('¬(A ∧ B)');
 
-      const [formulas, truthCombinations, mainFormulaValues] = output;
-      assert.deepStrictEqual(formulas, ['A', 'B', '¬(A ∧ B)']);
+      const {headers, truthCombinations, truthValues} = output;
+      assert.deepStrictEqual(headers, ['A', 'B', '¬(A ∧ B)']);
       assert.deepStrictEqual(truthCombinations, [
         [0, 0],
         [0, 1],
         [1, 0],
         [1, 1],
       ]);
-      assert.deepStrictEqual(mainFormulaValues, [true, true, true, false]);
+      assert.deepStrictEqual(truthValues, [true, true, true, false]);
     });
 
     it('should generate a truth table for (A -> B) ∧ (B -> A)', () => {
       const output = calculator.generateTruthTable('(A -> B) ∧ (B -> A)');
 
-      const [formulas, truthCombinations, mainFormulaValues] = output;
-      assert.deepStrictEqual(formulas, ['A', 'B', '(A -> B) ∧ (B -> A)']);
+      const {headers, truthCombinations, truthValues} = output;
+      assert.deepStrictEqual(headers, ['A', 'B', '(A -> B) ∧ (B -> A)']);
       assert.deepStrictEqual(truthCombinations, [
         [0, 0],
         [0, 1],
         [1, 0],
         [1, 1],
       ]);
-      assert.deepStrictEqual(mainFormulaValues, [true, false, false, true]);
+      assert.deepStrictEqual(truthValues, [true, false, false, true]);
     });
 
     it('should generate a truth table for (A ∨ B) -> (B -> A)', () => {
       const output = calculator.generateTruthTable('(A ∨ B) -> (B -> A)');
 
-      const [formulas, truthCombinations, mainFormulaValues] = output;
-      assert.deepStrictEqual(formulas, ['A', 'B', '(A ∨ B) -> (B -> A)']);
+      const {headers, truthCombinations, truthValues} = output;
+      assert.deepStrictEqual(headers, ['A', 'B', '(A ∨ B) -> (B -> A)']);
       assert.deepStrictEqual(truthCombinations, [
         [0, 0],
         [0, 1],
         [1, 0],
         [1, 1],
       ]);
-      assert.deepStrictEqual(mainFormulaValues, [true, false, true, true]);
+      assert.deepStrictEqual(truthValues, [true, false, true, true]);
     });
   });
 
