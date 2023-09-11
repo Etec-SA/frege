@@ -1,5 +1,9 @@
 # fregejs
 
+## 0.2.3
+
+hotfix: publish updated dist
+
 ## 0.2.2
 
 ### Patch Changes
