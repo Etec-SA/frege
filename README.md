@@ -60,7 +60,7 @@ Constructing formulas, simplifying them, checking semantic or syntactic validity
 
 When passing propositional logic formulas to some Frege function, it is necessary to know that the accepted symbols are the following:
 ```typescript
-type Operator = '¬' | '∧' | '∨' | '->' | '<->';
+export type Operator = '¬' | '∧' | '∨' | '->' | '<->' | '!' | '&' | '|';
 ```
 Parentheses ( "()" ) are also accepted.
 
@@ -71,7 +71,7 @@ When entering any propositional variable, only **uppercase** `A - Z` letters wil
 frege.evaluate('¬(P ∧ Q)', {P: false, Q: true});
 
 // Not supported ❌
-frege.evaluate('!(p ^ Q)', {p: false, Q: true});
+frege.evaluate('~(p ^ Q)', {p: false, Q: true});
 ```
 
 
@@ -92,6 +92,13 @@ frege.parse.toFormulaObject('P <-> Q'); // {2} Biconditional
 frege.parse.toFormulaObject('P ∧ Q'); // {3} Conjunction
 frege.parse.toFormulaObject('P ∨ Q'); // {4} Disjunction
 frege.parse.toFormulaObject('¬P'); // {5} Negation
+
+/*
+Alternative Symbols:
+*/
+frege.parse.toFormulaObject('P & Q'); // {6} Conjunction
+frege.parse.toFormulaObject('P | Q'); // {7} Disjunction
+frege.parse.toFormulaObject('!P'); // {8} Negation
 ```
 **output**:
 ```typescript
@@ -100,6 +107,13 @@ frege.parse.toFormulaObject('¬P'); // {5} Negation
 { operation: 'Conjunction', left: 'P', right: 'Q' }   // {3} Conjunction
 { operation: 'Disjunction', left: 'P', right: 'Q' }   // {4} Disjunction
 { operation: 'Negation', value: 'P' } // {5} Negation
+
+/*
+Alternative Symbols:
+*/
+{ operation: 'Conjunction', left: 'P', right: 'Q' }   // {6} Conjunction
+{ operation: 'Disjunction', left: 'P', right: 'Q' }   // {7} Disjunction
+{ operation: 'Negation', value: 'P' } // {8} Negation
 ```
 
 #### Object to Formula string:
