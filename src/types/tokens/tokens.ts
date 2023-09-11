@@ -1,9 +1,18 @@
 import { PropositionalVariable } from '../operations/propositional-variable';
 
 /**
-* Represents logical operators used in propositional logic.
-*/
-export type Operator = '¬' | '∧' | '∨' | '->' | '<->';
+ * Represents logical operators used in propositional logic.
+ * 
+ * - '¬' (Negation): Represents logical negation (NOT).
+ * - '∧' (Conjunction): Represents logical conjunction (AND).
+ * - '∨' (Disjunction): Represents logical disjunction (OR).
+ * - '->' (Implication): Represents logical implication (IF...THEN).
+ * - '<->' (Biconditional): Represents logical biconditional (IF AND ONLY IF).
+ * - '!' (Negation, alternative symbol): Represents logical negation (NOT).
+ * - '&' (Conjunction, alternative symbol): Represents logical conjunction (AND).
+ * - '|' (Disjunction, alternative symbol): Represents logical disjunction (OR).
+ */
+export type Operator = '¬' | '∧' | '∨' | '->' | '<->' | '!' | '&' | '|';
 
 /**
    * Represents boundary characters used in propositional logic.

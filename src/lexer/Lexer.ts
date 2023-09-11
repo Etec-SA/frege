@@ -77,7 +77,7 @@ export class Lexer {
   }
 
   private isSpecial(c: string) {
-    return /[¬∧∨\-><->]/.test(c);
+    return /[¬∧∨&!|\-><->]/.test(c);
   }
 
   private isExpressionBoundary(c: string): c is Boundary {
@@ -85,7 +85,7 @@ export class Lexer {
   }
 
   private operatorExists(op: string): op is Operator {
-    return ['¬', '∧', '∨', '->', '<->'].indexOf(op) !== -1;
+    return ['¬', '!', '∧', '&', '∨', '|', '->', '<->'].indexOf(op) !== -1;
   }
 
   private throwTokenException(token: string, position: number) {

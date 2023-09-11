@@ -80,4 +80,31 @@ describe('Lexer', () => {
     assert.equal(result.length, 15);
     assert.deepEqual(result, expected);
   });
+
+  it('should lex ( P | (Q & P) ) <-> (!Q -> P)', () => {
+    const expected: Token[] = [
+      { type: 'boundary', value: '(' },
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '|' },
+      { type: 'boundary', value: '(' },
+      { type: 'variable', value: 'Q' },
+      { type: 'operator', value: '&' },
+      { type: 'variable', value: 'P' },
+      { type: 'boundary', value: ')' },
+      { type: 'boundary', value: ')' },
+      { type: 'operator', value: '<->' },
+      { type: 'boundary', value: '(' },
+      { type: 'operator', value: '!' },
+      { type: 'variable', value: 'Q' },
+      { type: 'operator', value: '->' },
+      { type: 'variable', value: 'P' },
+      { type: 'boundary', value: ')' },
+    ];
+
+    lexer.input = '(P | (Q & P)) <-> (!Q -> P) ';
+    const result = lexer.lex();
+    assert.equal(result.length, 16);
+    assert.deepEqual(result, expected);
+  });
+
 });

@@ -79,39 +79,43 @@ export class Parser {
   }
 
   private node(operator: Operator, args: Formula[]): Formula {
-    switch (operator) {
-      case '¬':
-        return { operation: 'Negation', value: args[0] } as Negation;
-      case '∨':
-        return {
-          operation: 'Disjunction',
-          left: args[0],
-          right: args[1],
-        } as Disjunction;
-      case '∧':
-        return {
-          operation: 'Conjunction',
-          left: args[0],
-          right: args[1],
-        } as Conjunction;
-      case '->':
-        return {
-          operation: 'Implication',
-          left: args[0],
-          right: args[1],
-        } as Implication;
-      case '<->':
-        return {
-          operation: 'Biconditional',
-          left: args[0],
-          right: args[1],
-        } as Biconditional;
-      default:
-        return args[0] as PropositionalVariable;
-    }
+
+    if (operator === '¬' || operator === '!')
+      return { operation: 'Negation', value: args[0] } as Negation;
+
+    if (operator === '∨' || operator === '|')
+      return {
+        operation: 'Disjunction',
+        left: args[0],
+        right: args[1],
+      } as Disjunction;
+
+    if (operator === '∧' || operator === '&')
+      return {
+        operation: 'Conjunction',
+        left: args[0],
+        right: args[1],
+      } as Conjunction;
+
+    if (operator === '->')
+      return {
+        operation: 'Implication',
+        left: args[0],
+        right: args[1],
+      } as Implication;
+
+    if (operator === '<->')
+      return {
+        operation: 'Biconditional',
+        left: args[0],
+        right: args[1],
+      } as Biconditional;
+
+
+    return args[0] as PropositionalVariable;
   }
 
   private isUnary(operator: Operator) {
-    return operator === '¬';
+    return operator === '¬' || operator === '!';
   }
 }
