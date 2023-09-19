@@ -1,4 +1,4 @@
-import { builder } from 'builder/Builder';
+import { Builder } from 'builder/Builder';
 
 import {
   Formula,
@@ -24,7 +24,7 @@ import {
 /**
  * Class responsible for performing semantic truth-value operations, such as evaluate formulas and generate truth tables.
  */
-export class calculator {
+export class Calculator {
   /**
    * Generates a truth table for the given formula.
    *
@@ -51,15 +51,15 @@ export class calculator {
   ): TruthTable {
     if (typeof formula === 'string' && !isPropositionalVariable(formula)) {
       const parsedFormula = parseToFormulaObject(formula);
-      return calculator.generateTruthTable(parsedFormula, formula);
+      return Calculator.generateTruthTable(parsedFormula, formula);
     }
 
     const variables = new Set<PropositionalVariable>();
-    calculator.collectVariables(formula, variables);
+    Calculator.collectVariables(formula, variables);
 
     const variableArray = Array.from(variables);
 
-    const truthCombinations = calculator.generateTruthCombinations(
+    const truthCombinations = Calculator.generateTruthCombinations(
       variableArray.length
     );
 
@@ -73,7 +73,7 @@ export class calculator {
       table.headers.push(variable);
     });
 
-    stringfiedFormula = stringfiedFormula || builder.buildFormula(formula);
+    stringfiedFormula = stringfiedFormula || Builder.buildFormula(formula);
 
     table.headers.push(stringfiedFormula);
 
@@ -86,7 +86,7 @@ export class calculator {
 
       table.truthCombinations.push(combination);
 
-      const result = calculator.evaluate(formula, values);
+      const result = Calculator.evaluate(formula, values);
 
       table.truthValues.push(result);
     });
@@ -111,29 +111,29 @@ export class calculator {
   ): boolean {
     if (typeof formula === 'string' && !isPropositionalVariable(formula)) {
       const parsedFormula = parseToFormulaObject(formula);
-      return calculator.evaluate(parsedFormula, values);
+      return Calculator.evaluate(parsedFormula, values);
     }
 
     if (typeof formula === 'string') return values[`${formula}`];
 
     if (formula.operation === 'Implication') {
-      return calculator.evaluateImplication(formula, values);
+      return Calculator.evaluateImplication(formula, values);
     }
 
     if (formula.operation === 'Biconditional') {
-      return calculator.evaluateBiconditional(formula, values);
+      return Calculator.evaluateBiconditional(formula, values);
     }
 
     if (formula.operation === 'Conjunction') {
-      return calculator.evaluateConjunction(formula, values);
+      return Calculator.evaluateConjunction(formula, values);
     }
 
     if (formula.operation === 'Disjunction') {
-      return calculator.evaluateDisjunction(formula, values);
+      return Calculator.evaluateDisjunction(formula, values);
     }
 
     if (formula.operation === 'Negation') {
-      return calculator.evaluateNegation(formula, values);
+      return Calculator.evaluateNegation(formula, values);
     }
 
     throw new Error('Invalid formula operation');
@@ -178,9 +178,9 @@ export class calculator {
 
     }
 
-    calculator.collectVariables(conjunctionOfPremises, variables);
+    Calculator.collectVariables(conjunctionOfPremises, variables);
     const variableArray = Array.from(variables);
-    const truthCombinations = calculator.generateTruthCombinations(variableArray.length);
+    const truthCombinations = Calculator.generateTruthCombinations(variableArray.length);
 
     for (const combination of truthCombinations) {
       const values: PropositionalVariableValues = {};
@@ -189,9 +189,9 @@ export class calculator {
         values[variable] = !!(combination[index]);
       });
 
-      const allPremisesAreTrue = calculator.evaluate(conjunctionOfPremises, values);
+      const allPremisesAreTrue = Calculator.evaluate(conjunctionOfPremises, values);
 
-      if (allPremisesAreTrue && !calculator.evaluate(conclusion, values))
+      if (allPremisesAreTrue && !Calculator.evaluate(conclusion, values))
         return false;
     }
 
@@ -202,8 +202,8 @@ export class calculator {
     formula: Implication,
     values: PropositionalVariableValues
   ): boolean {
-    const left = calculator.evaluate(formula.left, values);
-    const right = calculator.evaluate(formula.right, values);
+    const left = Calculator.evaluate(formula.left, values);
+    const right = Calculator.evaluate(formula.right, values);
     return !left || right;
   }
 
@@ -211,8 +211,8 @@ export class calculator {
     formula: Biconditional,
     values: PropositionalVariableValues
   ): boolean {
-    const left = calculator.evaluate(formula.left, values);
-    const right = calculator.evaluate(formula.right, values);
+    const left = Calculator.evaluate(formula.left, values);
+    const right = Calculator.evaluate(formula.right, values);
     return (left && right) || (!left && !right);
   }
 
@@ -220,8 +220,8 @@ export class calculator {
     formula: Conjunction,
     values: PropositionalVariableValues
   ): boolean {
-    const left = calculator.evaluate(formula.left, values);
-    const right = calculator.evaluate(formula.right, values);
+    const left = Calculator.evaluate(formula.left, values);
+    const right = Calculator.evaluate(formula.right, values);
     return left && right;
   }
 
@@ -229,8 +229,8 @@ export class calculator {
     formula: Disjunction,
     values: PropositionalVariableValues
   ): boolean {
-    const left = calculator.evaluate(formula.left, values);
-    const right = calculator.evaluate(formula.right, values);
+    const left = Calculator.evaluate(formula.left, values);
+    const right = Calculator.evaluate(formula.right, values);
     return left || right;
   }
 
@@ -238,7 +238,7 @@ export class calculator {
     formula: Negation,
     values: PropositionalVariableValues
   ): boolean {
-    const value = calculator.evaluate(formula.value, values);
+    const value = Calculator.evaluate(formula.value, values);
     return !value;
   }
 
@@ -265,10 +265,10 @@ export class calculator {
     if (isPropositionalVariable(formula)) {
       variables.add(formula);
     } else if (isNegation(formula)) {
-      calculator.collectVariables(formula.value, variables);
+      Calculator.collectVariables(formula.value, variables);
     } else {
-      calculator.collectVariables(formula.left, variables);
-      calculator.collectVariables(formula.right, variables);
+      Calculator.collectVariables(formula.left, variables);
+      Calculator.collectVariables(formula.right, variables);
     }
   }
 }

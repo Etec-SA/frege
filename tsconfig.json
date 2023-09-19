@@ -16,6 +16,13 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@fregejs": ["./"],
+      "@fregejs/utils": ["./utils/"],
+      "@fregejs/exceptions": ["./exceptions/"],
+      "@fregejs/types": ["./types/"],
+      "@fregejs/modules": ["./modules/"]
+    }
   }
 }

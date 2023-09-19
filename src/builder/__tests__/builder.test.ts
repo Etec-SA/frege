@@ -1,16 +1,16 @@
 import assert from 'assert/strict';
 import { describe, it } from 'node:test';
-import { builder } from '../Builder';
+import { Builder } from '../Builder';
 import { Formula } from '../../types/formulas/formula';
 import { Implication } from '../../types/operations/binary-operations';
 
 describe('Builder', () => {
   it('should be defined', () => {
-    assert.ok(builder);
+    assert.ok(Builder);
   });
 
   it('should build a conjunction', () => {
-    const result = builder.buildFormula({
+    const result = Builder.buildFormula({
       operation: 'Conjunction',
       left: 'P',
       right: 'Q',
@@ -21,7 +21,7 @@ describe('Builder', () => {
   });
 
   it('should build a disjunction', () => {
-    const result = builder.buildFormula({
+    const result = Builder.buildFormula({
       operation: 'Disjunction',
       left: 'P',
       right: 'Q',
@@ -32,7 +32,7 @@ describe('Builder', () => {
   });
 
   it('should build an implication', () => {
-    const result = builder.buildFormula({
+    const result = Builder.buildFormula({
       operation: 'Implication',
       left: 'P',
       right: 'Q',
@@ -43,7 +43,7 @@ describe('Builder', () => {
   });
 
   it('should build a biconditional', () => {
-    const result = builder.buildFormula({
+    const result = Builder.buildFormula({
       operation: 'Biconditional',
       left: 'P',
       right: 'Q',
@@ -54,7 +54,7 @@ describe('Builder', () => {
   });
 
   it('should build a negation', () => {
-    const result = builder.buildFormula({
+    const result = Builder.buildFormula({
       operation: 'Negation',
       value: 'A',
     });
@@ -70,7 +70,7 @@ describe('Builder', () => {
       right: 'P',
     };
 
-    const result = builder.buildFormula({
+    const result = Builder.buildFormula({
       operation: 'Implication',
       left: 'P',
       right,
@@ -104,7 +104,7 @@ describe('Builder', () => {
       },
     };
 
-    const result = builder.buildFormula({
+    const result = Builder.buildFormula({
       operation: 'Implication',
       left,
       right,

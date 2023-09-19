@@ -6,7 +6,7 @@ import { Formula } from 'types';
  * the artificial language of logic syntax.
  */
 
-export class builder {
+export class Builder {
   private static operations = {
     Biconditional: this.biconditional,
     Conjunction: this.conjunction,

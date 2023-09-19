@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import { describe, it } from 'node:test';
-import { reducer } from '../Reducer';
-import { builder } from 'builder/Builder';
+import { Reducer } from '../Reducer';
+import { Builder } from 'builder/Builder';
 import {
   Implication,
   Biconditional,
@@ -18,10 +18,10 @@ describe('Reducer', () => {
       right: 'Q',
     };
 
-    const result = reducer.implication(implication);
+    const result = Reducer.implication(implication);
     assert.ok(result);
     assert.equal(result.operation, 'Disjunction');
-    assert.equal(builder.buildFormula(result), '(¬(P) ∨ Q)');
+    assert.equal(Builder.buildFormula(result), '(¬(P) ∨ Q)');
   });
 
   it('should reduce P -> (Q -> P) to (¬(P) v (¬(Q) v P))', () => {
@@ -35,10 +35,10 @@ describe('Reducer', () => {
       },
     };
 
-    const result = reducer.implication(implication);
+    const result = Reducer.implication(implication);
     assert.ok(result);
     assert.equal(result.operation, 'Disjunction');
-    assert.equal(builder.buildFormula(result), '(¬(P) ∨ (¬(Q) ∨ P))');
+    assert.equal(Builder.buildFormula(result), '(¬(P) ∨ (¬(Q) ∨ P))');
   });
 
   it('should reduce (P <-> Q) to ((¬(P) v Q) ^ (¬(Q) v P))', () => {
@@ -48,11 +48,11 @@ describe('Reducer', () => {
       right: 'Q',
     };
 
-    const result = reducer.biconditional(biconditional);
+    const result = Reducer.biconditional(biconditional);
 
     assert.ok(result);
     assert.equal(result.operation, 'Conjunction');
-    assert.equal(builder.buildFormula(result), '((¬(P) ∨ Q) ∧ (¬(Q) ∨ P))');
+    assert.equal(Builder.buildFormula(result), '((¬(P) ∨ Q) ∧ (¬(Q) ∨ P))');
   });
 
   it(`should reduce "(P -> (Q -> (P -> Q)) <-> (P v Q))" to 
@@ -87,11 +87,11 @@ describe('Reducer', () => {
       right: disjunction,
     };
 
-    const result = reducer.biconditional(conjunction);
+    const result = Reducer.biconditional(conjunction);
     assert.ok(result);
     assert.equal(result.operation, 'Conjunction');
     assert.equal(
-      builder.buildFormula(result),
+      Builder.buildFormula(result),
       '((¬((¬(P) ∨ (¬(Q) ∨ (¬(P) ∨ Q)))) ∨ (P ∨ Q)) ∧ (¬((P ∨ Q)) ∨ (¬(P) ∨ (¬(Q) ∨ (¬(P) ∨ Q)))))'
     );
   });
@@ -109,10 +109,10 @@ describe('Reducer', () => {
       right: implication,
     };
 
-    const result = reducer.conjunction(conjunction);
+    const result = Reducer.conjunction(conjunction);
     assert.ok(result);
     assert.equal(result.operation, 'Conjunction');
-    assert.equal(builder.buildFormula(result), '((¬(P) ∨ Q) ∧ (¬(P) ∨ Q))');
+    assert.equal(Builder.buildFormula(result), '((¬(P) ∨ Q) ∧ (¬(P) ∨ Q))');
   });
 
   it('should reduce (P -> Q) v (P -> Q) to ((¬(P) ∨ Q) ∨ (¬(P) ∨ Q))', () => {
@@ -128,10 +128,10 @@ describe('Reducer', () => {
       right: implication,
     };
 
-    const result = reducer.disjunction(disjunction);
+    const result = Reducer.disjunction(disjunction);
     assert.ok(result);
     assert.equal(result.operation, 'Disjunction');
-    assert.equal(builder.buildFormula(result), '((¬(P) ∨ Q) ∨ (¬(P) ∨ Q))');
+    assert.equal(Builder.buildFormula(result), '((¬(P) ∨ Q) ∨ (¬(P) ∨ Q))');
   });
 
   it('should reduce ¬(P -> Q) to ¬((¬(P) ∨ Q))', () => {
@@ -146,9 +146,9 @@ describe('Reducer', () => {
       value: implication,
     };
 
-    const result = reducer.negation(negation);
+    const result = Reducer.negation(negation);
     assert.ok(result);
     assert.equal(result.operation, 'Negation');
-    assert.equal(builder.buildFormula(result), '¬((¬(P) ∨ Q))');
+    assert.equal(Builder.buildFormula(result), '¬((¬(P) ∨ Q))');
   });
 });

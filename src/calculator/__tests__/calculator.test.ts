@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { calculator } from '../Calculator';
+import { Calculator } from '../Calculator';
 import {
   Implication,
   Conjunction,
@@ -11,12 +11,12 @@ import {
 
 describe('calculator', () => {
   it('should be defined', () => {
-    assert.ok(calculator, 'calculator class is defined.');
+    assert.ok(Calculator, 'calculator class is defined.');
   });
 
   describe('evaluate', () => {
     it('should be defined', () => {
-      assert.ok(calculator.evaluate, 'evaluate method is defined');
+      assert.ok(Calculator.evaluate, 'evaluate method is defined');
     });
 
     it('should evaluate correctly an implication', () => {
@@ -25,10 +25,10 @@ describe('calculator', () => {
         left: 'A',
         right: 'B',
       };
-      const case1 = calculator.evaluate(operation, { A: true, B: true });
-      const case2 = calculator.evaluate(operation, { A: false, B: true });
-      const case3 = calculator.evaluate(operation, { A: true, B: false });
-      const case4 = calculator.evaluate(operation, { A: false, B: false });
+      const case1 = Calculator.evaluate(operation, { A: true, B: true });
+      const case2 = Calculator.evaluate(operation, { A: false, B: true });
+      const case3 = Calculator.evaluate(operation, { A: true, B: false });
+      const case4 = Calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -42,10 +42,10 @@ describe('calculator', () => {
         left: 'A',
         right: 'B',
       };
-      const case1 = calculator.evaluate(operation, { A: true, B: true });
-      const case2 = calculator.evaluate(operation, { A: false, B: true });
-      const case3 = calculator.evaluate(operation, { A: true, B: false });
-      const case4 = calculator.evaluate(operation, { A: false, B: false });
+      const case1 = Calculator.evaluate(operation, { A: true, B: true });
+      const case2 = Calculator.evaluate(operation, { A: false, B: true });
+      const case3 = Calculator.evaluate(operation, { A: true, B: false });
+      const case4 = Calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, false);
@@ -59,10 +59,10 @@ describe('calculator', () => {
         left: 'A',
         right: 'B',
       };
-      const case1 = calculator.evaluate(operation, { A: true, B: true });
-      const case2 = calculator.evaluate(operation, { A: false, B: true });
-      const case3 = calculator.evaluate(operation, { A: true, B: false });
-      const case4 = calculator.evaluate(operation, { A: false, B: false });
+      const case1 = Calculator.evaluate(operation, { A: true, B: true });
+      const case2 = Calculator.evaluate(operation, { A: false, B: true });
+      const case3 = Calculator.evaluate(operation, { A: true, B: false });
+      const case4 = Calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -76,10 +76,10 @@ describe('calculator', () => {
         left: 'A',
         right: 'B',
       };
-      const case1 = calculator.evaluate(operation, { A: true, B: true });
-      const case2 = calculator.evaluate(operation, { A: false, B: true });
-      const case3 = calculator.evaluate(operation, { A: true, B: false });
-      const case4 = calculator.evaluate(operation, { A: false, B: false });
+      const case1 = Calculator.evaluate(operation, { A: true, B: true });
+      const case2 = Calculator.evaluate(operation, { A: false, B: true });
+      const case3 = Calculator.evaluate(operation, { A: true, B: false });
+      const case4 = Calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, false);
@@ -89,8 +89,8 @@ describe('calculator', () => {
 
     it('should evaluate correctly a negation', () => {
       const operation: Negation = { operation: 'Negation', value: 'A' };
-      const case1 = calculator.evaluate(operation, { A: true });
-      const case2 = calculator.evaluate(operation, { A: false });
+      const case1 = Calculator.evaluate(operation, { A: true });
+      const case2 = Calculator.evaluate(operation, { A: false });
 
       assert.equal(case1, false);
       assert.equal(case2, true);
@@ -98,10 +98,10 @@ describe('calculator', () => {
 
     it('should evaluate A->(B->A)', () => {
       const operation = 'A->(B->A)';
-      const case1 = calculator.evaluate(operation, { A: true, B: true });
-      const case2 = calculator.evaluate(operation, { A: false, B: true });
-      const case3 = calculator.evaluate(operation, { A: true, B: false });
-      const case4 = calculator.evaluate(operation, { A: false, B: false });
+      const case1 = Calculator.evaluate(operation, { A: true, B: true });
+      const case2 = Calculator.evaluate(operation, { A: false, B: true });
+      const case3 = Calculator.evaluate(operation, { A: true, B: false });
+      const case4 = Calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -111,10 +111,10 @@ describe('calculator', () => {
 
     it('should evaluate ¬(¬(A ∧ ¬B) ∧ ¬(A ∧ ¬B))', () => {
       const operation = '¬A ∨ (¬B ∨ A)';
-      const case1 = calculator.evaluate(operation, { A: true, B: true });
-      const case2 = calculator.evaluate(operation, { A: false, B: true });
-      const case3 = calculator.evaluate(operation, { A: true, B: false });
-      const case4 = calculator.evaluate(operation, { A: false, B: false });
+      const case1 = Calculator.evaluate(operation, { A: true, B: true });
+      const case2 = Calculator.evaluate(operation, { A: false, B: true });
+      const case3 = Calculator.evaluate(operation, { A: true, B: false });
+      const case4 = Calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -125,10 +125,10 @@ describe('calculator', () => {
     it('should evaluate ¬(¬ A ∧ ¬(B->A))', () => {
       const operation = '¬(A ∧ ¬¬(B ∧ ¬A))';
 
-      const case1 = calculator.evaluate(operation, { A: true, B: true });
-      const case2 = calculator.evaluate(operation, { A: false, B: true });
-      const case3 = calculator.evaluate(operation, { A: true, B: false });
-      const case4 = calculator.evaluate(operation, { A: false, B: false });
+      const case1 = Calculator.evaluate(operation, { A: true, B: true });
+      const case2 = Calculator.evaluate(operation, { A: false, B: true });
+      const case3 = Calculator.evaluate(operation, { A: true, B: false });
+      const case4 = Calculator.evaluate(operation, { A: false, B: false });
 
       assert.equal(case1, true);
       assert.equal(case2, true);
@@ -139,7 +139,7 @@ describe('calculator', () => {
 
   describe('generateTruthTable', () => {
     it('should generate a truth table for ¬P', () => {
-      const output = calculator.generateTruthTable('¬P');
+      const output = Calculator.generateTruthTable('¬P');
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', '¬P']);
@@ -148,7 +148,7 @@ describe('calculator', () => {
     });
 
     it('should generate a truth table for P -> Q', () => {
-      const output = calculator.generateTruthTable('P -> Q');
+      const output = Calculator.generateTruthTable('P -> Q');
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', 'Q', 'P -> Q']);
@@ -162,7 +162,7 @@ describe('calculator', () => {
     });
 
     it('should generate a truth table for P <-> Q', () => {
-      const output = calculator.generateTruthTable('P <-> Q');
+      const output = Calculator.generateTruthTable('P <-> Q');
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', 'Q', 'P <-> Q']);
@@ -176,7 +176,7 @@ describe('calculator', () => {
     });
 
     it('should generate a truth table for P ∧ Q', () => {
-      const output = calculator.generateTruthTable('P ∧ Q');
+      const output = Calculator.generateTruthTable('P ∧ Q');
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', 'Q', 'P ∧ Q']);
@@ -190,7 +190,7 @@ describe('calculator', () => {
     });
 
     it('should generate a truth table for P ∨ Q', () => {
-      const output = calculator.generateTruthTable('P ∨ Q');
+      const output = Calculator.generateTruthTable('P ∨ Q');
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['P', 'Q', 'P ∨ Q']);
@@ -204,7 +204,7 @@ describe('calculator', () => {
     });
 
     it('should generate a truth table for (A ∨ B) -> ¬(¬C ∧ D)', () => {
-      const output = calculator.generateTruthTable('(A ∨ B) -> ¬(¬C ∧ D)');
+      const output = Calculator.generateTruthTable('(A ∨ B) -> ¬(¬C ∧ D)');
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, [
@@ -253,7 +253,7 @@ describe('calculator', () => {
     });
 
     it('should generate a truth table for ¬(A ∧ B)', () => {
-      const output = calculator.generateTruthTable('¬(A ∧ B)');
+      const output = Calculator.generateTruthTable('¬(A ∧ B)');
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['A', 'B', '¬(A ∧ B)']);
@@ -267,7 +267,7 @@ describe('calculator', () => {
     });
 
     it('should generate a truth table for (A -> B) ∧ (B -> A)', () => {
-      const output = calculator.generateTruthTable('(A -> B) ∧ (B -> A)');
+      const output = Calculator.generateTruthTable('(A -> B) ∧ (B -> A)');
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['A', 'B', '(A -> B) ∧ (B -> A)']);
@@ -281,7 +281,7 @@ describe('calculator', () => {
     });
 
     it('should generate a truth table for (A ∨ B) -> (B -> A)', () => {
-      const output = calculator.generateTruthTable('(A ∨ B) -> (B -> A)');
+      const output = Calculator.generateTruthTable('(A ∨ B) -> (B -> A)');
 
       const {headers, truthCombinations, truthValues} = output;
       assert.deepStrictEqual(headers, ['A', 'B', '(A ∨ B) -> (B -> A)']);
@@ -298,17 +298,17 @@ describe('calculator', () => {
   describe('isSemanticConsequence', () => {
     describe('Inference Rules', () => {
       it('should validate an application of Modus Ponens', () => {
-        const output = calculator.isSemanticConsequence(['P->Q', 'P'], 'Q');
+        const output = Calculator.isSemanticConsequence(['P->Q', 'P'], 'Q');
         assert.ok(output);
       });
 
       it('should validate an application of Modus Tollens', () => {
-        const output = calculator.isSemanticConsequence(['P->Q', '¬Q'], '¬P');
+        const output = Calculator.isSemanticConsequence(['P->Q', '¬Q'], '¬P');
         assert.ok(output);
       });
 
       it('should validate an application of Hypothetical Syllogism', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['P->Q', 'Q->R'],
           'P->R'
         );
@@ -316,12 +316,12 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Disjunctive Syllogism', () => {
-        const output = calculator.isSemanticConsequence(['P ∨ Q', '¬P'], 'Q');
+        const output = Calculator.isSemanticConsequence(['P ∨ Q', '¬P'], 'Q');
         assert.ok(output);
       });
 
       it('should validate an application of Constructive Dilemma', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['P -> Q', 'R -> S', 'P ∨ R'],
           'Q ∨ S'
         );
@@ -329,7 +329,7 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Reductio ad Absurdum', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['P->(Q ∨ R)', 'R -> (P ∧ ¬P)', 'P', '¬Q'],
           '¬P'
         );
@@ -337,7 +337,7 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Conditional Proof', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['A->B', 'B->C', 'A'],
           'A->C'
         );
@@ -345,7 +345,7 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Contraposition', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['(P ∧ ¬Q) -> (¬Q ∧ X)'],
           '¬(¬Q ∧ X) -> ¬(P ∧ ¬Q)'
         );
@@ -353,12 +353,12 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Negation of Conditional', () => {
-        const output = calculator.isSemanticConsequence(['¬(P->Q)'], 'P ∧ ¬Q');
+        const output = Calculator.isSemanticConsequence(['¬(P->Q)'], 'P ∧ ¬Q');
         assert.ok(output);
       });
 
       it('should validate an application of Associativity (Biconditional)', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['(P<->Q)<->R'],
           'P<->(Q<->R)'
         );
@@ -366,7 +366,7 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Associativity (Conjunction)', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['(P ∧ Q) ∧ R'],
           'P ∧ (Q ∧ R)'
         );
@@ -374,7 +374,7 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Associativity (Disjunction)', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['(P ∨ Q) ∨ R'],
           'P ∨ (Q ∨ R)'
         );
@@ -382,22 +382,22 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Commutativity (Biconditional)', () => {
-        const output = calculator.isSemanticConsequence(['(P<->Q)'], 'Q<->P');
+        const output = Calculator.isSemanticConsequence(['(P<->Q)'], 'Q<->P');
         assert.ok(output);
       });
 
       it('should validate an application of Commutativity (Conjunction)', () => {
-        const output = calculator.isSemanticConsequence(['(P ∧ Q)'], 'Q ∧ P');
+        const output = Calculator.isSemanticConsequence(['(P ∧ Q)'], 'Q ∧ P');
         assert.ok(output);
       });
 
       it('should validate an application of Commutativity (Disjunction)', () => {
-        const output = calculator.isSemanticConsequence(['(P ∨ Q)'], 'Q ∨ P');
+        const output = Calculator.isSemanticConsequence(['(P ∨ Q)'], 'Q ∨ P');
         assert.ok(output);
       });
 
       it('should validate an application of Distribution', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['(P ∨ Q) ∧ R'],
           '(P ∧ R) ∨ (Q ∧ R)'
         );
@@ -405,7 +405,7 @@ describe('calculator', () => {
       });
 
       it('should validate an application of De Morgan (Conjunction)', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['¬(P ∧ Q)'],
           '¬P ∨ ¬Q'
         );
@@ -413,7 +413,7 @@ describe('calculator', () => {
       });
 
       it('should validate an application of De Morgan (Disjunction)', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['¬(P ∨ Q)'],
           '¬P ∧ ¬Q'
         );
@@ -421,12 +421,12 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Implication Introduction', () => {
-        const output = calculator.isSemanticConsequence(['P'], 'Q->P');
+        const output = Calculator.isSemanticConsequence(['P'], 'Q->P');
         assert.ok(output);
       });
 
       it('should validate an application of Biconditional Introduction', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['P->Q', 'Q->P'],
           'P <-> Q'
         );
@@ -434,17 +434,17 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Conjunction Introduction', () => {
-        const output = calculator.isSemanticConsequence(['P', 'Q'], 'P ∧ Q');
+        const output = Calculator.isSemanticConsequence(['P', 'Q'], 'P ∧ Q');
         assert.ok(output);
       });
 
       it('should validate an application of Disjunction Introduction', () => {
-        const output = calculator.isSemanticConsequence(['P'], 'P ∨ R');
+        const output = Calculator.isSemanticConsequence(['P'], 'P ∨ R');
         assert.ok(output);
       });
 
       it('should validate an application of Biconditional Simplification', () => {
-        const output = calculator.isSemanticConsequence(
+        const output = Calculator.isSemanticConsequence(
           ['P <-> Q'],
           '(P->Q) ∧ (Q->P)'
         );
@@ -452,26 +452,26 @@ describe('calculator', () => {
       });
 
       it('should validate an application of Conjunction Simplification', () => {
-        const output = calculator.isSemanticConsequence(['P ∧ Q'], 'P');
-        const output2 = calculator.isSemanticConsequence(['P ∧ Q'], 'Q');
+        const output = Calculator.isSemanticConsequence(['P ∧ Q'], 'P');
+        const output2 = Calculator.isSemanticConsequence(['P ∧ Q'], 'Q');
         assert.ok(output);
         assert.ok(output2);
       });
 
       it('should validate an application of Negation Simplification', () => {
-        const output = calculator.isSemanticConsequence(['¬¬¬¬P'], 'P');
+        const output = Calculator.isSemanticConsequence(['¬¬¬¬P'], 'P');
         assert.ok(output);
       });
     });
 
     describe('Fallacies', () => {
       it('should invalidate a fallacy of asserting the consequent', () => {
-        const output = calculator.isSemanticConsequence(['P->Q', 'Q'], 'P');
+        const output = Calculator.isSemanticConsequence(['P->Q', 'Q'], 'P');
         assert.ok(!output);
       });
 
       it('should invalidate a fallacy of asserting the disjunct', () => {
-        const output = calculator.isSemanticConsequence(['P ∨ Q', 'P'], '¬Q');
+        const output = Calculator.isSemanticConsequence(['P ∨ Q', 'P'], '¬Q');
         assert.ok(!output);
       });
     });

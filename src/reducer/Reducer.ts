@@ -10,7 +10,7 @@ import {
 /**
  * A class that provides methods to reduce formulas, which use implication or biconditional, to use only negations, conjunctions and disjunctions.
  */
-export class reducer {
+export class Reducer {
   /**
    * Recursively reduces a logical formula to its reduced form based on its operation.
    * @param x - The logical formula to reduce.
