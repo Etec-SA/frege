@@ -1,5 +1,11 @@
 # fregejs
 
+## 0.3.0
+
+### Minor Changes
+
+- 1f80ab3: Create new util functions to build formula objects and custom paths.
+
 ## 0.2.3
 
 hotfix: publish updated dist
