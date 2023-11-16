@@ -3,6 +3,7 @@
   "llang is MIT licensed. Feel free to use it, contribute or spread the word. Created with love by Petr Nevyhoštěný."
 */
 
+import { SyntaxException } from 'exceptions/syntax-error.exception';
 import {
   Token,
   Formula,
@@ -21,6 +22,7 @@ import {
 export class Parser {
   public tokens: Token[];
   private token: Token;
+  private lastIsVariable: boolean = false;
 
   /**
    * Constructor of the Parser class.
@@ -43,6 +45,11 @@ export class Parser {
     const args: Formula[] = [];
 
     while (this.next()) {
+      if (this.lastIsVariable && this.token?.type === 'variable')
+        throw new SyntaxException(
+          `Token "${this.token.value}": Expected one variable, but received more than 1.`
+        );
+
       if (this.token === undefined) break;
       if (this.token?.type === 'boundary') {
         if (this.token.value === ')') return this.node(operation, args);
@@ -69,16 +76,29 @@ export class Parser {
 
         operation = this.token.value;
       }
+
+      this.lastIsVariable =
+        this.token?.type === 'variable' ||
+        (this.lastIsVariable && this.token?.type === 'boundary');
     }
 
     return this.node(operation, args);
   }
 
   private next() {
+    /*if (this.token?.type === 'variable' && this.tokens[0]?.type === 'variable')
+      throw new Error();*/
+
     return (this.token = this.tokens.shift());
   }
 
   private node(operator: Operator, args: Formula[]): Formula {
+    if (['->', '<->', '&', '|', '∧', '∨'].includes(operator)) {
+      if (args.length !== 2)
+        throw new SyntaxException(`
+        Token "${operator}": expected 2 variables, but received 1.
+      `);
+    }
 
     if (operator === '¬' || operator === '!')
       return { operation: 'Negation', value: args[0] } as Negation;
@@ -110,7 +130,6 @@ export class Parser {
         left: args[0],
         right: args[1],
       } as Biconditional;
-
 
     return args[0] as PropositionalVariable;
   }

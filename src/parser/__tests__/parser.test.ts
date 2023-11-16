@@ -12,7 +12,10 @@ import {
 } from 'types';
 
 describe('Parser', () => {
-  let parser: Parser = new Parser([]);
+  let parser: Parser;
+  beforeEach(() => {
+    parser = new Parser([]);
+  });
 
   it('should be defined', () => {
     assert.ok(parser);
@@ -354,5 +357,124 @@ describe('Parser', () => {
 
     assert.deepEqual(result, expected);
     assert.equal(result.operation, 'Negation');
+  });
+
+  it('should not parse (P->)', () => {
+    parser.tokens = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '->' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse (P |)', () => {
+    parser.tokens = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '|' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse (P &)', () => {
+    parser.tokens = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '&' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse (P <->)', () => {
+    parser.tokens = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '<->' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse (P ∨)', () => {
+    parser.tokens = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '∨' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse (P ∧)', () => {
+    parser.tokens = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '∧' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse P->->', () => {
+    parser.tokens = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '->' },
+      { type: 'operator', value: '->' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse P->|', () => {
+    parser.tokens = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '->' },
+      { type: 'operator', value: '|' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse P<->Q->', () => {
+    parser.tokens = [
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '<->' },
+      { type: 'variable', value: 'Q' },
+      { type: 'operator', value: '->' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse (P->)Q', () => {
+    parser.tokens = [
+      { type: 'boundary', value: '(' },
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '->' },
+      { type: 'boundary', value: ')' },
+      { type: 'variable', value: 'Q' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
+  });
+
+  it('should not parse ((P -> Q)->(QQ))P))', () => {
+    parser.tokens = [
+      { type: 'boundary', value: '(' },
+      { type: 'boundary', value: '(' },
+      { type: 'variable', value: 'P' },
+      { type: 'operator', value: '->' },
+      { type: 'variable', value: 'Q' },
+      { type: 'boundary', value: ')' },
+      { type: 'operator', value: '->' },
+      { type: 'boundary', value: '(' },
+      { type: 'variable', value: 'Q' },
+      { type: 'variable', value: 'Q' },
+      { type: 'boundary', value: ')' },
+      { type: 'boundary', value: ')' },
+      { type: 'variable', value: 'P' },
+      { type: 'boundary', value: ')' },
+      { type: 'boundary', value: ')' },
+    ];
+
+    assert.throws(() => parser.parse(), Error);
   });
 });
