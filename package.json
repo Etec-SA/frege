@@ -19,7 +19,7 @@
     "style:fix": "prettier --write src/**/*.ts src/**/__tests__/*.test.ts",
     "build": "npx tsup src/index.ts --format cjs,esm --dts ",
     "lint": "tsc",
-    "release": "npm run build && npx changeset publish"
+    "release": "pnpm run build && npx changeset publish"
   },
   "keywords": [
     "logic",
