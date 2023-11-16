@@ -1,5 +1,11 @@
 # fregejs
 
+## 0.4.0
+
+### Minor Changes
+
+- f2ec411: add syntax validation
+
 ## 0.3.0
 
 ### Minor Changes
